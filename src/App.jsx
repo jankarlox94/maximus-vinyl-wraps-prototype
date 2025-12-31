@@ -1,6 +1,7 @@
 import Hero from "./components/Hero/Hero";
 import Navbar from "./components/Navbar/Navbar";
 import Fondo from "./assets/fondo-presses.png";
+import LandingPage from "./components/LandingPage/LandingPage";
 
 function App() {
   const bgImagen = {
@@ -12,12 +13,11 @@ function App() {
   };
 
   return (
-    <div
-      style={bgImagen}
-      className="flex justify-center overflow-hidden min-h-screen"
-    >
-      <Navbar />
-      <Hero />
+    <div className="flex justify-center overflow-hidden min-h-screen">
+      <LandingPage />
+      {/* <Navbar /> */}
+
+      {/* <Hero /> */}
     </div>
   );
 }
