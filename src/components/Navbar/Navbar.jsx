@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-// import Logo from "../../assets/mxi.png";
-import Logo from "../../assets/maximus-vinyl-3d-logo-crop.png";
+import Logo from "../../assets/maxi3d.png";
+// import Logo from "../../assets/maximus-vinyl-3d-logo-crop.png";
 import { Menu, X } from "lucide-react";
 
 const Navbar = () => {
@@ -40,10 +40,10 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 left-0 w-full bg-gray-300 bg-opacity-30 backdrop-blur-md z-50 transition-all duration-300">
-      <div className="flex justify-between items-center sm:px-12 sm:py-6 px-4 py-3">
+      <div className="flex justify-between items-center sm:px-12 sm:py-2 px-4 py-1">
         {/* Logo */}
         <div className="flex items-center gap-2 md:ml-[4rem]">
-          <img src={Logo} alt="Logo" className="w-[200px]" />
+          <img src={Logo} alt="Logo" className="w-[230px]" />
         </div>
 
         {/* Botón de menú hamburguesa - visible solo en móvil */}
