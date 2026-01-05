@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Logo from "../../assets/maximus-vinyl-3d-logo-crop.png";
+import Logo from "../../assets/maxi3d.png";
 import { motion } from "framer-motion";
 import { slideUp, slideInFromSide } from "../../utility/animation";
 
@@ -177,8 +177,8 @@ const LandingPage = () => {
 
       {/* Footer */}
       <footer className="py-12 border-t border-gray-800 px-6 text-center">
-        <div className="max-w-7xl flex justify-center my-auto mx-auto">
-          <div className="mb-8 font-black uppercase italic text-2xl tracking-tighter">
+        <div className="max-w-7xl flex flex-col justify-center my-auto mx-auto">
+          <div className="my-auto mx-auto font-black uppercase italic text-2xl tracking-tighter">
             <img src={Logo} alt="Logo" className="w-[200px]" />
           </div>
           <p className="text-gray-500 text-xs tracking-[0.3em] uppercase mb-4">
