@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Logo from "../../assets/maxi3d.png";
 // import Logo from "../../assets/maximus-vinyl-3d-logo-crop.png";
 import { Menu, X } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -109,15 +110,15 @@ const Navbar = () => {
         </div> */}
         {/*  */}
         <div className="hidden md:flex gap-8 text-sm font-medium tracking-widest uppercase text-gray-400">
-          <a href="#services" className="hover:text-cyan-400 transition-colors">
+          <Link to="/" className="hover:text-cyan-400 transition-colors">
             Services
-          </a>
+          </Link>
           <a href="#process" className="hover:text-cyan-400 transition-colors">
             Process
           </a>
-          <a href="#contact" className="hover:text-cyan-400 transition-colors">
+          <Link to="/contact" className="hover:text-cyan-400 transition-colors">
             Contact
-          </a>
+          </Link>
         </div>
 
         <button className="hidden md:block px-6 py-2 md:mr-[4rem] border border-cyan-500/50 text-cyan-400 hover:bg-cyan-500/10 transition-all rounded-full text-xs font-bold tracking-[0.2em]">

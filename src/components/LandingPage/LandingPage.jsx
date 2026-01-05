@@ -17,9 +17,9 @@ const LandingPage = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#0f1115] text-gray-100 font-sans selection:bg-cyan-500/30">
+    <div>
       {/* Navigation */}
-      <Navbar />
+      {/* <Navbar /> */}
       {/* <nav className="fixed w-full z-50 bg-[#0f1115]/80 backdrop-blur-md border-b border-gray-800">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="p-10 sm:p-10 md:p-15 lg:p-30 xl:p-36">
