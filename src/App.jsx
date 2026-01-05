@@ -2,6 +2,7 @@ import Hero from "./components/Hero/Hero";
 import Navbar from "./components/Navbar/Navbar";
 import Fondo from "./assets/fondo-presses.png";
 import LandingPage from "./components/LandingPage/LandingPage";
+import PrintProjectView from "./components/PrintProjectView/PrintProjectView";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
 
           <Routes>
             <Route path="/" element={<LandingPage />} />
-            <Route path="/contact" element={<Hero />} />
+            <Route path="/contact" element={<PrintProjectView />} />
           </Routes>
         </div>
 
