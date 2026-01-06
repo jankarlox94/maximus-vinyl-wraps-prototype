@@ -105,7 +105,7 @@ const PrintProjectView = () => {
   );
 
   return (
-    <div className="mt-[10rem] bg-white rounded-xl shadow-lg border border-gray-100">
+    <div className="mt-[10rem] bg-white rounded-xl shadow-lg border border-gray-100 md:mx-[5rem]">
       <div className="bg-white rounded-xl shadow-lg border border-gray-100">
         <h2 className="text-2xl font-bold text-gray-800 mb-2 text-center">
           Start Your Print Project

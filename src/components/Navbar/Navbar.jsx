@@ -106,7 +106,7 @@ const Navbar = () => {
         </div> */}
 
         {/* Redes - visible en desktop */}
-        <div className="hidden md:block font-black tracking-tighter text-gray-700 lg:text-lg 2xl:text-xl animate-glow-pulse">
+        <div className="hidden md:block font-black tracking-tighter lg:text-lg 2xl:text-xl animate-glow-pulse">
           <ul className="flex space-x-4 ">
             {navbarRedes.map((link) => (
               <li key={link.id}>
@@ -114,10 +114,10 @@ const Navbar = () => {
                   href={link.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block  transition-transform font-black tracking-tighter text-gray-700 lg:text-lg 2xl:text-xl animate-glow-pulse duration-300 transform hover:scale-125"
+                  className="inline-block  transition-transform font-black tracking-tighter 0 lg:text-lg 2xl:text-xl animate-glow-pulse duration-300 transform hover:scale-125"
                 >
                   <i
-                    className={`${link.icon} sm:text-2xl text-lg font-black tracking-tighter text-gray-700 lg:text-2xl 2xl:text-3xl animate-glow-pulse transition-all duration-300 hover:text-sky-100`}
+                    className={`${link.icon} sm:text-2xl text-lg font-black tracking-tighter  lg:text-2xl 2xl:text-3xl animate-glow-pulse transition-all duration-300 hover:text-sky-100`}
                   ></i>
                 </a>
               </li>
