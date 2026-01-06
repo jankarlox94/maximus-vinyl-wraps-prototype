@@ -53,7 +53,7 @@ const Hero = () => {
         >
           <img src={Personaje} alt="Personaje de juego" />
         </motion.div>
-        <style jsx>{`
+        <style jsx="true">{`
           @keyframes glow-pulse {
             0%,
             100% {

@@ -35,7 +35,7 @@ const Navbar = () => {
     {
       id: 2,
       title: "Contact",
-      link: "#",
+      link: "/contact",
     },
   ];
 
@@ -74,23 +74,39 @@ const Navbar = () => {
         </button>
 
         {/* Navegación - visible en desktop */}
-        {/* <div className="hidden md:block">
+        <div className="hidden md:block">
           <ul className="flex sm:space-x-8 space-x-4 px-4">
             {navbarLinks.map((link) => (
               <li key={link.id}>
-                <a
-                  href={link.link}
-                  className="sm:text-lg text-sm lg:text-xl font-black tracking-tighter text-gray-700 lg:text-lg 2xl:text-xl animate-glow-pulse hover:text-sky-100 transition-transform duration-300 transform hover:scale-110 inline-block"
+                <Link
+                  to={link.link}
+                  className="hover:text-cyan-400 transition-colors"
                 >
                   {link.title}
-                </a>
+                </Link>
               </li>
             ))}
+            <button className="hidden md:block px-6 py-2 md:mr-[4rem] border border-cyan-500/50 hover:text-cyan-400 hover:bg-cyan-500/10 transition-all rounded-full text-xs font-bold tracking-[0.2em]">
+              GET A QUOTE
+            </button>
           </ul>
+        </div>
+
+        {/*  */}
+        {/* <div className="hidden md:flex gap-8 text-sm font-medium tracking-widest uppercase text-gray-400">
+          <Link to="/" className="hover:text-cyan-400 transition-colors">
+            Services
+          </Link>
+          <a href="#process" className="hover:text-cyan-400 transition-colors">
+            Process
+          </a>
+          <Link to="/contact" className="hover:text-cyan-400 transition-colors">
+            Contact
+          </Link>
         </div> */}
 
         {/* Redes - visible en desktop */}
-        {/* <div className="hidden md:block font-black tracking-tighter text-gray-700 lg:text-lg 2xl:text-xl animate-glow-pulse">
+        <div className="hidden md:block font-black tracking-tighter text-gray-700 lg:text-lg 2xl:text-xl animate-glow-pulse">
           <ul className="flex space-x-4 ">
             {navbarRedes.map((link) => (
               <li key={link.id}>
@@ -107,30 +123,14 @@ const Navbar = () => {
               </li>
             ))}
           </ul>
-        </div> */}
-        {/*  */}
-        <div className="hidden md:flex gap-8 text-sm font-medium tracking-widest uppercase text-gray-400">
-          <Link to="/" className="hover:text-cyan-400 transition-colors">
-            Services
-          </Link>
-          <a href="#process" className="hover:text-cyan-400 transition-colors">
-            Process
-          </a>
-          <Link to="/contact" className="hover:text-cyan-400 transition-colors">
-            Contact
-          </Link>
         </div>
 
-        <button className="hidden md:block px-6 py-2 md:mr-[4rem] border border-cyan-500/50 text-cyan-400 hover:bg-cyan-500/10 transition-all rounded-full text-xs font-bold tracking-[0.2em]">
-          GET A QUOTE
-        </button>
-
-        <button
+        {/* <button
           className="md:hidden text-gray-400"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? <X /> : <Menu />}
-        </button>
+        </button> */}
 
         {/*  */}
       </div>
@@ -142,7 +142,7 @@ const Navbar = () => {
         }`}
       >
         {/* Links de navegación móvil */}
-        {/* <ul className="flex flex-col px-4 py-2">
+        <ul className="flex flex-col px-4 py-2">
           {navbarLinks.map((link) => (
             <li key={link.id} className="py-2 text-center">
               <a
@@ -154,10 +154,10 @@ const Navbar = () => {
               </a>
             </li>
           ))}
-        </ul> */}
+        </ul>
 
         {/* Redes sociales móvil */}
-        {/* <ul className="flex space-x-4 px-4 py-2 border-t border-gray-700 justify-center">
+        <ul className="flex space-x-4 px-4 py-2 border-t border-gray-700 justify-center">
           {navbarRedes.map((link) => (
             <li key={link.id}>
               <a
@@ -173,9 +173,9 @@ const Navbar = () => {
               </a>
             </li>
           ))}
-        </ul> */}
+        </ul>
 
-        <style jsx>{`
+        <style jsx="true">{`
           @keyframes glow-pulse {
             0%,
             100% {
