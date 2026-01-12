@@ -1,72 +1,18 @@
 import React, { useState } from "react";
 import Logo from "../../assets/maxi3d.png";
-import LandingImg from "../../assets/landing-img-definitive.png";
-import { motion } from "framer-motion";
-import { slideUp, slideInFromSide } from "../../utility/animation";
 
-import {
-  MousePointer2,
-  Truck,
-  Clock,
-  ShieldCheck,
-  Menu,
-  X,
-} from "lucide-react";
-import Navbar from "../Navbar/Navbar";
+import { MousePointer2, Truck, Clock, ShieldCheck } from "lucide-react";
+import HeroTop from "../HeroTop/HeroTop";
 
 const LandingPage = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   return (
     <div>
       {/* Hero Section */}
-      <header className="relative pt-32 pb-20 px-6 overflow-hidden">
+      <header className="relative  pt-32 pb-20 px-6 w-full md:w-[95rem] 2xl:w-[180rem] overflow-hidden">
         {/* Futuristic Background Elements */}
         <div className="absolute top-20 left-[-10%] w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[120px] pointer-events-none"></div>
         <div className="absolute bottom-0 right-[-5%] w-[400px] h-[400px] bg-cyan-600/10 rounded-full blur-[100px] pointer-events-none"></div>
-
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-3 gap-12 items-center">
-          <div className="max-w-3xl">
-            <div className="inline-block px-3 py-1 border border-cyan-500/30 bg-cyan-500/5 rounded-full mb-6">
-              <span className="text-[10px] font-bold tracking-[0.3em] text-cyan-400 uppercase">
-                OKC's Next-Gen Print Solutions
-              </span>
-            </div>
-            <h1 className="text-6xl md:text-6xl font-black mb-6 leading-tight tracking-tighter uppercase italic text-gray-100">
-              Your Vision, <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">
-                Amplified.
-              </span>
-            </h1>
-            <p className="text-gray-400 text-lg md:text-xl max-w-lg mb-10 leading-relaxed">
-              From local shops to personal projects, we bring your projects into
-              life with professional marketing materials tailored to your exact
-              needs.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button className="px-8 py-4 bg-cyan-500 text-black font-black uppercase italic tracking-wider hover:bg-cyan-400 transition-all shadow-[0_0_20px_rgba(34,211,238,0.4)]">
-                Start Your Project
-              </button>
-              {/* <button className="px-8 py-4 border border-gray-700 bg-gray-800/50 text-white font-black uppercase italic tracking-wider hover:border-cyan-500 transition-all">
-                View Portfolio
-              </button> */}
-            </div>
-          </div>
-
-          <div className="col-span-2 relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
-            <div className="relative aspect-video bg-gray-900 border border-gray-700 rounded-2xl flex items-center justify-center overflow-hidden">
-              <div className="absolute inset-0 bg-cover opacity-40 mix-blend-overlay"></div>
-              <div className="z-10 text-center">
-                <img
-                  src={LandingImg}
-                  alt="maximus-img"
-                  className="h-full w-full object-cover "
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+        <HeroTop />
       </header>
 
       {/* Features Grid */}
