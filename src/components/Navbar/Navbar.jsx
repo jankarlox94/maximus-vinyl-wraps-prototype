@@ -92,19 +92,6 @@ const Navbar = () => {
           </ul>
         </div>
 
-        {/*  */}
-        {/* <div className="hidden md:flex gap-8 text-sm font-medium tracking-widest uppercase text-gray-400">
-          <Link to="/" className="hover:text-cyan-400 transition-colors">
-            Services
-          </Link>
-          <a href="#process" className="hover:text-cyan-400 transition-colors">
-            Process
-          </a>
-          <Link to="/contact" className="hover:text-cyan-400 transition-colors">
-            Contact
-          </Link>
-        </div> */}
-
         {/* Redes - visible en desktop */}
         <div className="hidden md:block font-black tracking-tighter lg:text-lg 2xl:text-xl animate-glow-pulse">
           <ul className="flex space-x-4 ">
@@ -124,15 +111,6 @@ const Navbar = () => {
             ))}
           </ul>
         </div>
-
-        {/* <button
-          className="md:hidden text-gray-400"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          {isOpen ? <X /> : <Menu />}
-        </button> */}
-
-        {/*  */}
       </div>
 
       {/* Menú móvil */}
