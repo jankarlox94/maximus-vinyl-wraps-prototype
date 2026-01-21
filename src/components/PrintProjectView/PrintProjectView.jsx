@@ -339,7 +339,7 @@ const PrintProjectView = () => {
           {step === 4 && (
             <form onSubmit={handleEmailFormSubmit} className="space-y-4">
               {/* Contact Section */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-black">
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
                     Full Name
@@ -368,8 +368,8 @@ const PrintProjectView = () => {
                 </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
+              <div className="text-black">
+                <label className="block text-sm font-medium text-black">
                   Phone Number
                 </label>
                 <input
@@ -386,8 +386,8 @@ const PrintProjectView = () => {
 
               {/* Order Details Section */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
+                <div className="text-black">
+                  <label className="block text-sm font-medium text-black">
                     Service Type
                   </label>
                   <select
@@ -402,8 +402,8 @@ const PrintProjectView = () => {
                     <option>Brochures/Flyers</option>
                   </select>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
+                <div className="text-black">
+                  <label className="block text-sm font-medium text-black">
                     Quantity
                   </label>
                   <input
@@ -418,8 +418,8 @@ const PrintProjectView = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-black">
+                <div className="text-black">
                   <label className="block text-sm font-medium text-gray-700">
                     Paper Stock
                   </label>
@@ -435,7 +435,7 @@ const PrintProjectView = () => {
                     <option>Recycled Matte</option>
                   </select>
                 </div>
-                <div>
+                <div className="text-black">
                   <label className="block text-sm font-medium text-gray-700">
                     Finish
                   </label>
@@ -457,7 +457,7 @@ const PrintProjectView = () => {
                 </div>
               </div>
 
-              <div>
+              <div className="text-black">
                 <label className="block text-sm font-medium text-gray-700">
                   Additional Instructions
                 </label>
