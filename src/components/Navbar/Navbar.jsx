@@ -87,7 +87,12 @@ const Navbar = () => {
               </li>
             ))}
             <button className="hidden md:block px-6 py-2 md:mr-[4rem] border border-cyan-500/50 hover:text-cyan-400 hover:bg-cyan-500/10 transition-all rounded-full text-xs font-bold tracking-[0.2em]">
-              GET A QUOTE
+              <Link
+                to="/contact"
+                className="hover:text-cyan-400 transition-colors"
+              >
+                GET A QUOTE
+              </Link>
             </button>
           </ul>
         </div>
