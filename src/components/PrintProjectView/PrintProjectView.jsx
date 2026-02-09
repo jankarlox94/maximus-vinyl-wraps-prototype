@@ -19,23 +19,79 @@ const PrintProjectView = () => {
     phone: "",
     serviceType: "Digital Printing",
     quantity: "",
+    dimensions: "",
     paperStock: "Standard 80lb",
     finish: "Matte",
     notes: "",
   });
 
   // --- HANDLERS ---
+  // 2. Separate state for the image file
+  const [imageFile, setImageFile] = useState(null);
+  const [status, setStatus] = useState("idle"); // idle, submitting, success, error
+  // Handle file selection
+  const handleFileChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setImageFile(e.target.files[0]);
+    }
+  };
   // -- email handlers--
   const handleEmailFormChange = (e) => {
     const { name, value } = e.target;
     emailSetFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleEmailFormSubmit = (e) => {
+  const handleEmailFormSubmit = async (e) => {
     e.preventDefault();
+    setStatus("submitting");
     // This is the payload you would send to your email service
     console.log("Email Payload:", emailFormData);
-    alert("Order submitted! Check console for payload.");
+    const formData = new FormData();
+    // formData.append("customerName", emailFormData.customerName);
+    // formData.append("email", emailFormData.email);
+    // formData.append("phone", emailFormData.phone);
+    // formData.append("serviceType", emailFormData.serviceType);
+    // formData.append("quantity", emailFormData.quantity);
+    // formData.append("paperStock", emailFormData.paperStock);
+    // formData.append("finish", emailFormData.finish);
+    // formData.append("notes", emailFormData.notes);
+    // formData.append("dimensions", "10'x10'");
+
+    formData.append("customerEmail", emailFormData.email);
+    formData.append("width", "24"); // sending as string is fine, backend converts
+    formData.append("height", "36");
+    formData.append("material", "Vinyl Gloss");
+    if (imageFile) {
+      formData.append("image", imageFile);
+    }
+    // debugger;
+    // Append all text fields
+    // Object.keys(formData).forEach((key) => {
+    //   data.append(key, formData[key]);
+    // });
+    try {
+      const response = await fetch("http://[::1]:3000/api/print-jobs", {
+        method: "POST",
+        body: formData, // Do NOT set headers; the browser will set multipart/form-data automatically
+      });
+
+      if (response.ok) {
+        setStatus("success");
+        // Reset form (optional)
+        // setFormData({ customerName: '', email: '', /* reset others */ });
+        // setImageFile(null);
+      } else {
+        setStatus("error");
+      }
+    } catch (error) {
+      debugger;
+      console.log("Error:", error);
+      setStatus("error");
+    }
+
+    alert(
+      "Your information was sent to the shop Manager. We will be contacting you in a few moments.",
+    );
     setStep(5);
   };
   // ---------
@@ -455,6 +511,28 @@ const PrintProjectView = () => {
                     ))}
                   </div>
                 </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Upload Image Reference
+                </label>
+                <input
+                  type="file"
+                  name="image"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  className="block w-full text-sm text-gray-500
+              file:mr-4 file:py-2 file:px-4
+              file:rounded-full file:border-0
+              file:text-sm file:font-semibold
+              file:bg-indigo-50 file:text-indigo-700
+              hover:file:bg-indigo-100"
+                />
+                {imageFile && (
+                  <p className="mt-2 text-xs text-green-600">
+                    Selected: {imageFile.name}
+                  </p>
+                )}
               </div>
 
               <div className="text-black">
