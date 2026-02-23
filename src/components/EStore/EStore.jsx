@@ -72,7 +72,7 @@ const EStore = () => {
           className="text-2xl font-bold tracking-tight cursor-pointer"
           onClick={() => setView("catalog")}
         >
-          PRINTS<span className="text-orange-400">PRO</span>
+          Maximus<span className="text-orange-400">CATALOG</span>
         </h1>
         <div className="flex-1 max-w-xl mx-8 relative hidden md:block">
           <input
@@ -101,7 +101,12 @@ const EStore = () => {
 
   const Catalog = () => (
     <div className="p-6 max-w-7xl mx-auto">
-      <h2 className="text-2xl font-bold mb-6">Results</h2>
+      <h5 className="font-bold mb-6">
+        Select your size, upload your art, and let us handle the rest. Whether
+        it’s a 40" statement canvas or a custom vinyl project, our pro-grade
+        materials and precision cropping tools ensure your prints look exactly
+        how you imagined.
+      </h5>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {PRODUCTS.map((product) => (
           <div
@@ -323,7 +328,7 @@ const EStore = () => {
   );
 
   return (
-    <div className="min-h-screen bg-white font-sans text-slate-900">
+    <div className="mt-[7.8rem] min-h-screen bg-white font-sans text-slate-900">
       <Navbar />
       {view === "catalog" && <Catalog />}
       {view === "details" && <ProductDetails />}
