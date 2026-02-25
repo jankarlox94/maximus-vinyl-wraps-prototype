@@ -5,6 +5,7 @@ import LandingPage from "./components/LandingPage/LandingPage";
 import PrintProjectView from "./components/PrintProjectView/PrintProjectView";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import EStore from "./components/EStore/EStore";
+import Storefront from "./components/StoreFront/StoreFront";
 
 function App() {
   const bgImagen = {
@@ -25,6 +26,7 @@ function App() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/contact" element={<PrintProjectView />} />
             <Route path="/contact2" element={<EStore />} />
+            <Route path="/contact3" element={<Storefront />} />
           </Routes>
         </div>
 
