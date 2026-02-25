@@ -410,6 +410,9 @@ const EStore = () => {
             <h3 className="font-medium text-lg text-blue-800 hover:text-orange-600 truncate">
               {product.name} - {product.size}
             </h3>
+            <h3 className="font-medium text-lg text-blue-800  truncate">
+              {product.size}
+            </h3>
             <h2 className="text-lg font-medium leading-tight hover:text-[#c45500] cursor-pointer">
               {product.desc}
             </h2>
