@@ -24,8 +24,8 @@ function App() {
 
           <Routes>
             <Route path="/" element={<LandingPage />} />
-            <Route path="/contact" element={<PrintProjectView />} />
-            <Route path="/contact2" element={<EStore />} />
+            <Route path="/contact2" element={<PrintProjectView />} />
+            <Route path="/contact" element={<EStore />} />
             <Route path="/contact3" element={<Storefront />} />
           </Routes>
         </div>
