@@ -336,17 +336,36 @@ const EStore = () => {
   // --- Handlers ---
   const handleUpload = (e) => {
     if (e.target.files && e.target.files.length > 0) {
-      const reader = new FileReader();
-      reader.addEventListener("load", () => setImageSrc(reader.result));
+      debugger;
+      const reader = new FileReader(e.target.files[0]);
+      debugger;
+      reader.addEventListener("load", () => setImageSrc(e.target.files[0]));
       reader.readAsDataURL(e.target.files[0]);
     }
   };
 
-  const addToCart = (product) => {
-    setCart([...cart, { ...product, id: Date.now() }]);
-    setView("checkout");
+  const handleFileChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const reader = new FileReader();
+      reader.addEventListener("load", () => setImageSrc(e.target.files[0]));
+      debugger;
+      reader.readAsDataURL(e.target.files[0]);
+      //   setImageSrc(e.target.files[0]);
+    }
   };
 
+  //   const addToCart = (product) => {
+  //     setCart([...cart, { ...product, id: Date.now() }]);
+  //     setView("checkout");
+  //   };
+
+  const addToCart = (product) => {
+    // 1. Update cart using the previous state (prevCart)
+    setCart((prevCart) => [...prevCart, { ...product, id: Date.now() }]);
+
+    // 2. Switch the view
+    setView("checkout");
+  };
   // --- Components ---
 
   const Navbar = () => (
@@ -441,20 +460,44 @@ const EStore = () => {
       {/* Image Section */}
       <div className="md:col-span-5 relative bg-gray-100 rounded-lg overflow-hidden min-h-[400px] flex items-center justify-center border-2 border-dashed border-gray-300">
         {!imageSrc ? (
-          <div className="text-center p-8">
-            <Upload size={48} className="mx-auto text-gray-400 mb-4" />
-            <label className="bg-orange-400 hover:bg-orange-500 text-white px-4 py-2 rounded cursor-pointer shadow-sm">
-              Upload Your Image
+          <div>
+            {/* <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Upload Image Reference
+              </label>
               <input
                 type="file"
-                className="hidden"
-                onChange={handleUpload}
+                name="image"
                 accept="image/*"
+                onChange={handleFileChange}
+                className="block w-full text-sm text-gray-500
+              file:mr-4 file:py-2 file:px-4
+              file:rounded-full file:border-0
+              file:text-sm file:font-semibold
+              file:bg-indigo-50 file:text-indigo-700
+              hover:file:bg-indigo-100"
               />
-            </label>
-            <p className="mt-2 text-sm text-gray-500">
-              High resolution JPEG/PNG recommended
-            </p>
+              {imageSrc && (
+                <p className="mt-2 text-xs text-green-600">
+                  Selected: {imageSrc.name}
+                </p>
+              )}
+            </div> */}
+            <div className="text-center p-8">
+              <Upload size={48} className="mx-auto text-gray-400 mb-4" />
+              <label className="bg-orange-400 hover:bg-orange-500 text-white px-4 py-2 rounded cursor-pointer shadow-sm">
+                Upload Your Image
+                <input
+                  type="file"
+                  className="hidden"
+                  onChange={handleUpload}
+                  accept="image/*"
+                />
+              </label>
+              <p className="mt-2 text-sm text-gray-500">
+                High resolution JPEG/PNG recommended
+              </p>
+            </div>
           </div>
         ) : (
           <div className="relative w-full h-full">
@@ -545,12 +588,12 @@ const EStore = () => {
         >
           Add to Cart
         </button>
-        <button
+        {/* <button
           onClick={() => addToCart(selectedProduct)}
           className="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-full shadow text-sm"
         >
           Buy Now
-        </button>
+        </button> */}
       </div>
     </div>
   );

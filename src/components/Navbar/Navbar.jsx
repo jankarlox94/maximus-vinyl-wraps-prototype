@@ -91,7 +91,7 @@ const Navbar = () => {
                 to="/contact"
                 className="hover:text-cyan-400 transition-colors"
               >
-                GET A QUOTE
+                CATALOG
               </Link>
             </button>
           </ul>
@@ -162,11 +162,13 @@ const Navbar = () => {
           @keyframes glow-pulse {
             0%,
             100% {
-              text-shadow: 0 0 4px rgba(12, 138, 234, 0.31),
+              text-shadow:
+                0 0 4px rgba(12, 138, 234, 0.31),
                 0 0 10px rgba(12, 138, 234, 0.31);
             }
             50% {
-              text-shadow: 0 0 10px rgba(12, 138, 234, 0.31),
+              text-shadow:
+                0 0 10px rgba(12, 138, 234, 0.31),
                 0 0 20px rgba(12, 138, 234, 0.31),
                 0 0 30px rgba(12, 138, 234, 0.31);
             }
