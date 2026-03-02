@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Logo from "../../assets/maxi3d.png";
+import { Link } from "react-router-dom";
 import EighteenBy24 from "../../assets/18-by-24-medium-sized-poster.jpg";
 import TwentyfourBy36 from "../../assets/24by36.jpg";
 import TwentytwoBy28 from "../../assets/22_28_HOLDING_MOCKUP.jpg";
@@ -150,6 +151,13 @@ const LandingPage = () => {
                 </li>
               ))}
             </ul>
+            <div className="flex ">
+              <Link to="/contact">
+                <button className=" mx-auto px-8 py-4 bg-cyan-500 text-black font-black uppercase italic tracking-wider hover:bg-cyan-400 transition-all shadow-[0_0_20px_rgba(34,211,238,0.4)]">
+                  Start Your Project
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>

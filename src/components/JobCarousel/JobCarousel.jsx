@@ -32,8 +32,8 @@ const JobCarousel = ({ images }) => {
   };
 
   return (
-    <div className="max-w-[1200px] w-full m-auto py-12 px-4 relative group">
-      <h2 className="text-3xl font-bold text-center mb-8 text-slate-800">
+    <div className="max-w-[1200px] w-full m-auto py-12 px-4 relative group font-sans">
+      <h2 className="text-3xl font-bold text-center mb-8 text-gray-300">
         Our Recent Work
       </h2>
 
