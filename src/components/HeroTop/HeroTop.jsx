@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import LandingImg from "../../assets/landing-img-definitive.png";
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
 
@@ -142,9 +143,12 @@ const HeroTop = () => {
 
           {/* CTA Button */}
           <div className="flex flex-col sm:flex-row gap-4">
-            <button className="px-8 py-4 bg-cyan-500 text-black font-black uppercase italic tracking-wider hover:bg-cyan-400 transition-all shadow-[0_0_20px_rgba(34,211,238,0.4)]">
-              Start Your Project
-            </button>
+            <Link to="/contact">
+              <button className="px-8 py-4 bg-cyan-500 text-black font-black uppercase italic tracking-wider hover:bg-cyan-400 transition-all shadow-[0_0_20px_rgba(34,211,238,0.4)]">
+                Start Your Project
+              </button>
+            </Link>
+
             <button
               disabled
               className="px-8 py-4 border border-gray-700 bg-gray-800/50 text-white font-black uppercase italic tracking-wider hover:border-cyan-500 transition-all"
