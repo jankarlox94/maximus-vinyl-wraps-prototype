@@ -1,8 +1,20 @@
 import React, { useState } from "react";
 import Logo from "../../assets/maxi3d.png";
+import EighteenBy24 from "../../assets/18-by-24-medium-sized-poster.jpg";
+import TwentyfourBy36 from "../../assets/24by36.jpg";
+import TwentytwoBy28 from "../../assets/22_28_HOLDING_MOCKUP.jpg";
+import Twoby6feet from "../../assets/2by6banner.png";
+import Threeby6feet from "../../assets/3by6.png";
+import Fourby8feet from "../../assets/4by8.png";
 
 import { MousePointer2, Truck, Clock, ShieldCheck } from "lucide-react";
 import HeroTop from "../HeroTop/HeroTop";
+import JobCarousel from "../JobCarousel/JobCarousel";
+
+const images = [
+  { url: Threeby6feet, title: "three by six" },
+  { url: Fourby8feet, title: "four by eight" },
+];
 
 const LandingPage = () => {
   return (
@@ -41,7 +53,7 @@ const LandingPage = () => {
                   width="16"
                   height="16"
                   fill="currentColor"
-                  class="bi bi-car-front"
+                  className="bi bi-car-front"
                   viewBox="0 0 16 16"
                 >
                   <path d="M4 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0m10 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2zM4.862 4.276 3.906 6.19a.51.51 0 0 0 .497.731c.91-.073 2.35-.17 3.597-.17s2.688.097 3.597.17a.51.51 0 0 0 .497-.731l-.956-1.913A.5.5 0 0 0 10.691 4H5.309a.5.5 0 0 0-.447.276" />
@@ -53,6 +65,7 @@ const LandingPage = () => {
             />
           </div>
         </div>
+        <JobCarousel images={images} />
       </section>
 
       {/* Content Section */}
@@ -79,7 +92,7 @@ const LandingPage = () => {
               {[
                 "Expert Design Consultation",
                 "Local Pickup Available",
-                "High-end Custom Car Wraps",
+                "High-end Custom Prints",
               ].map((item, i) => (
                 <li
                   key={i}
