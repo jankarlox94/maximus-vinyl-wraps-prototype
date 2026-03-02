@@ -17,6 +17,16 @@ const JobCarousel = ({ images }) => {
     setCurrentIndex(newIndex);
   };
 
+  // Auto-play logic
+  useEffect(() => {
+    const slideInterval = setInterval(() => {
+      nextSlide();
+    }, 3000); // Changes every 5 seconds
+
+    // Cleanup function to prevent memory leaks and overlapping intervals
+    return () => clearInterval(slideInterval);
+  }, [currentIndex]); // Restarts the timer whenever the index changes
+
   const goToSlide = (slideIndex) => {
     setCurrentIndex(slideIndex);
   };
@@ -39,12 +49,6 @@ const JobCarousel = ({ images }) => {
                 index === currentIndex ? "opacity-100" : "opacity-0"
               }`}
             />
-            {/* Optional Overlay Text */}
-            <div className="absolute bottom-0 left-0 right-0 bg-black/40 p-4 text-white backdrop-blur-sm">
-              <p className="font-semibold text-lg">
-                {img.title || `Project ${index + 1}`}
-              </p>
-            </div>
           </div>
         ))}
 

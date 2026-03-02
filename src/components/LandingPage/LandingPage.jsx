@@ -7,13 +7,60 @@ import Twoby6feet from "../../assets/2by6banner.png";
 import Threeby6feet from "../../assets/3by6.png";
 import Fourby8feet from "../../assets/4by8.png";
 
+import Carousel1 from "../../assets/carousel-pics/carousel-1.webp";
+import Carousel2 from "../../assets/carousel-pics/carousel-2.webp";
+import Carousel3 from "../../assets/carousel-pics/carousel-3.webp";
+import Carousel4 from "../../assets/carousel-pics/carousel-4.webp";
+import Carousel5 from "../../assets/carousel-pics/carousel-5.webp";
+
+import Carousel6 from "../../assets/carousel-pics/carousel-6.webp";
+import Carousel7 from "../../assets/carousel-pics/carousel-7.webp";
+import Carousel8 from "../../assets/carousel-pics/carousel-8.webp";
+import Carousel9 from "../../assets/carousel-pics/carousel-9.webp";
+import Carousel10 from "../../assets/carousel-pics/carousel-10.webp";
+
+import Carousel11 from "../../assets/carousel-pics/carousel-11.webp";
+import Carousel12 from "../../assets/carousel-pics/carousel-12.webp";
+import Carousel13 from "../../assets/carousel-pics/carousel-13.webp";
+import Carousel14 from "../../assets/carousel-pics/carousel-14.webp";
+import Carousel15 from "../../assets/carousel-pics/carousel-15.webp";
+
+import Carousel16 from "../../assets/carousel-pics/carousel-16.webp";
+import Carousel17 from "../../assets/carousel-pics/carousel-17.webp";
+import Carousel18 from "../../assets/carousel-pics/carousel-18.webp";
+import Carousel19 from "../../assets/carousel-pics/carousel-19.webp";
+import Carousel20 from "../../assets/carousel-pics/carousel-20.webp";
+import Carousel21 from "../../assets/carousel-pics/carousel-21.webp";
+import Carousel22 from "../../assets/carousel-pics/carousel-22.webp";
+// import Fourby8feet from "../../assets/4by8.png";
+
 import { MousePointer2, Truck, Clock, ShieldCheck } from "lucide-react";
 import HeroTop from "../HeroTop/HeroTop";
 import JobCarousel from "../JobCarousel/JobCarousel";
 
 const images = [
-  { url: Threeby6feet, title: "three by six" },
-  { url: Fourby8feet, title: "four by eight" },
+  { url: Carousel1, title: "Full color Print - Made in the USA" },
+  { url: Carousel2, title: "Restaurant Wall Decoration" },
+  { url: Carousel3, title: "Custom Vinyl Wrap" },
+  { url: Carousel4, title: "Commercial Vinyl Wrap" },
+  { url: Carousel5, title: "Commercial Vinyl Wrap" },
+  { url: Carousel6, title: "Commercial Vinyl Wrap" },
+  { url: Carousel7, title: "Custom Vinyl Wrap Installation" },
+  { url: Carousel8, title: "Commercial Banner" },
+  { url: Carousel9, title: "Custom Vinyl Wrap" },
+  { url: Carousel10, title: "Commercial Vinyl Wrap" },
+  { url: Carousel11, title: "Restaurant Wall Decoration" },
+  { url: Carousel12, title: "Commercial Banner" },
+  { url: Carousel13, title: "Restaurant Wall Decoration" },
+  { url: Carousel14, title: "Custom Vinyl Wrap" },
+  { url: Carousel15, title: "Custom Vinyl Wrap" },
+  { url: Carousel16, title: "Commercial Vinyl Wrap for Trailer" },
+  { url: Carousel17, title: "Commercial Vinyl Wrap" },
+  { url: Carousel18, title: "Commercial Banner" },
+  { url: Carousel19, title: "Commercial Vinyl Wrap for Trailer" },
+  { url: Carousel20, title: "Custom Banner" },
+  { url: Carousel21, title: "Decorative Vinyl" },
+  { url: Carousel22, title: "Commercial Banner" },
 ];
 
 const LandingPage = () => {
