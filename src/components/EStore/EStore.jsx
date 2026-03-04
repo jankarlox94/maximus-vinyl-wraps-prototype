@@ -377,11 +377,7 @@ const EStore = () => {
     if (imageFile) {
       formData.append("image", imageFile);
     }
-    // debugger;
-    // Append all text fields
-    // Object.keys(formData).forEach((key) => {
-    //   data.append(key, formData[key]);
-    // });
+
     try {
       const response = await fetch("http://[::1]:3000/api/print-jobs", {
         method: "POST",
@@ -407,7 +403,7 @@ const EStore = () => {
     alert(
       "Your information was sent to the shop Manager. We will be contacting you in a few moments.",
     );
-    setStep(5);
+    // setStep(5);
   };
   // ---- email ----
   const handleUpload = (e) => {
@@ -537,337 +533,6 @@ const EStore = () => {
     </div>
   );
 
-  const ProductDetails = () => (
-    <div className="p-6 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8">
-      {/* Image Section */}
-      <div className="md:col-span-5 relative bg-gray-100 rounded-lg overflow-hidden min-h-[400px] flex items-center justify-center border-2 border-dashed border-gray-300">
-        {!imageSrc ? (
-          <div>
-            {/* <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Upload Image Reference
-              </label>
-              <input
-                type="file"
-                name="image"
-                accept="image/*"
-                onChange={handleFileChange}
-                className="block w-full text-sm text-gray-500
-              file:mr-4 file:py-2 file:px-4
-              file:rounded-full file:border-0
-              file:text-sm file:font-semibold
-              file:bg-indigo-50 file:text-indigo-700
-              hover:file:bg-indigo-100"
-              />
-              {imageSrc && (
-                <p className="mt-2 text-xs text-green-600">
-                  Selected: {imageSrc.name}
-                </p>
-              )}
-            </div> */}
-
-            <form onSubmit={handleEmailFormSubmit} className="space-y-4">
-              {/* Contact Section */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-black">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    Full Name
-                  </label>
-                  <input
-                    required
-                    type="text"
-                    name="customerName"
-                    value={emailFormData.customerName}
-                    onChange={handleEmailFormChange}
-                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2 border"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    Email Address
-                  </label>
-                  <input
-                    required
-                    type="email"
-                    name="email"
-                    value={emailFormData.email}
-                    onChange={handleEmailFormChange}
-                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2 border"
-                  />
-                </div>
-              </div>
-
-              <div className="text-black">
-                <label className="block text-sm font-medium text-black">
-                  Phone Number
-                </label>
-                <input
-                  required
-                  type="tel"
-                  name="phone"
-                  value={emailFormData.phone}
-                  onChange={handleEmailFormChange}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2 border"
-                />
-              </div>
-
-              <hr className="my-4" />
-
-              {/* Order Details Section */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="text-black">
-                  <label className="block text-sm font-medium text-black">
-                    Service Type
-                  </label>
-                  <select
-                    name="serviceType"
-                    value={emailFormData.serviceType}
-                    onChange={handleEmailFormChange}
-                    className="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm p-2 border"
-                  >
-                    <option>Digital Printing</option>
-                    <option>Large Format Poster</option>
-                    <option>Business Cards</option>
-                    <option>Brochures/Flyers</option>
-                  </select>
-                </div>
-                <div className="text-black">
-                  <label className="block text-sm font-medium text-black">
-                    Quantity
-                  </label>
-                  <input
-                    required
-                    type="number"
-                    name="quantity"
-                    value={emailFormData.quantity}
-                    onChange={handleEmailFormChange}
-                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 border"
-                    placeholder="e.g. 500"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-black">
-                <div className="text-black">
-                  <label className="block text-sm font-medium text-gray-700">
-                    Paper Stock
-                  </label>
-                  <select
-                    name="paperStock"
-                    value={emailFormData.paperStock}
-                    onChange={handleEmailFormChange}
-                    className="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm p-2 border"
-                  >
-                    <option>Standard 80lb</option>
-                    <option>Premium 100lb Cardstock</option>
-                    <option>Glossy Photo Paper</option>
-                    <option>Recycled Matte</option>
-                  </select>
-                </div>
-                <div className="text-black">
-                  <label className="block text-sm font-medium text-gray-700">
-                    Finish
-                  </label>
-                  <div className="mt-2 space-x-4">
-                    {["Matte", "Gloss", "UV Coat"].map((f) => (
-                      <label key={f} className="inline-flex items-center">
-                        <input
-                          type="radio"
-                          name="finish"
-                          value={f}
-                          checked={emailFormData.finish === f}
-                          onChange={handleEmailFormChange}
-                          className="text-blue-600"
-                        />
-                        <span className="ml-2 text-sm text-gray-600">{f}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              <div className="text-center p-8">
-                <Upload size={48} className="mx-auto text-gray-400 mb-4" />
-                <label className="bg-orange-400 hover:bg-orange-500 text-white px-4 py-2 rounded cursor-pointer shadow-sm">
-                  Upload Your Image
-                  <input
-                    type="file"
-                    className="hidden"
-                    onChange={handleFileChange}
-                    accept="image/*"
-                  />
-                </label>
-                <p className="mt-2 text-sm text-gray-500">
-                  High resolution JPEG/PNG recommended
-                </p>
-                {imageFile && (
-                  <p className="mt-2 text-xs text-green-600">
-                    Selected: {imageFile.name}
-                  </p>
-                )}
-              </div>
-              {/* <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Upload Image Reference
-                </label>
-                <input
-                  type="file"
-                  name="image"
-                  accept="image/*"
-                  onChange={handleFileChange}
-                  className="block w-full text-sm text-gray-500
-              file:mr-4 file:py-2 file:px-4
-              file:rounded-full file:border-0
-              file:text-sm file:font-semibold
-              file:bg-indigo-50 file:text-indigo-700
-              hover:file:bg-indigo-100"
-                />
-                {imageFile && (
-                  <p className="mt-2 text-xs text-green-600">
-                    Selected: {imageFile.name}
-                  </p>
-                )}
-              </div> */}
-
-              <div className="text-black">
-                <label className="block text-sm font-medium text-gray-700">
-                  Additional Instructions
-                </label>
-                <textarea
-                  name="notes"
-                  rows="3"
-                  value={emailFormData.notes}
-                  onChange={handleEmailFormChange}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 border"
-                  placeholder="File link, trim size, etc."
-                ></textarea>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-md hover:bg-blue-700 transition duration-200 shadow-md"
-              >
-                Submit Print Order
-              </button>
-            </form>
-            {/* old image logic */}
-            {/* <div className="text-center p-8">
-              <Upload size={48} className="mx-auto text-gray-400 mb-4" />
-              <label className="bg-orange-400 hover:bg-orange-500 text-white px-4 py-2 rounded cursor-pointer shadow-sm">
-                Upload Your Image
-                <input
-                  type="file"
-                  className="hidden"
-                  onChange={handleFileChange}
-                  accept="image/*"
-                />
-              </label>
-              <p className="mt-2 text-sm text-gray-500">
-                High resolution JPEG/PNG recommended
-              </p>
-            </div> */}
-            {/* commenting out for now */}
-          </div>
-        ) : (
-          <div></div>
-
-          // <div className="relative w-full h-full">
-          //   <Cropper
-          //     image={imageSrc}
-          //     crop={crop}
-          //     zoom={zoom}
-          //     aspect={aspect}
-          //     onCropChange={setCrop}
-          //     onZoomChange={setZoom}
-          //   />
-          //   <div className="absolute bottom-4 left-4 right-4 bg-black/50 p-2 rounded flex items-center gap-4 text-white">
-          //     <span className="text-xs">Zoom</span>
-          //     <input
-          //       type="range"
-          //       min="1"
-          //       max="3"
-          //       step="0.1"
-          //       value={zoom}
-          //       onChange={(e) => setZoom(e.target.value)}
-          //       className="flex-1"
-          //     />
-          //     <button
-          //       onClick={() => setImageSrc(null)}
-          //       className="text-xs bg-red-500 px-2 py-1 rounded"
-          //     >
-          //       Reset
-          //     </button>
-          //   </div>
-          // </div>
-        )}
-      </div>
-
-      {/* Options Section */}
-      <div className="md:col-span-4">
-        <h1 className="text-3xl font-semibold mb-2">{selectedProduct.title}</h1>
-        <p className="text-blue-600 border-b pb-4 mb-4">
-          Visit the PrintsPro Store
-        </p>
-
-        <div className="space-y-6">
-          <div>
-            <span className="font-bold text-sm">Size:</span>
-            <div className="flex gap-2 mt-2">
-              {selectedProduct.sizes.map((size) => (
-                <button
-                  key={size}
-                  onClick={() =>
-                    setAspect(eval(size.replace(/"/g, "").split("x").join("/")))
-                  }
-                  className="border p-2 rounded hover:border-orange-500 text-sm"
-                >
-                  {size}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <span className="font-bold text-sm">Paper Type:</span>
-            <select className="block w-full mt-2 border p-2 rounded bg-gray-50">
-              {selectedProduct.papers.map((p) => (
-                <option key={p}>{p}</option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <span className="font-bold text-sm">Lamination:</span>
-            <div className="flex gap-4 mt-2">
-              {selectedProduct.laminations.map((l) => (
-                <label key={l} className="flex items-center gap-2 text-sm">
-                  <input type="radio" name="lamination" /> {l}
-                </label>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Purchase Section */}
-      <div className="md:col-span-3 border rounded-lg p-4 h-fit sticky top-24">
-        <p className="text-3xl font-light">${selectedProduct.price}</p>
-        <p className="text-green-600 text-sm font-bold my-2">In Stock.</p>
-        <button
-          onClick={() => addToCart(selectedProduct)}
-          className="w-full bg-yellow-400 hover:bg-yellow-500 py-2 rounded-full shadow mb-2 text-sm"
-        >
-          Add to Cart
-        </button>
-        {/* <button
-          onClick={() => addToCart(selectedProduct)}
-          className="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-full shadow text-sm"
-        >
-          Buy Now
-        </button> */}
-      </div>
-    </div>
-  );
-
   const Checkout = () => (
     <div className="p-6 max-w-5xl mx-auto bg-gray-50 min-h-screen">
       <div className="flex items-center gap-2 mb-8 text-sm text-gray-500">
@@ -933,12 +598,279 @@ const EStore = () => {
 
   return (
     <div className="mt-[7.8rem] min-h-screen bg-white font-sans text-slate-900">
-      <Navbar />
-      {view === "catalog" && <Catalog />}
-      {view === "details" && <ProductDetails />}
-      {view === "checkout" && <Checkout />}
+      <Navbar setView={setView} cartLength={cart.length} />
+
+      {view === "catalog" && (
+        <Catalog setSelectedProduct={setSelectedProduct} setView={setView} />
+      )}
+
+      {view === "details" && (
+        <ProductDetails
+          imageSrc={imageSrc}
+          handleEmailFormSubmit={handleEmailFormSubmit}
+          emailFormData={emailFormData}
+          handleEmailFormChange={handleEmailFormChange}
+          imageFile={imageFile}
+          handleFileChange={handleFileChange}
+          selectedProduct={selectedProduct}
+          setAspect={setAspect}
+          addToCart={addToCart}
+        />
+      )}
+
+      {view === "checkout" && <Checkout cart={cart} setCart={setCart} />}
     </div>
+    // <div className="mt-[7.8rem] min-h-screen bg-white font-sans text-slate-900">
+    //   <Navbar />
+    //   {view === "catalog" && <Catalog />}
+    //   {view === "details" && <ProductDetails />}
+    //   {view === "checkout" && <Checkout />}
+    // </div>
   );
 };
+
+const ProductDetails = ({
+  imageSrc,
+  handleEmailFormSubmit,
+  emailFormData,
+  handleEmailFormChange,
+  imageFile,
+  handleFileChange,
+  selectedProduct,
+  setAspect,
+  addToCart,
+}) => (
+  <div className="p-6 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8">
+    {/* Image Section */}
+    <div className="md:col-span-5 relative bg-gray-100 rounded-lg overflow-hidden min-h-[400px] flex items-center justify-center border-2 border-dashed border-gray-300">
+      {!imageSrc ? (
+        <form onSubmit={handleEmailFormSubmit} className="space-y-4">
+          {/* Contact Section */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-black">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Full Name
+              </label>
+              <input
+                required
+                type="text"
+                name="customerName"
+                value={emailFormData.customerName}
+                onChange={handleEmailFormChange}
+                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2 border"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Email Address
+              </label>
+              <input
+                required
+                type="email"
+                name="email"
+                value={emailFormData.email}
+                onChange={handleEmailFormChange}
+                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2 border"
+              />
+            </div>
+          </div>
+
+          <div className="text-black">
+            <label className="block text-sm font-medium text-black">
+              Phone Number
+            </label>
+            <input
+              required
+              type="tel"
+              name="phone"
+              value={emailFormData.phone}
+              onChange={handleEmailFormChange}
+              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2 border"
+            />
+          </div>
+
+          <hr className="my-4" />
+
+          {/* Order Details Section */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="text-black">
+              <label className="block text-sm font-medium text-black">
+                Service Type
+              </label>
+              <select
+                name="serviceType"
+                value={emailFormData.serviceType}
+                onChange={handleEmailFormChange}
+                className="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm p-2 border"
+              >
+                <option>Digital Printing</option>
+                <option>Large Format Poster</option>
+                <option>Business Cards</option>
+                <option>Brochures/Flyers</option>
+              </select>
+            </div>
+            <div className="text-black">
+              <label className="block text-sm font-medium text-black">
+                Quantity
+              </label>
+              <input
+                required
+                type="number"
+                name="quantity"
+                value={emailFormData.quantity}
+                onChange={handleEmailFormChange}
+                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 border"
+                placeholder="e.g. 500"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-black">
+            <div className="text-black">
+              <label className="block text-sm font-medium text-gray-700">
+                Paper Stock
+              </label>
+              <select
+                name="paperStock"
+                value={emailFormData.paperStock}
+                onChange={handleEmailFormChange}
+                className="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm p-2 border"
+              >
+                <option>Standard 80lb</option>
+                <option>Premium 100lb Cardstock</option>
+                <option>Glossy Photo Paper</option>
+                <option>Recycled Matte</option>
+              </select>
+            </div>
+            <div className="text-black">
+              <label className="block text-sm font-medium text-gray-700">
+                Finish
+              </label>
+              <div className="mt-2 space-x-4">
+                {["Matte", "Gloss", "UV Coat"].map((f) => (
+                  <label key={f} className="inline-flex items-center">
+                    <input
+                      type="radio"
+                      name="finish"
+                      value={f}
+                      checked={emailFormData.finish === f}
+                      onChange={handleEmailFormChange}
+                      className="text-blue-600"
+                    />
+                    <span className="ml-2 text-sm text-gray-600">{f}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="text-center p-8 border-2 border-dashed border-gray-200 rounded-lg">
+            <Upload size={48} className="mx-auto text-gray-400 mb-4" />
+            <label className="bg-orange-400 hover:bg-orange-500 text-white px-4 py-2 rounded cursor-pointer shadow-sm transition-colors">
+              Upload Your Image
+              <input
+                type="file"
+                className="hidden"
+                onChange={handleFileChange}
+                accept="image/*"
+              />
+            </label>
+            {imageFile && (
+              <p className="mt-2 text-xs text-green-600">
+                Selected: {imageFile.name}
+              </p>
+            )}
+          </div>
+          <div className="text-black">
+            <label className="block text-sm font-medium text-gray-700">
+              Additional Instructions
+            </label>
+            <textarea
+              name="notes"
+              rows="3"
+              value={emailFormData.notes}
+              onChange={handleEmailFormChange}
+              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 border"
+              placeholder="File link, trim size, etc."
+            ></textarea>
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-md hover:bg-blue-700 transition duration-200 shadow-md"
+          >
+            Submit Print Order
+          </button>
+        </form>
+      ) : (
+        <div></div>
+      )}
+    </div>
+
+    {/* Options Section */}
+    <div className="md:col-span-4">
+      <h1 className="text-3xl font-semibold mb-2">{selectedProduct.title}</h1>
+      <p className="text-blue-600 border-b pb-4 mb-4">
+        Visit the PrintsPro Store
+      </p>
+
+      <div className="space-y-6">
+        <div>
+          <span className="font-bold text-sm">Size:</span>
+          <div className="flex gap-2 mt-2">
+            {selectedProduct.sizes.map((size) => (
+              <button
+                key={size}
+                onClick={() =>
+                  setAspect(eval(size.replace(/"/g, "").split("x").join("/")))
+                }
+                className="border p-2 rounded hover:border-orange-500 text-sm"
+              >
+                {size}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <span className="font-bold text-sm">Paper Type:</span>
+          <select className="block w-full mt-2 border p-2 rounded bg-gray-50">
+            {selectedProduct.papers.map((p) => (
+              <option key={p}>{p}</option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <span className="font-bold text-sm">Lamination:</span>
+          <div className="flex gap-4 mt-2">
+            {selectedProduct.laminations.map((l) => (
+              <label key={l} className="flex items-center gap-2 text-sm">
+                <input type="radio" name="lamination" /> {l}
+              </label>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* Purchase Section */}
+    <div className="md:col-span-3 border rounded-lg p-4 h-fit sticky top-24">
+      <p className="text-3xl font-light">${selectedProduct.price}</p>
+      <p className="text-green-600 text-sm font-bold my-2">In Stock.</p>
+      <button
+        onClick={() => addToCart(selectedProduct)}
+        className="w-full bg-yellow-400 hover:bg-yellow-500 py-2 rounded-full shadow mb-2 text-sm"
+      >
+        Add to Cart
+      </button>
+      {/* <button
+          onClick={() => addToCart(selectedProduct)}
+          className="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-full shadow text-sm"
+        >
+          Buy Now
+        </button> */}
+    </div>
+  </div>
+);
 
 export default EStore;
