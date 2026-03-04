@@ -38,10 +38,12 @@ const PrintProjectView = () => {
   // -- email handlers--
   const handleEmailFormChange = (e) => {
     const { name, value } = e.target;
+    // debugger;
     emailSetFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleEmailFormSubmit = async (e) => {
+    // debugger;
     e.preventDefault();
     setStatus("submitting");
     // This is the payload you would send to your email service

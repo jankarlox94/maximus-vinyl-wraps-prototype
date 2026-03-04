@@ -160,7 +160,7 @@ const PRODUCTS = [
     rating: 4.9,
     reviews: 89,
     sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
-    papers: ["Hahnemühle Photo Rag", "Archival Matte"],
+    papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
     laminations: ["None"],
     image: TwentyfourBy36,
   },
@@ -177,7 +177,7 @@ const PRODUCTS = [
     rating: 4.9,
     reviews: 89,
     sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
-    papers: ["Hahnemühle Photo Rag", "Archival Matte"],
+    papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
     laminations: ["None"],
     image: EighteenBy24,
   },
@@ -194,7 +194,7 @@ const PRODUCTS = [
     rating: 4.9,
     reviews: 89,
     sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
-    papers: ["Hahnemühle Photo Rag", "Archival Matte"],
+    papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
     laminations: ["None"],
     image:
       "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=400",
@@ -212,7 +212,7 @@ const PRODUCTS = [
     rating: 4.9,
     reviews: 89,
     sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
-    papers: ["Hahnemühle Photo Rag", "Archival Matte"],
+    papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
     laminations: ["None"],
     image: ElevenBy14,
   },
@@ -229,7 +229,7 @@ const PRODUCTS = [
     rating: 4.9,
     reviews: 89,
     sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
-    papers: ["Hahnemühle Photo Rag", "Archival Matte"],
+    papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
     laminations: ["None"],
     image:
       "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=400",
@@ -247,7 +247,7 @@ const PRODUCTS = [
     rating: 4.9,
     reviews: 89,
     sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
-    papers: ["Hahnemühle Photo Rag", "Archival Matte"],
+    papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
     laminations: ["None"],
     image:
       "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=400",
@@ -265,7 +265,7 @@ const PRODUCTS = [
     rating: 4.9,
     reviews: 89,
     sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
-    papers: ["Hahnemühle Photo Rag", "Archival Matte"],
+    papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
     laminations: ["None"],
     image: TwentytwoBy28,
   },
@@ -282,7 +282,7 @@ const PRODUCTS = [
     rating: 4.9,
     reviews: 89,
     sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
-    papers: ["Hahnemühle Photo Rag", "Archival Matte"],
+    papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
     laminations: ["None"],
     image: Twoby6feet,
   },
@@ -299,7 +299,7 @@ const PRODUCTS = [
     rating: 4.9,
     reviews: 89,
     sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
-    papers: ["Hahnemühle Photo Rag", "Archival Matte"],
+    papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
     laminations: ["None"],
     image: Threeby6feet,
   },
@@ -316,7 +316,7 @@ const PRODUCTS = [
     rating: 4.9,
     reviews: 89,
     sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
-    papers: ["Hahnemühle Photo Rag", "Archival Matte"],
+    papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
     laminations: ["None"],
     image: Fourby8feet,
   },
@@ -325,6 +325,7 @@ const PRODUCTS = [
 const EStore = () => {
   const [view, setView] = useState("catalog"); // catalog, details, checkout
   const [selectedProduct, setSelectedProduct] = useState(null);
+  debugger;
   const [cart, setCart] = useState([]);
 
   const [imageFile, setImageFile] = useState(null);
@@ -808,16 +809,17 @@ const ProductDetails = ({
 
     {/* Options Section */}
     <div className="md:col-span-4">
-      <h1 className="text-3xl font-semibold mb-2">{selectedProduct.title}</h1>
+      <h1 className="text-3xl font-semibold mb-2">{selectedProduct.name}</h1>
       <p className="text-blue-600 border-b pb-4 mb-4">
         Visit the PrintsPro Store
       </p>
 
       <div className="space-y-6">
         <div>
-          <span className="font-bold text-sm">Size:</span>
           <div className="flex gap-2 mt-2">
-            {selectedProduct.sizes.map((size) => (
+            <h2>Sample view</h2>
+
+            {/* {selectedProduct.sizes.map((size) => (
               <button
                 key={size}
                 onClick={() =>
@@ -827,8 +829,25 @@ const ProductDetails = ({
               >
                 {size}
               </button>
-            ))}
+            ))} */}
           </div>
+        </div>
+        <div className="border border-gray-200 rounded p-4 hover:shadow-lg transition cursor-pointer">
+          <img
+            src={selectedProduct.image}
+            alt={selectedProduct.title}
+            className="w-full h-64 object-cover mb-4"
+          />
+
+          <h3 className="font-medium text-lg text-blue-800 hover:text-orange-600 truncate">
+            {selectedProduct.name} - {selectedProduct.size}
+          </h3>
+          <h3 className="font-medium text-lg text-blue-800  truncate">
+            {selectedProduct.size}
+          </h3>
+          <h2 className="text-lg font-medium leading-tight hover:text-[#c45500] cursor-pointer">
+            {selectedProduct.desc}
+          </h2>
         </div>
 
         <div>
@@ -839,9 +858,9 @@ const ProductDetails = ({
             ))}
           </select>
         </div>
-
+        {/* 
         <div>
-          <span className="font-bold text-sm">Lamination:</span>
+          <span className="font-bold text-sm">Lamination(recommended):</span>
           <div className="flex gap-4 mt-2">
             {selectedProduct.laminations.map((l) => (
               <label key={l} className="flex items-center gap-2 text-sm">
@@ -849,7 +868,7 @@ const ProductDetails = ({
               </label>
             ))}
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
 
