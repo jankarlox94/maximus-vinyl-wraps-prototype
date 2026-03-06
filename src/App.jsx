@@ -6,6 +6,7 @@ import PrintProjectView from "./components/PrintProjectView/PrintProjectView";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import EStore from "./components/EStore/EStore";
 import Storefront from "./components/StoreFront/StoreFront";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop.jsx";
 
 function App() {
   const bgImagen = {
@@ -21,7 +22,7 @@ function App() {
       <div className="flex justify-center overflow-hidden min-h-screen">
         <div className="min-h-screen bg-[#0f1115] text-gray-100 font-sans selection:bg-cyan-500/30">
           <Navbar />
-
+          <ScrollToTop />
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/contact2" element={<PrintProjectView />} />
