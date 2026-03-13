@@ -16,6 +16,7 @@ import TwentytwoBy28 from "../../assets/22_28_HOLDING_MOCKUP.jpg";
 import Twoby6feet from "../../assets/2by6banner.png";
 import Threeby6feet from "../../assets/3by6.png";
 import Fourby8feet from "../../assets/4by8.png";
+import SizingWarningAlert from "../SizingWarningAlert/SizingWarningAlert";
 
 // const products = [
 //   {
@@ -324,9 +325,20 @@ const PRODUCTS = [
 
 const EStore = () => {
   const [view, setView] = useState("catalog"); // catalog, details, checkout
+
+  const [selectedPrintingMaterial, setSelectedPrintingMaterial] = useState("");
+
+  const handleSelectPrintingMaterialChange = (e) => {
+    // e.target.value contains the string from the chosen <option value="...">
+    setSelectedPrintingMaterial(e.target.value);
+  };
+
   const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const [customerNote, setCustomerNote] = useState("");
   debugger;
   const [cart, setCart] = useState([]);
+  debugger;
 
   const [imageFile, setImageFile] = useState(null);
 
@@ -440,8 +452,37 @@ const EStore = () => {
 
   const addToCart = (product) => {
     // 1. Update cart using the previous state (prevCart)
-    setCart((prevCart) => [...prevCart, { ...product, id: Date.now() }]);
+    setCart((prev) => {
+      const existing = prev.find((item) => item.id === product.id);
+      debugger;
+      if (existing) {
+        return prev.map((item) =>
+          item.id === product.id
+            ? {
+                ...item,
+                qty: item.qty + 1,
+                customerNotes: customerNote ?? "",
+                printingMaterial: selectedPrintingMaterial,
+              }
+            : item,
+        );
+      }
+      // debugger;
 
+      return [
+        ...prev,
+        {
+          ...product,
+          qty: 1,
+          customerNotes: customerNote ?? "",
+          printingMaterial: selectedPrintingMaterial,
+        },
+      ];
+    });
+    // setCart((prevCart) => [...prevCart, { ...product, id: Date.now() }]);
+    setCustomerNote("");
+    setImageFile(null);
+    setSelectedPrintingMaterial("");
     // 2. Switch the view
     setView("checkout");
   };
@@ -456,16 +497,7 @@ const EStore = () => {
         >
           Maximus<span className="text-orange-400">CATALOG</span>
         </h1>
-        <div className="flex-1 max-w-xl mx-8 relative hidden md:block">
-          <input
-            type="text"
-            className="w-full py-2 px-4 rounded text-black"
-            placeholder="Search for sizes or paper types..."
-          />
-          <div className="absolute right-0 top-0 h-full bg-orange-400 p-2 rounded-r">
-            <Search className="text-slate-900" size={20} />
-          </div>
-        </div>
+
         <div className="flex items-center gap-6">
           <div
             className="relative cursor-pointer"
@@ -536,11 +568,15 @@ const EStore = () => {
 
   const Checkout = () => (
     <div className="p-6 max-w-5xl mx-auto bg-gray-50 min-h-screen">
-      <div className="flex items-center gap-2 mb-8 text-sm text-gray-500">
-        <span className="text-orange-600 font-bold">Cart</span>{" "}
+      <div
+        className="flex items-center gap-2 mb-8 text-sm text-gray-500"
+        onClick={() => setView("catalog")}
+      >
+        <span className="text-orange-600 font-bold">
+          Go Back to previous print details
+        </span>{" "}
         <ChevronRight size={16} />
-        <span>Shipping</span> <ChevronRight size={16} />
-        <span>Payment</span>
+        <span onClick={() => setView("catalog")}>Catalog</span>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -616,6 +652,12 @@ const EStore = () => {
           selectedProduct={selectedProduct}
           setAspect={setAspect}
           addToCart={addToCart}
+          customerNote={customerNote}
+          setCustomerNote={setCustomerNote}
+          selectedPrintingMaterial={selectedPrintingMaterial}
+          handleSelectPrintingMaterialChange={
+            handleSelectPrintingMaterialChange
+          }
         />
       )}
 
@@ -640,76 +682,61 @@ const ProductDetails = ({
   selectedProduct,
   setAspect,
   addToCart,
+  customerNote,
+  setCustomerNote,
+  selectedPrintingMaterial,
+  handleSelectPrintingMaterialChange,
 }) => (
   <div className="p-6 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8">
-    {/* Image Section */}
-    <div className="md:col-span-5 relative bg-gray-100 rounded-lg overflow-hidden min-h-[400px] flex items-center justify-center border-2 border-dashed border-gray-300">
-      {!imageSrc ? (
-        <form onSubmit={handleEmailFormSubmit} className="space-y-4">
-          {/* Contact Section */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-black">
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Full Name
-              </label>
-              <input
-                required
-                type="text"
-                name="customerName"
-                value={emailFormData.customerName}
-                onChange={handleEmailFormChange}
-                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2 border"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Email Address
-              </label>
-              <input
-                required
-                type="email"
-                name="email"
-                value={emailFormData.email}
-                onChange={handleEmailFormChange}
-                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2 border"
-              />
-            </div>
-          </div>
+    <div className="md:col-span-5 relative">
+      <SizingWarningAlert />
+      <div>
+        <div className="flex gap-2 mt-2">
+          <h2>Sample view</h2>
 
-          <div className="text-black">
-            <label className="block text-sm font-medium text-black">
-              Phone Number
-            </label>
-            <input
-              required
-              type="tel"
-              name="phone"
-              value={emailFormData.phone}
-              onChange={handleEmailFormChange}
-              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2 border"
-            />
-          </div>
-
-          <hr className="my-4" />
-
-          {/* Order Details Section */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="text-black">
-              <label className="block text-sm font-medium text-black">
-                Service Type
-              </label>
-              <select
-                name="serviceType"
-                value={emailFormData.serviceType}
-                onChange={handleEmailFormChange}
-                className="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm p-2 border"
+          {/* {selectedProduct.sizes.map((size) => (
+              <button
+                key={size}
+                onClick={() =>
+                  setAspect(eval(size.replace(/"/g, "").split("x").join("/")))
+                }
+                className="border p-2 rounded hover:border-orange-500 text-sm"
               >
-                <option>Digital Printing</option>
-                <option>Large Format Poster</option>
-                <option>Business Cards</option>
-                <option>Brochures/Flyers</option>
-              </select>
-            </div>
+                {size}
+              </button>
+            ))} */}
+        </div>
+        <div className="md:col-span-4">
+          <h1 className="text-3xl font-semibold mb-2">
+            {selectedProduct.name}
+          </h1>
+          <div className="border border-gray-200 rounded p-4 hover:shadow-lg transition cursor-pointer">
+            <img
+              src={selectedProduct.image}
+              alt={selectedProduct.title}
+              className="w-full h-64 object-cover mb-4"
+            />
+
+            <h3 className="font-medium text-lg text-blue-800 hover:text-orange-600 truncate">
+              {selectedProduct.name} - {selectedProduct.size}
+            </h3>
+            <h3 className="font-medium text-lg text-blue-800  truncate">
+              {selectedProduct.size}
+            </h3>
+            <h2 className="text-lg font-medium leading-tight hover:text-[#c45500] cursor-pointer">
+              {selectedProduct.desc}
+            </h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* Image Section */}
+    {/* <div className="md:col-span-5 relative bg-gray-100 rounded-lg overflow-hidden min-h-[400px] flex items-center justify-center border-2 border-dashed border-gray-300">
+      {!imageSrc ? (
+        // <form onSubmit={handleEmailFormSubmit} className="space-y-4">
+        <div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="text-black">
               <label className="block text-sm font-medium text-black">
                 Quantity
@@ -727,22 +754,6 @@ const ProductDetails = ({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-black">
-            <div className="text-black">
-              <label className="block text-sm font-medium text-gray-700">
-                Paper Stock
-              </label>
-              <select
-                name="paperStock"
-                value={emailFormData.paperStock}
-                onChange={handleEmailFormChange}
-                className="mt-1 block w-full bg-white border-gray-300 rounded-md shadow-sm p-2 border"
-              >
-                <option>Standard 80lb</option>
-                <option>Premium 100lb Cardstock</option>
-                <option>Glossy Photo Paper</option>
-                <option>Recycled Matte</option>
-              </select>
-            </div>
             <div className="text-black">
               <label className="block text-sm font-medium text-gray-700">
                 Finish
@@ -764,61 +775,28 @@ const ProductDetails = ({
               </div>
             </div>
           </div>
-          <div className="text-center p-8 border-2 border-dashed border-gray-200 rounded-lg">
-            <Upload size={48} className="mx-auto text-gray-400 mb-4" />
-            <label className="bg-orange-400 hover:bg-orange-500 text-white px-4 py-2 rounded cursor-pointer shadow-sm transition-colors">
-              Upload Your Image
-              <input
-                type="file"
-                className="hidden"
-                onChange={handleFileChange}
-                accept="image/*"
-              />
-            </label>
-            {imageFile && (
-              <p className="mt-2 text-xs text-green-600">
-                Selected: {imageFile.name}
-              </p>
-            )}
-          </div>
-          <div className="text-black">
-            <label className="block text-sm font-medium text-gray-700">
-              Additional Instructions
-            </label>
-            <textarea
-              name="notes"
-              rows="3"
-              value={emailFormData.notes}
-              onChange={handleEmailFormChange}
-              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 border"
-              placeholder="File link, trim size, etc."
-            ></textarea>
-          </div>
-
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-md hover:bg-blue-700 transition duration-200 shadow-md"
-          >
-            Submit Print Order
-          </button>
-        </form>
+        </div>
       ) : (
+        // </form>
         <div></div>
       )}
-    </div>
+    </div> */}
 
     {/* Options Section */}
     <div className="md:col-span-4">
-      <h1 className="text-3xl font-semibold mb-2">{selectedProduct.name}</h1>
-      <p className="text-blue-600 border-b pb-4 mb-4">
-        Visit the PrintsPro Store
-      </p>
+      {/* Aqui hacer link para ir atras al catalogo */}
+      <div onClick={() => setView("catalog")}>
+        <span
+          className="text-blue-600 border-b pb-4 mb-4 cursor-pointer"
+          onClick={() => setView("catalog")}
+        >
+          Go back to the catalog
+        </span>
+      </div>
 
       <div className="space-y-6">
         <div>
           <div className="flex gap-2 mt-2">
-            <h2>Sample view</h2>
-
             {/* {selectedProduct.sizes.map((size) => (
               <button
                 key={size}
@@ -832,31 +810,67 @@ const ProductDetails = ({
             ))} */}
           </div>
         </div>
-        <div className="border border-gray-200 rounded p-4 hover:shadow-lg transition cursor-pointer">
-          <img
-            src={selectedProduct.image}
-            alt={selectedProduct.title}
-            className="w-full h-64 object-cover mb-4"
-          />
 
-          <h3 className="font-medium text-lg text-blue-800 hover:text-orange-600 truncate">
-            {selectedProduct.name} - {selectedProduct.size}
-          </h3>
-          <h3 className="font-medium text-lg text-blue-800  truncate">
-            {selectedProduct.size}
-          </h3>
-          <h2 className="text-lg font-medium leading-tight hover:text-[#c45500] cursor-pointer">
-            {selectedProduct.desc}
-          </h2>
+        <div className="text-center p-8 border-2 border-dashed border-gray-200 rounded-lg">
+          <Upload size={48} className="mx-auto text-gray-400 mb-4" />
+          <label className="bg-orange-400 hover:bg-orange-500 text-white px-4 py-2 rounded cursor-pointer shadow-sm transition-colors">
+            Upload Your Image
+            <input
+              type="file"
+              className="hidden"
+              onChange={handleFileChange}
+              accept="image/*"
+            />
+          </label>
+          {imageFile && (
+            <p className="mt-2 text-xs text-green-600">
+              Selected: {imageFile.name}
+            </p>
+          )}
         </div>
 
         <div>
-          <span className="font-bold text-sm">Paper Type:</span>
-          <select className="block w-full mt-2 border p-2 rounded bg-gray-50">
+          <span className="font-bold text-sm">Printing Material Type:</span>
+          <select
+            className="block w-full mt-2 border p-2 rounded bg-gray-50"
+            value={selectedPrintingMaterial}
+            onChange={handleSelectPrintingMaterialChange}
+          >
             {selectedProduct.papers.map((p) => (
               <option key={p}>{p}</option>
             ))}
           </select>
+        </div>
+
+        <div className="text-black">
+          <label className="block text-sm font-medium text-gray-700">
+            Additional Instructions
+          </label>
+          <textarea
+            name="notes"
+            rows="3"
+            value={customerNote}
+            onChange={(e) => setCustomerNote(e.target.value)}
+            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 border"
+            placeholder="File link, trim size, etc."
+          ></textarea>
+        </div>
+        {/* Purchase Section */}
+        <div className="md:col-span-3 border rounded-lg p-4 h-fit sticky top-24">
+          <p className="text-3xl font-light">${selectedProduct.price}</p>
+          <p className="text-green-600 text-sm font-bold my-2">In Stock.</p>
+          <button
+            onClick={() => addToCart(selectedProduct)}
+            className="w-full bg-yellow-400 hover:bg-yellow-500 py-2 rounded-full shadow mb-2 text-sm"
+          >
+            Add to Cart
+          </button>
+          {/* <button
+          onClick={() => addToCart(selectedProduct)}
+          className="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-full shadow text-sm"
+        >
+          Buy Now
+        </button> */}
         </div>
         {/* 
         <div>
@@ -870,24 +884,6 @@ const ProductDetails = ({
           </div>
         </div> */}
       </div>
-    </div>
-
-    {/* Purchase Section */}
-    <div className="md:col-span-3 border rounded-lg p-4 h-fit sticky top-24">
-      <p className="text-3xl font-light">${selectedProduct.price}</p>
-      <p className="text-green-600 text-sm font-bold my-2">In Stock.</p>
-      <button
-        onClick={() => addToCart(selectedProduct)}
-        className="w-full bg-yellow-400 hover:bg-yellow-500 py-2 rounded-full shadow mb-2 text-sm"
-      >
-        Add to Cart
-      </button>
-      {/* <button
-          onClick={() => addToCart(selectedProduct)}
-          className="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-full shadow text-sm"
-        >
-          Buy Now
-        </button> */}
     </div>
   </div>
 );
