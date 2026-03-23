@@ -766,10 +766,14 @@ const EStore = () => {
       debugger;
       //  const response = await fetch("http://[::1]:3000/api/print-jobs", {
       const response = await fetch(
-        "https://maximus-vinyl-wraps-backend.onrender.com/api/print-jobs",
+        "https://maximus-vinyl-wraps-backend.onrender.com/print-jobs",
         {
           method: "POST",
           body: formData, // Do NOT set headers; the browser will set multipart/form-data automatically
+          // headers: {
+          //   "Content-Type": "application/json", // <--- THIS IS CRITICAL
+          // },
+          // body: JSON.stringify(formData),
         },
       );
       debugger;
