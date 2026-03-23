@@ -766,7 +766,7 @@ const EStore = () => {
       debugger;
       //  const response = await fetch("http://[::1]:3000/api/print-jobs", {
       const response = await fetch(
-        "https://maximus-vinyl-wraps-backend.onrender.com/print-jobs",
+        `${import.meta.env.VITE_API_URL}/print-jobs`,
         {
           method: "POST",
           body: formData, // Do NOT set headers; the browser will set multipart/form-data automatically
