@@ -6,6 +6,7 @@ import PrintProjectView from "./components/PrintProjectView/PrintProjectView";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import EStore from "./components/EStore/EStore";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop.jsx";
+import MasterDashboard from "./components/MasterDashboard/MasterDashboard.jsx";
 
 function App() {
   const bgImagen = {
@@ -25,6 +26,7 @@ function App() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/contact2" element={<PrintProjectView />} />
             <Route path="/contact" element={<EStore />} />
+            <Route path="/dashboard" element={<MasterDashboard />} />
           </Routes>
         </div>
       </div>
