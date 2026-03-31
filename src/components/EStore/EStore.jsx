@@ -10,6 +10,7 @@ import {
   Plus,
   CheckCircle,
 } from "lucide-react";
+import OrderConfirmation from "../OrderConfirmation/OrderConfirmation";
 import ElevenBy14 from "../../assets/11x14.webp";
 import EighteenBy24 from "../../assets/18-by-24-medium-sized-poster.jpg";
 import TwentyfourBy36 from "../../assets/24by36.jpg";
@@ -659,6 +660,9 @@ const EStore = () => {
   const [view, setView] = useState("catalog"); // catalog, details, checkout
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [cart, setCart] = useState([]);
+  // --- NEW STATE FOR CONFIRMATION RESPONSE ---
+  const [orderResponse, setOrderResponse] = useState(null);
+  debugger;
 
   // Product Configuration State
   const [selectedPrintingMaterial, setSelectedPrintingMaterial] = useState("");
@@ -770,23 +774,34 @@ const EStore = () => {
         {
           method: "POST",
           body: formData, // Do NOT set headers; the browser will set multipart/form-data automatically
-          // headers: {
-          //   "Content-Type": "application/json", // <--- THIS IS CRITICAL
-          // },
-          // body: JSON.stringify(formData),
         },
       );
       debugger;
       if (response.ok) {
+        // 1. Save the API response (Expected format: { id, orderNumber, items, totalAmount, etc })
+        formData;
+        const rawData = await response.json();
+        debugger;
+        ///
+        if (Array.isArray(rawData) && rawData.length > 0) {
+          setOrderResponse(rawData[0]); // Set just the first (only) object
+        } else {
+          setOrderResponse(rawData); // Set directly if your endpoint is NOT PostgREST default
+        }
+
         setCart([]);
         setCustomerInfo({ name: "", email: "", phone: "" });
-        setView("catalog");
+        setView("confirmation");
       } else {
         debugger;
+        const errorData = await response.json().catch(() => ({})); // try to parse error JSON
+        console.error("API Error Response:", errorData);
+        throw new Error(`Submit failed with status: ${httpResponse.status}`);
       }
     } catch (error) {
       debugger;
       console.error("Error:", error);
+      setOrderResponse({ error: error.message });
       alert("There was an issue submitting your request. Please try again.");
     } finally {
       setIsSubmitting(false);
@@ -827,304 +842,19 @@ const EStore = () => {
             setView={setView}
           />
         )}
+        {/* --- NEW CONFIRMATION VIEW --- */}
+        {view === "confirmation" && orderResponse && (
+          <OrderConfirmation
+            orderData={orderResponse}
+            onReset={() => {
+              setOrderResponse(null);
+              setView("catalog");
+            }}
+          />
+        )}
       </main>
     </div>
   );
 };
 
 export default EStore;
-
-// import React, { useState, useCallback } from "react";
-// import {
-//   ShoppingCart,
-//   Upload,
-//   CheckCircle,
-//   ChevronRight,
-//   Star,
-//   Trash2,
-//   Image as ImageIcon,
-//   Minus,
-//   Plus,
-// } from "lucide-react";
-
-// const PRODUCTS = [
-//   {
-//     id: 1,
-//     title: "Custom Canvas Print - Large Format",
-//     size: '24" x 36"',
-//     name: "Large Statement Poster",
-//     ratio: "2:3",
-//     price: 45.99,
-//     tag: "Best Seller",
-//     desc: "Gold standard for living rooms and offices.",
-//     comparison: "Above a standard office desk",
-//     rating: 4.9,
-//     reviews: 89,
-//     sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
-//     papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
-//     laminations: ["None"],
-//     image: TwentyfourBy36,
-//   },
-//   {
-//     id: 2,
-//     title: "Custom Canvas Print - Large Format",
-//     size: '18" x 24"',
-//     name: "Medium-Large Print",
-//     ratio: "3:4",
-//     price: 32.5,
-//     tag: "Popular",
-//     desc: "Great for gallery walls or bedrooms.",
-//     comparison: "Scale of a standard carry-on suitcase",
-//     rating: 4.9,
-//     reviews: 89,
-//     sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
-//     papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
-//     laminations: ["None"],
-//     image: EighteenBy24,
-//   },
-//   {
-//     id: 3,
-//     title: "Custom Canvas Print - Large Format",
-//     size: '16" x 20"',
-//     name: "The Classic Portrait",
-//     ratio: "4:5",
-//     price: 28.0,
-//     tag: "",
-//     desc: "The traditional portrait look.",
-//     comparison: "Half the width of a standard doorway",
-//     rating: 4.9,
-//     reviews: 89,
-//     sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
-//     papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
-//     laminations: ["None"],
-//     image:
-//       "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=400",
-//   },
-//   {
-//     id: 4,
-//     title: "Custom Canvas Print - Large Format",
-//     size: '11" x 14"',
-//     name: "Small-Medium Personal",
-//     ratio: "11:14",
-//     price: 18.99,
-//     tag: "",
-//     desc: "Ideal for office desks or hallways.",
-//     comparison: "Slightly larger than a standard sheet of paper",
-//     rating: 4.9,
-//     reviews: 89,
-//     sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
-//     papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
-//     laminations: ["None"],
-//     image: ElevenBy14,
-//   },
-//   {
-//     id: 5,
-//     title: "Custom Canvas Print - Large Format",
-//     size: '12" x 12"',
-//     name: "Instagram Square",
-//     ratio: "1:1",
-//     price: 15.0,
-//     tag: "Trending",
-//     desc: "Modern minimalist decor and multi-panel sets.",
-//     comparison: "Size of a vinyl record sleeve",
-//     rating: 4.9,
-//     reviews: 89,
-//     sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
-//     papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
-//     laminations: ["None"],
-//     image:
-//       "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=400",
-//   },
-//   {
-//     id: 6,
-//     title: "Custom Canvas Print - Large Format",
-//     size: '11" x 17"',
-//     name: "Tabloid / Small Poster",
-//     ratio: "11:17",
-//     price: 12.99,
-//     tag: "",
-//     desc: "The go-to for bulletin boards and shop windows.",
-//     comparison: "Standard menu size",
-//     rating: 4.9,
-//     reviews: 89,
-//     sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
-//     papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
-//     laminations: ["None"],
-//     image:
-//       "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=400",
-//   },
-//   {
-//     id: 7,
-//     title: "Custom Canvas Print - Large Format",
-//     size: '22" x 28"',
-//     name: "Retail Standard Sign",
-//     ratio: "11:14",
-//     price: 38.0,
-//     tag: "",
-//     desc: "Standard sign size for malls and theaters.",
-//     comparison: "Fits inside a standard metal stanchion",
-//     rating: 4.9,
-//     reviews: 89,
-//     sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
-//     papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
-//     laminations: ["None"],
-//     image: TwentytwoBy28,
-//   },
-//   {
-//     id: 8,
-//     title: "Custom Canvas Print - Large Format",
-//     size: "2' x 6'",
-//     name: "Vertical Banner",
-//     ratio: "1:3",
-//     price: 85.0,
-//     tag: "Commercial",
-//     desc: "Perfect for trade shows or sidewalk A-frames.",
-//     comparison: "Human height (approx. 6ft tall)",
-//     rating: 4.9,
-//     reviews: 89,
-//     sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
-//     papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
-//     laminations: ["None"],
-//     image: Twoby6feet,
-//   },
-//   {
-//     id: 9,
-//     title: "Custom Canvas Print - Large Format",
-//     size: "3' x 6'",
-//     name: "Universal Vinyl Banner",
-//     ratio: "1:2",
-//     price: 110.0,
-//     tag: "Best Value",
-//     desc: "The 'Grand Opening' standard.",
-//     comparison: "Width of a double-door entrance",
-//     rating: 4.9,
-//     reviews: 89,
-//     sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
-//     papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
-//     laminations: ["None"],
-//     image: Threeby6feet,
-//   },
-//   {
-//     id: 10,
-//     title: "Custom Canvas Print - Large Format",
-//     size: "4' x 8'",
-//     name: "Outdoor Giant",
-//     ratio: "1:2",
-//     price: 195.0,
-//     tag: "Heavy Duty",
-//     desc: "Large outdoor marketing and construction sites.",
-//     comparison: "Full sheet of plywood / SUV side profile",
-//     rating: 4.9,
-//     reviews: 89,
-//     sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
-//     papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
-//     laminations: ["None"],
-//     image: Fourby8feet,
-//   },
-// ];
-
-// const EStore = () => {
-
-//   // --- SUB-COMPONENTS ---
-
-//   const Navbar = () => (
-//     <nav className="bg-slate-900 text-white p-4 sticky top-0 z-50 shadow-md">
-//       <div className="max-w-7xl mx-auto flex items-center justify-between">
-//         <h1
-//           className="text-2xl font-bold tracking-tight cursor-pointer"
-//           onClick={() => setView("catalog")}
-//         >
-//           Maximus<span className="text-orange-400">VINYL</span>
-//         </h1>
-//         <div className="flex items-center gap-6">
-//           <button
-//             className="relative cursor-pointer hover:text-orange-400 transition"
-//             onClick={() => setView("checkout")}
-//           >
-//             <ShoppingCart />
-//             {cart.length > 0 && (
-//               <span className="absolute -top-2 -right-2 bg-orange-500 text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
-//                 {cart.length}
-//               </span>
-//             )}
-//           </button>
-//         </div>
-//       </div>
-//     </nav>
-//   );
-
-//   const Catalog = () => (
-//     <div className="p-6 max-w-7xl mx-auto animate-in fade-in duration-500">
-//       <p className="text-gray-600 mb-8 max-w-3xl text-lg">
-//         Select your size, upload your art, and let us handle the rest. Whether
-//         it’s a 40" statement canvas or a custom vinyl project, our pro-grade
-//         materials and precision tools ensure your prints look exactly how you
-//         imagined.
-//       </p>
-//       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-//         {PRODUCTS.map((product) => (
-//           <div
-//             key={product.id}
-//             className="border border-gray-200 bg-white rounded-lg p-4 hover:shadow-xl hover:border-orange-200 transition-all cursor-pointer flex flex-col"
-//             onClick={() => {
-//               setSelectedProduct(product);
-//               setView("details");
-//             }}
-//           >
-//             <img
-//               src={product.image}
-//               alt={product.title}
-//               className="w-full h-48 object-cover mb-4 rounded"
-//             />
-//             <h3 className="font-bold text-lg text-slate-800 line-clamp-1">
-//               {product.name}
-//             </h3>
-//             <span className="inline-block bg-slate-100 text-slate-600 text-xs px-2 py-1 rounded font-medium mb-2 w-max">
-//               {product.size}
-//             </span>
-//             <p className="text-sm text-gray-500 flex-grow mb-4">
-//               {product.desc}
-//             </p>
-//             <div className="flex justify-between items-end pt-4 border-t border-gray-100">
-//               <p className="text-2xl font-bold text-slate-900">
-//                 ${product.price}
-//               </p>
-//               <div className="flex items-center text-orange-500">
-//                 <Star size={16} fill="currentColor" />
-//               </div>
-//             </div>
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-
-//   const ProductDetails = () => (
-//   );
-
-//   const Checkout = () => {
-//     // Calculate estimated subtotal
-//     const subtotal = cart.reduce(
-//       (total, item) => total + item.price * item.qty,
-//       0,
-//     );
-
-//     return (
-
-//     );
-//   };
-
-//   return (
-//     <div className="min-h-screen bg-gray-50 font-sans text-slate-900 pb-20">
-//       <Navbar />
-
-//       <main className="pt-8">
-//         {view === "catalog" && <Catalog />}
-//         {view === "details" && <ProductDetails />}
-//         {view === "checkout" && <Checkout />}
-//       </main>
-//     </div>
-//   );
-// };
-
-// export default EStore;

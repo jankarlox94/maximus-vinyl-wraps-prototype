@@ -7,6 +7,7 @@ import TwentytwoBy28 from "../../assets/22_28_HOLDING_MOCKUP.jpg";
 import Twoby6feet from "../../assets/2by6banner.png";
 import Threeby6feet from "../../assets/3by6.png";
 import Fourby8feet from "../../assets/4by8.png";
+import Navbar from "../Navbar/Navbar";
 
 import Carousel1 from "../../assets/carousel-pics/carousel-1.webp";
 import Carousel2 from "../../assets/carousel-pics/carousel-2.webp";
@@ -67,6 +68,8 @@ const images = [
 const LandingPage = () => {
   return (
     <div>
+      <Navbar />
+
       {/* Hero Section */}
       <header className="relative  pt-32 pb-20 px-6 w-full md:w-[95rem] 2xl:w-[180rem] overflow-hidden">
         {/* Futuristic Background Elements */}
