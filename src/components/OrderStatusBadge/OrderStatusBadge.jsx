@@ -16,6 +16,7 @@ const STATUS_OPTIONS = [
 const OrderStatusBadge = ({ orderId, initialStatus = "pending_quote" }) => {
   const [currentStatus, setCurrentStatus] = useState(initialStatus);
   const [isUpdating, setIsUpdating] = useState(false);
+  debugger;
 
   // Dynamic color mapping based on the active status
   const getColorClasses = (status) => {
@@ -43,6 +44,7 @@ const OrderStatusBadge = ({ orderId, initialStatus = "pending_quote" }) => {
   };
 
   const handleStatusChange = async (e) => {
+    debugger;
     const newStatus = e.target.value;
     const previousStatus = currentStatus;
 
@@ -52,20 +54,26 @@ const OrderStatusBadge = ({ orderId, initialStatus = "pending_quote" }) => {
 
     try {
       // NOTE: Replace the URL with your actual Render backend URL or environment variable
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/status`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/print-jobs/${orderId}/status`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ status: newStatus }),
         },
-        body: JSON.stringify({ status: newStatus }),
-      });
+      );
+      debugger;
 
       if (!response.ok) {
         throw new Error("Failed to update status on the server.");
       }
+      debugger;
 
       console.log(`Order ${orderId} successfully updated to ${newStatus}`);
     } catch (error) {
+      debugger;
       console.error(error);
       alert("Error saving status. Reverting change.");
       // Revert the UI back to the old status if the database update failed
