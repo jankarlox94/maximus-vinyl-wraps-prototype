@@ -1,9 +1,21 @@
 import React, { useEffect, useState } from "react";
+import {
+  Calendar,
+  Hash,
+  User,
+  Mail,
+  Phone,
+  Image as ImageIcon,
+  Package,
+  FileText,
+} from "lucide-react";
+import OrderStatusBadge from "../OrderStatusBadge/OrderStatusBadge";
 
 export default function MasterDashboard() {
   const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [loading, setLoading] = useState(true);
+  debugger;
 
   useEffect(() => {
     // Replace with your actual NestJS API URL
@@ -103,78 +115,363 @@ export default function MasterDashboard() {
   );
 }
 
-function OrderModal({ order, onClose }) {
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
-      <div className="bg-white w-full max-w-4xl max-h-[90vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col">
-        <div className="p-6 border-b flex justify-between items-center bg-slate-50">
-          <h2 className="text-xl font-black uppercase">
-            Order Details: {order.customer_name}
-          </h2>
-          <button
-            onClick={onClose}
-            className="text-slate-400 hover:text-slate-900 text-2xl font-bold"
-          >
-            &times;
-          </button>
-        </div>
+///
+const handleStatusUpdate = async (orderId, newStatus) => {
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL}/print-jobs/${orderId}/status`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: newStatus }),
+      },
+    );
 
-        <div className="p-6 overflow-y-auto flex-1">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div className="p-4 bg-gray-50 rounded-xl">
-              <p className="text-[10px] font-bold text-slate-400 uppercase mb-1">
-                Contact Info
-              </p>
-              <p className="text-sm font-bold">{order.customer_email}</p>
-              <p className="text-sm font-bold">
-                {order.customer_phone || "No Phone provided"}
-              </p>
-            </div>
-            {/* Add more summary stats here if needed */}
+    if (response.ok) {
+      const updatedOrder = await response.json();
+      // Update the main orders list state
+      setOrders((prev) =>
+        prev.map((o) =>
+          o.id === orderId ? { ...o, status: updatedOrder.status } : o,
+        ),
+      );
+      // Update the currently selected modal view
+      setSelectedOrder((prev) => ({ ...prev, status: updatedOrder.status }));
+      alert("Status updated successfully!");
+    }
+  } catch (err) {
+    console.error("Failed to update status", err);
+  }
+};
+
+//
+
+function OrderModal({ order, onClose }) {
+  const statuses = [
+    "pending_quote",
+    "on progress",
+    "ready for pickup",
+    "complete",
+  ];
+  if (!order)
+    return (
+      <div className="p-8 text-center text-slate-500">
+        Loading order details...
+      </div>
+    );
+  // Calculate the total estimated price
+  const orderTotal = order.order_items.reduce(
+    (sum, item) => sum + Number(item.estimated_price) * item.quantity,
+    0,
+  );
+
+  // Format the date nicely
+  const formattedDate = new Date(order.created_at).toLocaleDateString("en-US", {
+    weekday: "short",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  // Helper function for status badge colors
+  const getStatusBadge = (status) => {
+    switch (status) {
+      case "pending_quote":
+        return (
+          <span className="px-3 py-1 bg-yellow-100 text-yellow-800 text-xs font-bold uppercase tracking-wider rounded-full">
+            Pending Quote
+          </span>
+        );
+      case "approved":
+        return (
+          <span className="px-3 py-1 bg-green-100 text-green-800 text-xs font-bold uppercase tracking-wider rounded-full">
+            Approved
+          </span>
+        );
+      case "printing":
+        return (
+          <span className="px-3 py-1 bg-blue-100 text-blue-800 text-xs font-bold uppercase tracking-wider rounded-full">
+            In Production
+          </span>
+        );
+      default:
+        return (
+          <span className="px-3 py-1 bg-slate-100 text-slate-800 text-xs font-bold uppercase tracking-wider rounded-full">
+            {status}
+          </span>
+        );
+    }
+  };
+
+  return (
+    <div>
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+        {/* <div className="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden">
+          <div className="p-6 border-b bg-slate-50 flex justify-between items-center">
+            <h2 className="text-xl font-black uppercase">Manage Order</h2>
+            <button
+              onClick={onClose}
+              className="text-slate-400 hover:text-slate-900 text-2xl"
+            >
+              &times;
+            </button>
           </div>
 
-          <h3 className="font-black text-sm uppercase tracking-widest mb-4 text-yellow-600">
-            Line Items & Artwork
-          </h3>
-          <div className="space-y-4">
-            {order.order_items.map((item) => (
-              <div
-                key={item.id}
-                className="border rounded-2xl p-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4"
-              >
-                <div>
-                  <p className="font-black text-slate-900">
-                    {item.product_name}
-                  </p>
-                  <p className="text-xs text-slate-500">
-                    Qty: {item.quantity} | Size: {item.size} | Material:{" "}
-                    {item.material}
-                  </p>
+          <div className="p-8">
+            <div className="mb-8">
+              <label className="block text-xs font-bold text-slate-400 uppercase mb-3 tracking-widest">
+                Current Workflow Status
+              </label>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                {statuses.map((s) => (
+                  <button
+                    key={s}
+                    className={`py-2 px-1 rounded-lg text-[10px] font-black uppercase border-2 transition-all ${
+                      order.status === s
+                        ? "bg-yellow-500 border-yellow-500 text-slate-900 shadow-md scale-105"
+                        : "bg-white border-slate-100 text-slate-400 hover:border-slate-300"
+                    }`}
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="bg-slate-900 text-white p-6 rounded-2xl flex justify-between items-center">
+              <div>
+                <p className="text-[10px] font-bold text-slate-400 uppercase">
+                  Customer
+                </p>
+                <p className="text-lg font-bold">{order.customer_name}</p>
+              </div>
+              <div className="text-right">
+                <p className="text-[10px] font-bold text-slate-400 uppercase">
+                  Order Total
+                </p>
+                <p className="text-2xl font-black text-yellow-500">
+                  ${order.total_price || "0"}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="p-6 border-t bg-slate-50 text-center">
+            <p className="text-xs text-slate-400 font-medium italic">
+              Changing status will update the customer's portal and internal
+              logs.
+            </p>
+          </div>
+        </div> */}
+        <div className="max-w-5xl mx-auto p-6 bg-slate-50 min-h-screen font-sans text-slate-900">
+          {/* <div>
+            <OrderStatusBadge orderId={order.id} initialStatus={order.status} />
+          </div> */}
+          {/* Header Section */}
+
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+            <div>
+              <h1 className="text-3xl font-bold flex items-center gap-2">
+                Order Details
+              </h1>
+              <div className="flex flex-wrap items-center gap-4 mt-2 text-sm text-slate-500">
+                <span className="flex items-center gap-1 font-mono bg-slate-200 px-2 py-1 rounded text-slate-700">
+                  <Hash size={14} /> {order.id.slice(0, 13)}...
+                </span>
+                <span className="flex items-center gap-1">
+                  <Calendar size={14} /> {formattedDate}
+                </span>
+              </div>
+            </div>
+            {/* <div>{getStatusBadge(order.status)}</div> */}
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Left Column: Line Items */}
+            <div className="lg:col-span-2 space-y-6">
+              <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+                <div className="bg-slate-900 px-6 py-4 border-b border-slate-200 flex items-center gap-2">
+                  <Package size={20} className="text-orange-400" />
+                  <h2 className="text-lg font-bold text-white">
+                    Print Jobs ({order.order_items.length})
+                  </h2>
                 </div>
 
-                {item.artwork_url ? (
-                  <a
-                    href={item.artwork_url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex items-center gap-2 bg-blue-50 text-blue-600 px-4 py-2 rounded-xl text-xs font-bold hover:bg-blue-600 hover:text-white transition-all"
-                  >
-                    View Artwork ↗
-                  </a>
-                ) : (
-                  <span className="text-[10px] font-bold text-slate-300 uppercase">
-                    No file uploaded
-                  </span>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
+                <div className="divide-y divide-slate-100">
+                  {order.order_items.map((item, index) => (
+                    <div
+                      key={item.id}
+                      className="p-6 flex flex-col sm:flex-row gap-6 hover:bg-slate-50 transition-colors"
+                    >
+                      {/* Artwork Thumbnail */}
+                      <div className="w-full sm:w-32 h-32 flex-shrink-0 bg-slate-100 rounded-lg border border-slate-200 flex flex-col items-center justify-center overflow-hidden relative group">
+                        {item.artwork_url ? (
+                          <>
+                            <img
+                              src={item.artwork_url}
+                              alt={`Artwork for ${item.product_name}`}
+                              className="w-full h-full object-cover"
+                            />
+                            <a
+                              href={item.artwork_url}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-bold"
+                            >
+                              View Full
+                            </a>
+                          </>
+                        ) : (
+                          <div className="text-slate-400 flex flex-col items-center">
+                            <ImageIcon size={24} className="mb-1 opacity-50" />
+                            <span className="text-[10px] uppercase font-bold tracking-wider">
+                              No File
+                            </span>
+                          </div>
+                        )}
+                      </div>
 
-        <div className="p-6 border-t bg-slate-50 flex justify-end">
-          <button className="bg-slate-900 text-white px-8 py-3 rounded-xl font-bold uppercase text-xs tracking-widest">
-            Print Order Summary
-          </button>
+                      {/* Item Details */}
+                      <div className="flex-1">
+                        <div className="flex justify-between items-start mb-1">
+                          <h3 className="font-bold text-lg text-slate-900">
+                            {item.product_name}
+                          </h3>
+                          <p className="font-bold text-lg text-slate-900">
+                            ${Number(item.estimated_price).toFixed(2)}
+                          </p>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-y-1 mb-3 text-sm">
+                          <p className="text-slate-500">
+                            <span className="font-medium text-slate-700">
+                              Size:
+                            </span>{" "}
+                            {item.size}
+                          </p>
+                          <p className="text-slate-500">
+                            <span className="font-medium text-slate-700">
+                              Qty:
+                            </span>{" "}
+                            {item.quantity}
+                          </p>
+                          <p className="text-slate-500 col-span-2">
+                            <span className="font-medium text-slate-700">
+                              Material:
+                            </span>{" "}
+                            {item.material}
+                          </p>
+                        </div>
+
+                        {item.customer_notes && (
+                          <div className="bg-orange-50 border border-orange-100 text-orange-800 text-sm p-3 rounded-lg flex items-start gap-2 mt-2">
+                            <FileText
+                              size={16}
+                              className="mt-0.5 flex-shrink-0"
+                            />
+                            <p>{item.customer_notes}</p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: Customer & Financials */}
+            <div className="space-y-6">
+              {/* Customer Card */}
+              <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+                <div className="bg-slate-100 px-6 py-4 border-b border-slate-200">
+                  <h2 className="text-lg font-bold text-slate-900">
+                    Customer Details
+                  </h2>
+                </div>
+                <div className="p-6 space-y-4">
+                  <div className="flex items-center gap-3 text-slate-700">
+                    <div className="bg-slate-100 p-2 rounded-full text-slate-500">
+                      <User size={18} />
+                    </div>
+                    <p className="font-medium text-lg">{order.customer_name}</p>
+                  </div>
+                  <div className="flex items-center gap-3 text-slate-600">
+                    <div className="bg-slate-100 p-2 rounded-full text-slate-500">
+                      <Mail size={18} />
+                    </div>
+                    <a
+                      href={`mailto:${order.customer_email}`}
+                      className="hover:text-blue-600 transition-colors break-all"
+                    >
+                      {order.customer_email}
+                    </a>
+                  </div>
+                  <div className="flex items-center gap-3 text-slate-600">
+                    <div className="bg-slate-100 p-2 rounded-full text-slate-500">
+                      <Phone size={18} />
+                    </div>
+                    <a
+                      href={`tel:${order.customer_phone}`}
+                      className="hover:text-blue-600 transition-colors"
+                    >
+                      {order.customer_phone || (
+                        <span className="italic text-slate-400">
+                          Not provided
+                        </span>
+                      )}
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* Quote Summary Card */}
+              <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+                <div className="bg-slate-100 px-6 py-4 border-b border-slate-200">
+                  <h2 className="text-lg font-bold text-slate-900">
+                    Quote Summary
+                  </h2>
+                </div>
+                <div className="p-6 space-y-3">
+                  <div className="flex justify-between text-sm text-slate-600">
+                    <span>
+                      Subtotal (
+                      {order.order_items.reduce(
+                        (sum, item) => sum + item.quantity,
+                        0,
+                      )}{" "}
+                      items)
+                    </span>
+                    <span>${orderTotal.toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between text-sm text-slate-600 pb-3 border-b border-slate-100">
+                    <span>Estimated Tax & Shipping</span>
+                    <span className="italic">To be calculated</span>
+                  </div>
+                  <div className="flex justify-between items-center pt-2">
+                    <span className="font-bold text-lg text-slate-900">
+                      Est. Total
+                    </span>
+                    <span className="font-bold text-2xl text-slate-900">
+                      ${orderTotal.toFixed(2)}
+                    </span>
+                  </div>
+
+                  <div className="pt-6">
+                    <button className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-lg transition-colors shadow-sm">
+                      <div>
+                        <OrderStatusBadge
+                          orderId={order.id}
+                          initialStatus={order.status}
+                        />
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
