@@ -44,7 +44,7 @@ const PRODUCTS = [
     size: '18" x 24"',
     name: "Medium-Large Print",
     ratio: "3:4",
-    price: 32.5,
+    price: 32,
     tag: "Popular",
     desc: "Great for gallery walls or bedrooms.",
     comparison: "Scale of a standard carry-on suitcase",
@@ -249,13 +249,31 @@ const Catalog = ({ setSelectedProduct, setView }) => (
       {PRODUCTS.map((product) => (
         <div
           key={product.id}
-          className="border border-gray-200 bg-white rounded-lg p-4 hover:shadow-xl hover:border-orange-200 transition-all cursor-pointer flex flex-col"
+          className="border group bg-[#1c2128] border border-gray-800 rounded-xl overflow-hidden hover:border-cyan-500/50 transition-all shadow-xl"
           onClick={() => {
             setSelectedProduct(product);
             setView("details");
           }}
         >
-          <img
+          <div className="aspect-[4/5] overflow-hidden bg-gray-900">
+            <img
+              src={product.image}
+              alt={product.title}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80"
+            />
+          </div>
+          <div className="p-5 space-y-2">
+            <h3 className="font-bold text-lg leading-tight">{product.title}</h3>
+            <p className="text-xs text-cyan-400 font-mono">{product.size}</p>
+            <p className="text-gray-400 text-xs line-clamp-2">{product.name}</p>
+            <div className="pt-4 flex justify-between items-center">
+              <span className="text-xl font-black">${product.price}</span>
+              <button className="p-2 bg-gray-800 rounded-lg group-hover:bg-cyan-500 group-hover:text-black transition-colors">
+                <ChevronRight size={18} />
+              </button>
+            </div>
+          </div>
+          {/* <img
             src={product.image}
             alt={product.title}
             className="w-full h-48 object-cover mb-4 rounded"
@@ -274,7 +292,7 @@ const Catalog = ({ setSelectedProduct, setView }) => (
             <div className="flex items-center text-orange-500">
               <Star size={16} fill="currentColor" />
             </div>
-          </div>
+          </div> */}
         </div>
       ))}
     </div>
