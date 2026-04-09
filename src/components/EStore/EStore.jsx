@@ -199,15 +199,25 @@ const PRODUCTS = [
 // --- SUB-COMPONENTS (Defined OUTSIDE to prevent focus loss) ---
 
 const Navbar = ({ cartLength, setView }) => (
-  <nav className="bg-slate-900 text-white p-4 sticky top-0 z-50 shadow-md">
+  <nav className="border-b border-gray-800 bg-[#161b22] px-6 py-4 flex justify-between items-center sticky top-0 z-50">
     <div className="max-w-7xl mx-auto flex items-center justify-between">
-      <h1
-        className="text-2xl font-bold tracking-tight cursor-pointer"
+      <div
+        className="text-xl font-black italic tracking-tighter"
         onClick={() => setView("catalog")}
       >
-        Maximus<span className="text-orange-400">VINYL</span>
-      </h1>
-      <div className="flex items-center gap-6">
+        Maximus<span className="text-orange-500">VINYL</span>
+      </div>
+      <div className="flex gap-6 items-center">
+        <div className="relative cursor-pointer hover:text-orange-500 transition-colors">
+          <ShoppingCart size={20} />
+          {cartLength > 0 && (
+            <span className="absolute -top-2 -right-2 bg-orange-500 text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
+              {cartLength}
+            </span>
+          )}
+        </div>
+      </div>
+      {/* <div className="flex items-center gap-6">
         <button
           className="relative cursor-pointer hover:text-orange-400 transition"
           onClick={() => setView("checkout")}
@@ -219,19 +229,22 @@ const Navbar = ({ cartLength, setView }) => (
             </span>
           )}
         </button>
-      </div>
+      </div> */}
     </div>
   </nav>
 );
 
 const Catalog = ({ setSelectedProduct, setView }) => (
   <div className="p-6 py-12 max-w-7xl mx-auto animate-in fade-in duration-500">
-    <p className="text-gray-600 mb-8 max-w-3xl text-lg">
-      Select your size, upload your art, and let us handle the rest. Whether
-      it’s a 40" statement canvas or a custom vinyl project, our pro-grade
-      materials and precision tools ensure your prints look exactly how you
-      imagined.
-    </p>
+    <div className="text-center mb-16 space-y-4">
+      <h1 className="text-4xl md:text-5xl font-black italic uppercase tracking-tight">
+        Step Up Your Print Game
+      </h1>
+      <p className="text-gray-400 max-w-xl mx-auto text-lg leading-relaxed">
+        High-grade materials. Precision tools. Your custom masterpiece, made
+        easy. Select, upload, and we'll do the rest.
+      </p>
+    </div>
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {PRODUCTS.map((product) => (
         <div
@@ -809,7 +822,7 @@ const EStore = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans text-slate-900 pb-20">
+    <div className="min-h-screen bg-[#0f1115] text-white font-sans selection:bg-cyan-500/30">
       <Navbar cartLength={cart.length} setView={setView} />
       <main className="pt-8">
         {view === "catalog" && (
