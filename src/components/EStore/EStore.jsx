@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   ShoppingCart,
   Upload,
@@ -236,7 +237,14 @@ const Navbar = ({ cartLength, setView }) => (
 
 const Catalog = ({ setSelectedProduct, setView }) => (
   <div className="p-6 py-12 max-w-7xl mx-auto animate-in fade-in duration-500">
-    <div className="text-center mb-16 space-y-4">
+    <div className="flex ">
+      <Link to="/">
+        <div className="mt-[-4rem] px-2 justify-center bg-cyan-500 text-black font-black uppercase italic  hover:bg-cyan-400 transition-all shadow-[0_0_20px_rgba(34,211,238,0.4)]">
+          Go back to Home page
+        </div>
+      </Link>
+    </div>
+    <div className="text-center mb-4 space-y-4">
       <h1 className="text-4xl md:text-5xl font-black italic uppercase tracking-tight">
         Step Up Your Print Game
       </h1>
@@ -245,6 +253,7 @@ const Catalog = ({ setSelectedProduct, setView }) => (
         easy. Select, upload, and we'll do the rest.
       </p>
     </div>
+
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {PRODUCTS.map((product) => (
         <div
