@@ -6,7 +6,7 @@
 
 body {
   font-family: "Poppins", sans-serif;
-  background-image: url(/Users/jankarlox94/Desktop/maximus-prototype/maximus-vinyl-web-client/src/assets/background-catalog.png);
+  background-image: url(/background-catalog.png);
   /* Ensures the image covers the entire screen without stretching */
   background-size: cover;
 
