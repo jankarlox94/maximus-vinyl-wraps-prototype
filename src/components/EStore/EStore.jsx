@@ -313,7 +313,7 @@ const ProductDetails = ({
   addToCart,
   setView,
 }) => (
-  <div className="p-6 py-12 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 animate-in slide-in-from-right-8 duration-300">
+  <div className="p-6 py-12 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 animate-in slide-in-from-right-8 duration-300 ">
     {/* Left Column: Image & Details */}
     <div className="lg:col-span-7 space-y-6">
       <button
@@ -323,14 +323,14 @@ const ProductDetails = ({
         <ChevronRight size={16} className="rotate-180 mr-1" /> Back to Catalog
       </button>
 
-      <h1 className="text-4xl font-bold text-slate-900">
+      <h1 className="text-4xl font-bold text-slate-300">
         {selectedProduct.name}
       </h1>
       <p className="text-xl text-gray-500">{selectedProduct.size}</p>
 
       {/* <SizingWarningAlert /> */}
 
-      <div className="border border-gray-200 rounded-xl p-2 bg-white shadow-sm overflow-hidden relative group">
+      <div className="border group bg-[#1c2128] border border-gray-800 rounded-xl overflow-hidden hover:border-cyan-500/50 transition-all shadow-xl">
         <img
           src={previewUrl || selectedProduct.image}
           alt="Product Preview"
@@ -346,13 +346,13 @@ const ProductDetails = ({
 
     {/* Right Column: Configuration Options */}
     <div className="lg:col-span-5">
-      <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-lg sticky top-24">
+      <div className=" rounded-xl p-6 shadow-lg sticky top-24 bg-[#1a1c22] text-[#c9ccd3] font-sans p-6 rounded-3xl w-full max-w-sm shadow-2xl border border-[#2e313c]">
         <div className="flex justify-between items-start border-b border-gray-100 pb-4 mb-6">
           <div>
             <p className="text-sm text-gray-500 uppercase tracking-wider font-bold mb-1">
               Base Price
             </p>
-            <p className="text-4xl font-light text-slate-900">
+            <p className="text-4xl font-light text-slate-100">
               ${selectedProduct.price}
             </p>
           </div>
@@ -361,7 +361,7 @@ const ProductDetails = ({
         <div className="space-y-6">
           {/* File Upload */}
           <div>
-            <label className="block text-sm font-bold text-slate-700 mb-2">
+            <label className="block text-sm font-bold text-slate-300 mb-2">
               1. Upload Artwork (Optional)
             </label>
             <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 hover:bg-gray-50 transition text-center relative">
@@ -375,7 +375,7 @@ const ProductDetails = ({
                 size={32}
                 className={`mx-auto mb-2 ${imageFile ? "text-green-500" : "text-gray-400"}`}
               />
-              <p className="text-sm font-medium text-slate-700">
+              <p className="text-sm font-medium text-slate-400">
                 {imageFile
                   ? "Click to replace file"
                   : "Drag & Drop or Click to Browse"}
@@ -390,15 +390,15 @@ const ProductDetails = ({
 
           {/* Material Dropdown */}
           <div>
-            <label className="block text-sm font-bold text-slate-700 mb-2">
+            <label className="block text-sm font-bold text-slate-300 mb-2">
               2. Printing Material
             </label>
             <select
-              className="w-full border border-gray-300 p-3 rounded-lg bg-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
+              className="w-full text-slate-400 border bg-[#1a1c22] p-3 rounded-lg  focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
               value={selectedPrintingMaterial}
               onChange={(e) => setSelectedPrintingMaterial(e.target.value)}
             >
-              <option value="" disabled>
+              <option className="text-slate-400" value="" disabled>
                 Select a material...
               </option>
               {selectedProduct.papers.map((p) => (
@@ -411,34 +411,34 @@ const ProductDetails = ({
 
           {/* Notes */}
           <div>
-            <label className="block text-sm font-bold text-slate-700 mb-2">
+            <label className="block text-sm font-bold text-slate-300 mb-2">
               3. Additional Instructions
             </label>
             <textarea
               rows="3"
               value={customerNote}
               onChange={(e) => setCustomerNote(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none resize-none"
+              className="w-full border bg-[#1a1c22] placeholder:text-slate-400 border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none resize-none"
               placeholder="Trim size, color adjustments, or external links..."
             />
           </div>
 
           {/* Quantity and Add to Cart */}
           <div className="flex items-center gap-4 pt-4">
-            <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden bg-white">
+            <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden bg-[#1a1c22]">
               <button
                 type="button"
-                className="px-4 py-3 hover:bg-gray-100 text-slate-600 transition-colors"
+                className="px-4 py-3 hover:bg-gray-100 text-slate-500 transition-colors"
                 onClick={() => setQuantity((q) => Math.max(1, q - 1))}
               >
                 <Minus size={18} />
               </button>
-              <span className="px-4 py-2 font-bold text-lg text-slate-900 w-12 text-center">
+              <span className="px-4 py-2 font-bold text-lg text-slate-300 w-12 text-center">
                 {quantity}
               </span>
               <button
                 type="button"
-                className="px-4 py-3 hover:bg-gray-100 text-slate-600 transition-colors"
+                className="px-4 py-3 hover:bg-gray-100 text-slate-500 transition-colors"
                 onClick={() => setQuantity((q) => q + 1)}
               >
                 <Plus size={18} />
