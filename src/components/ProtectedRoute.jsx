@@ -6,6 +6,9 @@ import { supabase } from "../supabaseClient"; // Make sure this points to your i
 const ALLOWED_EMAILS = [
   "giancarlo.sanchez.developer@gmail.com",
   "giancarlosanchez.dev@icloud.com",
+  "jank_329@hotmail.com",
+  "jfa336@hotmail.com",
+  "joflorez@utp.edu.co",
 ];
 
 const ProtectedRoute = ({ children }) => {
