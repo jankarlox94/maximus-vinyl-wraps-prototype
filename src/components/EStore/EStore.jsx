@@ -19,6 +19,7 @@ import TwentytwoBy28 from "../../assets/22_28_HOLDING_MOCKUP.jpg";
 import Twoby6feet from "../../assets/2by6banner.png";
 import Threeby6feet from "../../assets/3by6.png";
 import Fourby8feet from "../../assets/4by8.png";
+import PaymentMethods from "../PaymentMethods/PaymentMethods";
 
 // --- CONSTANTS ---
 const PRODUCTS = [
@@ -236,76 +237,127 @@ const Navbar = ({ cartLength, setView }) => (
 );
 
 const Catalog = ({ setSelectedProduct, setView }) => (
-  <div className="p-6 py-12 max-w-7xl mx-auto animate-in fade-in duration-500">
-    <div className="flex ">
-      <Link to="/">
-        <div className="mt-[-4rem] px-2 justify-center bg-cyan-500 text-black font-black uppercase italic  hover:bg-cyan-400 transition-all shadow-[0_0_20px_rgba(34,211,238,0.4)]">
+  <div className="px-4 py-8 md:p-6 md:py-12 max-w-7xl mx-auto animate-in fade-in duration-500">
+    {/* Back Button - Fixed negative margin for mobile */}
+    <div className="flex mb-8 md:mb-0">
+      <Link to="/" className="w-full md:w-auto">
+        <div className="md:mt-[-4rem] py-3 md:py-1 px-4 inline-flex items-center justify-center bg-cyan-500 text-black font-black uppercase italic hover:bg-cyan-400 transition-all shadow-[0_0_20px_rgba(34,211,238,0.4)] w-full md:w-auto text-sm md:text-base">
           Go back to Home page
         </div>
       </Link>
     </div>
-    <div className="text-center mb-4 space-y-4">
-      <h1 className="text-4xl md:text-5xl font-black italic uppercase tracking-tight">
-        Step Up Your Print Game
+
+    <div className="text-center mb-10 space-y-3 md:space-y-4">
+      <h1 className="text-3xl sm:text-4xl md:text-5xl font-black italic uppercase tracking-tighter leading-none">
+        Step Up Your <span className="text-cyan-500">Print Game</span>
       </h1>
-      <p className="text-gray-400 max-w-xl mx-auto text-lg leading-relaxed">
+      <p className="text-gray-400 max-w-xl mx-auto text-sm md:text-lg leading-relaxed px-2">
         High-grade materials. Precision tools. Your custom masterpiece, made
         easy. Select, upload, and we'll do the rest.
       </p>
     </div>
 
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    {/* Grid: 1 column on tiny phones, 2 on tablets, 4 on desktop */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
       {PRODUCTS.map((product) => (
         <div
           key={product.id}
-          className="border group bg-[#1c2128] border border-gray-800 rounded-xl overflow-hidden hover:border-cyan-500/50 transition-all shadow-xl"
+          className="group bg-[#1c2128] border border-gray-800 rounded-xl overflow-hidden hover:border-cyan-500/50 active:scale-[0.98] transition-all shadow-xl flex flex-row sm:flex-col"
           onClick={() => {
             setSelectedProduct(product);
             setView("details");
           }}
         >
-          <div className="aspect-[4/5] overflow-hidden bg-gray-900">
+          {/* Image: Thumbnail style on mobile, Card style on Desktop */}
+          <div className="aspect-square w-1/3 sm:w-full sm:aspect-[4/5] overflow-hidden bg-gray-900 flex-shrink-0">
             <img
               src={product.image}
               alt={product.title}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80"
+              className="w-full h-full object-cover sm:group-hover:scale-105 transition-transform duration-500 opacity-90 sm:opacity-80"
             />
           </div>
-          <div className="p-5 space-y-2">
-            <h3 className="font-bold text-lg leading-tight">{product.title}</h3>
-            <p className="text-xs text-cyan-400 font-mono">{product.size}</p>
-            <p className="text-gray-400 text-xs line-clamp-2">{product.name}</p>
-            <div className="pt-4 flex justify-between items-center">
-              <span className="text-xl font-black">${product.price}</span>
-              <button className="p-2 bg-gray-800 rounded-lg group-hover:bg-cyan-500 group-hover:text-black transition-colors">
+
+          {/* Content */}
+          <div className="p-4 sm:p-5 flex flex-col justify-between flex-1">
+            <div className="space-y-1">
+              <h3 className="font-bold text-sm md:text-lg leading-tight uppercase italic">
+                {product.title}
+              </h3>
+              <div className="flex items-center gap-2">
+                <p className="text-[10px] md:text-xs text-cyan-400 font-mono bg-cyan-400/10 px-1.5 py-0.5 rounded">
+                  {product.size}
+                </p>
+              </div>
+              <p className="text-gray-500 text-[10px] md:text-xs line-clamp-1 sm:line-clamp-2">
+                {product.name}
+              </p>
+            </div>
+
+            <div className="pt-3 sm:pt-4 flex justify-between items-center">
+              <span className="text-lg md:text-xl font-black">
+                ${product.price}
+              </span>
+              {/* Visual cue: Cyan on mobile since hover isn't a thing */}
+              <button className="p-2 bg-cyan-500 text-black sm:bg-gray-800 sm:text-white rounded-lg sm:group-hover:bg-cyan-500 sm:group-hover:text-black transition-colors">
                 <ChevronRight size={18} />
               </button>
             </div>
           </div>
-          {/* <img
-            src={product.image}
-            alt={product.title}
-            className="w-full h-48 object-cover mb-4 rounded"
-          />
-          <h3 className="font-bold text-lg text-slate-800 line-clamp-1">
-            {product.name}
-          </h3>
-          <span className="inline-block bg-slate-100 text-slate-600 text-xs px-2 py-1 rounded font-medium mb-2 w-max">
-            {product.size}
-          </span>
-          <p className="text-sm text-gray-500 flex-grow mb-4">{product.desc}</p>
-          <div className="flex justify-between items-end pt-4 border-t border-gray-100">
-            <p className="text-2xl font-bold text-slate-900">
-              ${product.price}
-            </p>
-            <div className="flex items-center text-orange-500">
-              <Star size={16} fill="currentColor" />
-            </div>
-          </div> */}
         </div>
       ))}
     </div>
   </div>
+
+  // <div className="p-6 py-12 max-w-7xl mx-auto animate-in fade-in duration-500">
+  //   <div className="flex ">
+  //     <Link to="/">
+  //       <div className="mt-[-4rem] px-2 justify-center bg-cyan-500 text-black font-black uppercase italic  hover:bg-cyan-400 transition-all shadow-[0_0_20px_rgba(34,211,238,0.4)]">
+  //         Go back to Home page
+  //       </div>
+  //     </Link>
+  //   </div>
+  //   <div className="text-center mb-4 space-y-4">
+  //     <h1 className="text-4xl md:text-5xl font-black italic uppercase tracking-tight">
+  //       Step Up Your Print Game
+  //     </h1>
+  //     <p className="text-gray-400 max-w-xl mx-auto text-lg leading-relaxed">
+  //       High-grade materials. Precision tools. Your custom masterpiece, made
+  //       easy. Select, upload, and we'll do the rest.
+  //     </p>
+  //   </div>
+
+  //   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+  //     {PRODUCTS.map((product) => (
+  //       <div
+  //         key={product.id}
+  //         className="border group bg-[#1c2128] border border-gray-800 rounded-xl overflow-hidden hover:border-cyan-500/50 transition-all shadow-xl"
+  //         onClick={() => {
+  //           setSelectedProduct(product);
+  //           setView("details");
+  //         }}
+  //       >
+  //         <div className="aspect-[4/5] overflow-hidden bg-gray-900">
+  //           <img
+  //             src={product.image}
+  //             alt={product.title}
+  //             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80"
+  //           />
+  //         </div>
+  //         <div className="p-5 space-y-2">
+  //           <h3 className="font-bold text-lg leading-tight">{product.title}</h3>
+  //           <p className="text-xs text-cyan-400 font-mono">{product.size}</p>
+  //           <p className="text-gray-400 text-xs line-clamp-2">{product.name}</p>
+  //           <div className="pt-4 flex justify-between items-center">
+  //             <span className="text-xl font-black">${product.price}</span>
+  //             <button className="p-2 bg-gray-800 rounded-lg group-hover:bg-cyan-500 group-hover:text-black transition-colors">
+  //               <ChevronRight size={18} />
+  //             </button>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     ))}
+  //   </div>
+  // </div>
 );
 
 const ProductDetails = ({
@@ -322,32 +374,35 @@ const ProductDetails = ({
   addToCart,
   setView,
 }) => (
-  <div className="p-6 py-12 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 animate-in slide-in-from-right-8 duration-300 ">
+  <div className="p-4 sm:p-6 py-8 sm:py-12 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 animate-in slide-in-from-right-8 duration-300">
     {/* Left Column: Image & Details */}
-    <div className="lg:col-span-7 space-y-6">
+    <div className="lg:col-span-7 space-y-4 sm:space-y-6">
       <button
         onClick={() => setView("catalog")}
-        className="flex items-center text-blue-600 hover:text-orange-600 font-medium transition mb-4"
+        className="flex items-center text-blue-600 hover:text-orange-600 font-medium transition mb-2"
       >
         <ChevronRight size={16} className="rotate-180 mr-1" /> Back to Catalog
       </button>
 
-      <h1 className="text-4xl font-bold text-slate-300">
-        {selectedProduct.name}
-      </h1>
-      <p className="text-xl text-gray-500">{selectedProduct.size}</p>
+      <div className="space-y-1">
+        <h1 className="text-2xl sm:text-4xl font-bold text-slate-300 leading-tight">
+          {selectedProduct.name}
+        </h1>
+        <p className="text-lg sm:text-xl text-gray-500">
+          {selectedProduct.size}
+        </p>
+      </div>
 
-      {/* <SizingWarningAlert /> */}
-
-      <div className="border group bg-[#1c2128] border border-gray-800 rounded-xl overflow-hidden hover:border-cyan-500/50 transition-all shadow-xl">
+      {/* Image Container: Height is responsive (300px on mobile, 500px on desktop) */}
+      <div className="relative group bg-[#1c2128] border border-gray-800 rounded-xl overflow-hidden hover:border-cyan-500/50 transition-all shadow-xl">
         <img
           src={previewUrl || selectedProduct.image}
           alt="Product Preview"
-          className="w-full h-[500px] object-contain bg-gray-50 rounded-lg"
+          className="w-full h-[300px] sm:h-[500px] object-contain bg-[#111] rounded-lg"
         />
         {previewUrl && (
-          <div className="absolute top-4 right-4 bg-green-500 text-white text-xs px-3 py-1 rounded-full shadow-lg font-bold flex items-center">
-            <CheckCircle size={14} className="mr-1" /> Your Artwork Attached
+          <div className="absolute top-3 right-3 bg-green-500 text-white text-[10px] sm:text-xs px-3 py-1 rounded-full shadow-lg font-bold flex items-center">
+            <CheckCircle size={12} className="mr-1" /> Artwork Attached
           </div>
         )}
       </div>
@@ -355,25 +410,29 @@ const ProductDetails = ({
 
     {/* Right Column: Configuration Options */}
     <div className="lg:col-span-5">
-      <div className=" rounded-xl p-6 shadow-lg sticky top-24 bg-[#1a1c22] text-[#c9ccd3] font-sans p-6 rounded-3xl w-full max-w-sm shadow-2xl border border-[#2e313c]">
-        <div className="flex justify-between items-start border-b border-gray-100 pb-4 mb-6">
+      {/* Removed fixed max-width on mobile to allow full-screen width */}
+      <div className="rounded-2xl p-5 sm:p-8 shadow-lg lg:sticky lg:top-24 bg-[#1a1c22] text-[#c9ccd3] font-sans w-full border border-[#2e313c]">
+        <div className="flex justify-between items-end border-b border-gray-800 pb-4 mb-6">
           <div>
-            <p className="text-sm text-gray-500 uppercase tracking-wider font-bold mb-1">
+            <p className="text-[10px] text-gray-500 uppercase tracking-widest font-black mb-1">
               Base Price
             </p>
-            <p className="text-4xl font-light text-slate-100">
+            <p className="text-4xl font-bold text-slate-100">
               ${selectedProduct.price}
             </p>
           </div>
+          <div className="text-right hidden sm:block">
+            <p className="text-xs text-gray-500">Includes basic setup</p>
+          </div>
         </div>
 
-        <div className="space-y-6">
-          {/* File Upload */}
+        <div className="space-y-5 sm:space-y-6">
+          {/* File Upload - Mobile Optimized Area */}
           <div>
-            <label className="block text-sm font-bold text-slate-300 mb-2">
+            <label className="block text-xs sm:text-sm font-bold text-slate-300 mb-2 uppercase tracking-wide">
               1. Upload Artwork (Optional)
             </label>
-            <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 hover:bg-gray-50 transition text-center relative">
+            <div className="border-2 border-dashed border-[#2e313c] rounded-xl p-4 sm:p-6 hover:bg-[#242731] transition text-center relative group">
               <input
                 type="file"
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
@@ -381,33 +440,31 @@ const ProductDetails = ({
                 accept="image/*"
               />
               <Upload
-                size={32}
-                className={`mx-auto mb-2 ${imageFile ? "text-green-500" : "text-gray-400"}`}
+                size={28}
+                className={`mx-auto mb-2 ${imageFile ? "text-cyan-400" : "text-gray-500"}`}
               />
-              <p className="text-sm font-medium text-slate-400">
-                {imageFile
-                  ? "Click to replace file"
-                  : "Drag & Drop or Click to Browse"}
+              <p className="text-xs sm:text-sm font-medium text-slate-400">
+                {imageFile ? "Tap to replace file" : "Browse Artwork File"}
               </p>
               {imageFile && (
-                <p className="mt-2 text-xs text-green-600 font-bold truncate px-4">
+                <p className="mt-2 text-[10px] text-cyan-400 font-bold truncate px-2">
                   {imageFile.name}
                 </p>
               )}
             </div>
           </div>
 
-          {/* Material Dropdown */}
+          {/* Material Dropdown - Native appearance for easier mobile selection */}
           <div>
-            <label className="block text-sm font-bold text-slate-300 mb-2">
+            <label className="block text-xs sm:text-sm font-bold text-slate-300 mb-2 uppercase tracking-wide">
               2. Printing Material
             </label>
             <select
-              className="w-full text-slate-400 border bg-[#1a1c22] p-3 rounded-lg  focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
+              className="w-full text-slate-300 border border-[#2e313c] bg-[#1a1c22] p-4 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none appearance-none cursor-pointer"
               value={selectedPrintingMaterial}
               onChange={(e) => setSelectedPrintingMaterial(e.target.value)}
             >
-              <option className="text-slate-400" value="" disabled>
+              <option value="" disabled>
                 Select a material...
               </option>
               {selectedProduct.papers.map((p) => (
@@ -420,43 +477,43 @@ const ProductDetails = ({
 
           {/* Notes */}
           <div>
-            <label className="block text-sm font-bold text-slate-300 mb-2">
+            <label className="block text-xs sm:text-sm font-bold text-slate-300 mb-2 uppercase tracking-wide">
               3. Additional Instructions
             </label>
             <textarea
-              rows="3"
+              rows="2"
               value={customerNote}
               onChange={(e) => setCustomerNote(e.target.value)}
-              className="w-full border bg-[#1a1c22] placeholder:text-slate-400 border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none resize-none"
-              placeholder="Trim size, color adjustments, or external links..."
+              className="w-full border bg-[#1a1c22] text-slate-300 placeholder:text-gray-600 border-[#2e313c] rounded-xl p-4 focus:ring-2 focus:ring-cyan-500 outline-none resize-none text-sm"
+              placeholder="Special instructions..."
             />
           </div>
 
-          {/* Quantity and Add to Cart */}
-          <div className="flex items-center gap-4 pt-4">
-            <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden bg-[#1a1c22]">
+          {/* Quantity and Add to Cart - Large targets for thumbs */}
+          <div className="flex flex-col sm:flex-row items-stretch gap-4 pt-2">
+            <div className="flex items-center justify-between border border-[#2e313c] rounded-xl overflow-hidden bg-[#1a1c22] h-14">
               <button
                 type="button"
-                className="px-4 py-3 hover:bg-gray-100 text-slate-500 transition-colors"
+                className="flex-1 h-full flex items-center justify-center hover:bg-gray-800 text-slate-500 active:bg-gray-700 transition-colors"
                 onClick={() => setQuantity((q) => Math.max(1, q - 1))}
               >
-                <Minus size={18} />
+                <Minus size={20} />
               </button>
-              <span className="px-4 py-2 font-bold text-lg text-slate-300 w-12 text-center">
+              <span className="px-6 font-black text-xl text-slate-100 min-w-[3rem] text-center">
                 {quantity}
               </span>
               <button
                 type="button"
-                className="px-4 py-3 hover:bg-gray-100 text-slate-500 transition-colors"
+                className="flex-1 h-full flex items-center justify-center hover:bg-gray-800 text-slate-500 active:bg-gray-700 transition-colors"
                 onClick={() => setQuantity((q) => q + 1)}
               >
-                <Plus size={18} />
+                <Plus size={20} />
               </button>
             </div>
 
             <button
               onClick={addToCart}
-              className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 rounded-lg shadow-md transition-colors text-lg"
+              className="flex-[2] bg-orange-600 hover:bg-orange-500 active:scale-[0.98] text-white font-black py-4 rounded-xl shadow-lg transition-all text-lg h-14"
             >
               Add to Cart
             </button>
@@ -465,6 +522,150 @@ const ProductDetails = ({
       </div>
     </div>
   </div>
+
+  // <div className="p-6 py-12 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 animate-in slide-in-from-right-8 duration-300 ">
+  //   {/* Left Column: Image & Details */}
+  //   <div className="lg:col-span-7 space-y-6">
+  //     <button
+  //       onClick={() => setView("catalog")}
+  //       className="flex items-center text-blue-600 hover:text-orange-600 font-medium transition mb-4"
+  //     >
+  //       <ChevronRight size={16} className="rotate-180 mr-1" /> Back to Catalog
+  //     </button>
+
+  //     <h1 className="text-4xl font-bold text-slate-300">
+  //       {selectedProduct.name}
+  //     </h1>
+  //     <p className="text-xl text-gray-500">{selectedProduct.size}</p>
+
+  //     {/* <SizingWarningAlert /> */}
+
+  //     <div className="border group bg-[#1c2128] border border-gray-800 rounded-xl overflow-hidden hover:border-cyan-500/50 transition-all shadow-xl">
+  //       <img
+  //         src={previewUrl || selectedProduct.image}
+  //         alt="Product Preview"
+  //         className="w-full h-[500px] object-contain bg-gray-50 rounded-lg"
+  //       />
+  //       {previewUrl && (
+  //         <div className="absolute top-4 right-4 bg-green-500 text-white text-xs px-3 py-1 rounded-full shadow-lg font-bold flex items-center">
+  //           <CheckCircle size={14} className="mr-1" /> Your Artwork Attached
+  //         </div>
+  //       )}
+  //     </div>
+  //   </div>
+
+  //   {/* Right Column: Configuration Options */}
+  //   <div className="lg:col-span-5">
+  //     <div className=" rounded-xl p-6 shadow-lg sticky top-24 bg-[#1a1c22] text-[#c9ccd3] font-sans p-6 rounded-3xl w-full max-w-sm shadow-2xl border border-[#2e313c]">
+  //       <div className="flex justify-between items-start border-b border-gray-100 pb-4 mb-6">
+  //         <div>
+  //           <p className="text-sm text-gray-500 uppercase tracking-wider font-bold mb-1">
+  //             Base Price
+  //           </p>
+  //           <p className="text-4xl font-light text-slate-100">
+  //             ${selectedProduct.price}
+  //           </p>
+  //         </div>
+  //       </div>
+
+  //       <div className="space-y-6">
+  //         {/* File Upload */}
+  //         <div>
+  //           <label className="block text-sm font-bold text-slate-300 mb-2">
+  //             1. Upload Artwork (Optional)
+  //           </label>
+  //           <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 hover:bg-gray-50 transition text-center relative">
+  //             <input
+  //               type="file"
+  //               className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+  //               onChange={handleFileChange}
+  //               accept="image/*"
+  //             />
+  //             <Upload
+  //               size={32}
+  //               className={`mx-auto mb-2 ${imageFile ? "text-green-500" : "text-gray-400"}`}
+  //             />
+  //             <p className="text-sm font-medium text-slate-400">
+  //               {imageFile
+  //                 ? "Click to replace file"
+  //                 : "Drag & Drop or Click to Browse"}
+  //             </p>
+  //             {imageFile && (
+  //               <p className="mt-2 text-xs text-green-600 font-bold truncate px-4">
+  //                 {imageFile.name}
+  //               </p>
+  //             )}
+  //           </div>
+  //         </div>
+
+  //         {/* Material Dropdown */}
+  //         <div>
+  //           <label className="block text-sm font-bold text-slate-300 mb-2">
+  //             2. Printing Material
+  //           </label>
+  //           <select
+  //             className="w-full text-slate-400 border bg-[#1a1c22] p-3 rounded-lg  focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
+  //             value={selectedPrintingMaterial}
+  //             onChange={(e) => setSelectedPrintingMaterial(e.target.value)}
+  //           >
+  //             <option className="text-slate-400" value="" disabled>
+  //               Select a material...
+  //             </option>
+  //             {selectedProduct.papers.map((p) => (
+  //               <option key={p} value={p}>
+  //                 {p}
+  //               </option>
+  //             ))}
+  //           </select>
+  //         </div>
+
+  //         {/* Notes */}
+  //         <div>
+  //           <label className="block text-sm font-bold text-slate-300 mb-2">
+  //             3. Additional Instructions
+  //           </label>
+  //           <textarea
+  //             rows="3"
+  //             value={customerNote}
+  //             onChange={(e) => setCustomerNote(e.target.value)}
+  //             className="w-full border bg-[#1a1c22] placeholder:text-slate-400 border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none resize-none"
+  //             placeholder="Trim size, color adjustments, or external links..."
+  //           />
+  //         </div>
+
+  //         {/* Quantity and Add to Cart */}
+  //         <div className="flex items-center gap-4 pt-4">
+  //           <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden bg-[#1a1c22]">
+  //             <button
+  //               type="button"
+  //               className="px-4 py-3 hover:bg-gray-100 text-slate-500 transition-colors"
+  //               onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+  //             >
+  //               <Minus size={18} />
+  //             </button>
+  //             <span className="px-4 py-2 font-bold text-lg text-slate-300 w-12 text-center">
+  //               {quantity}
+  //             </span>
+  //             <button
+  //               type="button"
+  //               className="px-4 py-3 hover:bg-gray-100 text-slate-500 transition-colors"
+  //               onClick={() => setQuantity((q) => q + 1)}
+  //             >
+  //               <Plus size={18} />
+  //             </button>
+  //           </div>
+
+  //           <button
+  //             onClick={addToCart}
+  //             className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 rounded-lg shadow-md transition-colors text-lg"
+  //           >
+  //             Add to Cart
+  //           </button>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   </div>
+  // </div>
 );
 
 const Checkout = ({
@@ -482,19 +683,20 @@ const Checkout = ({
   );
 
   return (
-    <div className="p-6 py-12 max-w-7xl mx-auto min-h-screen animate-in fade-in">
+    <div className="p-4 sm:p-6 py-8 sm:py-12 max-w-7xl mx-auto min-h-screen animate-in fade-in">
+      {/* Back Button - Increased touch area */}
       <button
         onClick={() => setView("catalog")}
-        className="flex items-center text-blue-600 hover:text-orange-600 font-medium transition mb-8"
+        className="flex items-center text-blue-600 hover:text-orange-600 font-medium transition mb-6 sm:mb-8 py-2 px-1"
       >
-        <ChevronRight size={16} className="rotate-180 mr-1" /> Continue Adding
+        <ChevronRight size={18} className="rotate-180 mr-1" /> Continue Adding
         Products
       </button>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Left: Cart Items List */}
         <div className="lg:col-span-7 space-y-4">
-          <h2 className="text-2xl font-bold text-slate-900 mb-6 border-b pb-2">
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-4 sm:mb-6 border-b pb-2">
             Your Print Projects
           </h2>
 
@@ -509,31 +711,44 @@ const Checkout = ({
             cart.map((item) => (
               <div
                 key={item.cartItemId}
-                className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex gap-6 relative"
+                className="bg-white p-3 sm:p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col sm:flex-row gap-4 sm:gap-6 relative"
               >
-                {/* Image Thumbnail */}
-                <div className="w-28 h-28 bg-gray-50 rounded-lg border border-gray-200 flex items-center justify-center overflow-hidden flex-shrink-0">
-                  {item.userPreview ? (
-                    <img
-                      src={item.userPreview}
-                      alt="User Art"
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="text-center text-gray-400">
-                      <ImageIcon
-                        size={24}
-                        className="mx-auto mb-1 opacity-50"
+                {/* Image & Title Header for Mobile */}
+                <div className="flex gap-4 sm:contents">
+                  <div className="w-20 h-20 sm:w-28 sm:h-28 bg-gray-50 rounded-lg border border-gray-200 flex items-center justify-center overflow-hidden flex-shrink-0">
+                    {item.userPreview ? (
+                      <img
+                        src={item.userPreview}
+                        alt="User Art"
+                        className="w-full h-full object-cover"
                       />
-                      <span className="text-[10px] uppercase font-bold tracking-wider">
-                        No File
-                      </span>
-                    </div>
-                  )}
+                    ) : (
+                      <div className="text-center text-gray-400">
+                        <ImageIcon
+                          size={20}
+                          className="mx-auto mb-1 opacity-50"
+                        />
+                        <span className="text-[8px] sm:text-[10px] uppercase font-bold tracking-wider">
+                          No File
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Mobile Title Layout */}
+                  <div className="flex-1 sm:hidden">
+                    <h4 className="font-bold text-base text-slate-900 leading-tight mb-1">
+                      {item.name}
+                    </h4>
+                    <p className="font-bold text-lg text-slate-900">
+                      ${(item.price * item.qty).toFixed(2)}
+                    </p>
+                  </div>
                 </div>
 
                 <div className="flex-1">
-                  <div className="flex justify-between items-start">
+                  {/* Desktop-only Title Layout */}
+                  <div className="hidden sm:flex justify-between items-start">
                     <h4 className="font-bold text-lg text-slate-900 pr-8">
                       {item.name}
                     </h4>
@@ -542,36 +757,40 @@ const Checkout = ({
                     </p>
                   </div>
 
-                  <div className="text-sm text-gray-500 mb-2 space-y-1 mt-1">
+                  {/* Details Grid */}
+                  <div className="grid grid-cols-2 sm:block text-sm text-gray-500 mb-2 gap-y-1 mt-1">
                     <p>
                       <span className="font-medium text-slate-700">Size:</span>{" "}
                       {item.size}
                     </p>
                     <p>
+                      <span className="font-medium text-slate-700">Qty:</span>{" "}
+                      {item.qty}
+                    </p>
+                    <p className="col-span-2">
                       <span className="font-medium text-slate-700">
                         Material:
                       </span>{" "}
                       {item.material}
                     </p>
-                    <p>
-                      <span className="font-medium text-slate-700">Qty:</span>{" "}
-                      {item.qty} (@ ${item.price.toFixed(2)}/ea)
-                    </p>
                   </div>
 
                   {item.customerNotes && (
-                    <div className="bg-orange-50 text-orange-800 text-xs p-2 rounded border border-orange-100 mb-2 inline-block">
+                    <div className="bg-orange-50 text-orange-800 text-xs p-2 rounded border border-orange-100 mb-2 w-full">
                       <span className="font-bold">Notes:</span>{" "}
                       {item.customerNotes}
                     </div>
                   )}
 
-                  <button
-                    onClick={() => removeFromCart(item.cartItemId)}
-                    className="text-red-500 hover:text-red-700 text-sm font-medium flex items-center mt-2 absolute bottom-4 right-4"
-                  >
-                    <Trash2 size={16} className="mr-1" /> Remove
-                  </button>
+                  {/* Action Buttons Container */}
+                  <div className="flex justify-end border-t sm:border-none pt-2 sm:pt-0 mt-2">
+                    <button
+                      onClick={() => removeFromCart(item.cartItemId)}
+                      className="text-red-500 hover:text-red-700 text-sm font-medium flex items-center p-2 -mr-2"
+                    >
+                      <Trash2 size={16} className="mr-1" /> Remove
+                    </button>
+                  </div>
                 </div>
               </div>
             ))
@@ -579,13 +798,18 @@ const Checkout = ({
         </div>
 
         {/* Right: The Customer Form & Quote Request */}
-        <div className="lg:col-span-5">
-          <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-xl sticky top-24">
+        <div className="lg:col-span-5 space-y-6">
+          <div className="bg-white border border-gray-200 rounded-xl p-5 sm:p-6 shadow-md">
+            <PaymentMethods />
+          </div>
+
+          {/* Made this section sticky only on Desktop */}
+          <div className="bg-white border border-gray-200 rounded-xl p-5 sm:p-6 shadow-xl lg:sticky lg:top-24">
             <div className="mb-6 border-b border-gray-100 pb-6">
               <h3 className="text-xl font-bold text-slate-900 mb-2">
                 Order Summary
               </h3>
-              <div className="flex justify-between items-center text-slate-600 mb-2">
+              <div className="flex justify-between items-center text-slate-600 mb-2 text-sm sm:text-base">
                 <span>
                   Items ({cart.reduce((sum, item) => sum + item.qty, 0)}):
                 </span>
@@ -595,9 +819,6 @@ const Checkout = ({
                 <span>Estimated Total:</span>
                 <span>${subtotal.toFixed(2)}</span>
               </div>
-              <p className="text-xs text-gray-400 mt-2">
-                * Final price may vary based on file adjustments and shipping.
-              </p>
             </div>
 
             <h3 className="text-lg font-bold text-slate-900 mb-2">
@@ -608,88 +829,263 @@ const Checkout = ({
             </p>
 
             <form onSubmit={handleQuoteSubmit} className="space-y-4">
-              <div>
-                <label className="block text-sm font-bold text-slate-700 mb-1">
-                  Full Name *
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  required
-                  value={customerInfo.name}
-                  onChange={handleCustomerInfoChange}
-                  className="w-full bg-gray-50 border border-gray-300 rounded p-3 text-slate-900 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none"
-                  placeholder="Jane Doe"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-bold text-slate-700 mb-1">
-                  Email Address *
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  required
-                  value={customerInfo.email}
-                  onChange={handleCustomerInfoChange}
-                  className="w-full bg-gray-50 border border-gray-300 rounded p-3 text-slate-900 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none"
-                  placeholder="jane@example.com"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-bold text-slate-700 mb-1">
-                  Phone Number (Optional)
-                </label>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={customerInfo.phone}
-                  onChange={handleCustomerInfoChange}
-                  className="w-full bg-gray-50 border border-gray-300 rounded p-3 text-slate-900 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none"
-                  placeholder="(555) 123-4567"
-                />
+              <div className="grid grid-cols-1 gap-4">
+                <div>
+                  <label className="block text-sm font-bold text-slate-700 mb-1">
+                    Full Name *
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    required
+                    value={customerInfo.name}
+                    onChange={handleCustomerInfoChange}
+                    className="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-base outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
+                    placeholder="Jane Doe"
+                  />
+                </div>
+                {/* ... Other inputs use same style: rounded-lg and text-base ... */}
+                <div>
+                  <label className="block text-sm font-bold text-slate-700 mb-1">
+                    Email Address *
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    value={customerInfo.email}
+                    onChange={handleCustomerInfoChange}
+                    className="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-base outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
+                    placeholder="jane@example.com"
+                  />
+                </div>
               </div>
 
               <button
                 type="submit"
                 disabled={isSubmitting || cart.length === 0}
-                className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 rounded-lg shadow-md transition-colors mt-4 disabled:bg-slate-400 flex justify-center items-center"
+                className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 rounded-xl shadow-lg active:scale-[0.98] transition-all mt-4 disabled:bg-slate-400 flex justify-center items-center h-14"
               >
-                {isSubmitting ? (
-                  <span className="flex items-center">
-                    <svg
-                      className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                      ></circle>
-                      <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                      ></path>
-                    </svg>
-                    Processing Request...
-                  </span>
-                ) : (
-                  "Request Official Quote"
-                )}
+                {isSubmitting ? "Processing..." : "Request Official Quote"}
               </button>
             </form>
           </div>
         </div>
       </div>
     </div>
+
+    // testing new mobile responsive
+    // <div className="p-6 py-12 max-w-7xl mx-auto min-h-screen animate-in fade-in">
+    //   <button
+    //     onClick={() => setView("catalog")}
+    //     className="flex items-center text-blue-600 hover:text-orange-600 font-medium transition mb-8"
+    //   >
+    //     <ChevronRight size={16} className="rotate-180 mr-1" /> Continue Adding
+    //     Products
+    //   </button>
+
+    //   <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+    //     {/* Left: Cart Items List */}
+    //     <div className="lg:col-span-7 space-y-4">
+    //       <h2 className="text-2xl font-bold text-slate-900 mb-6 border-b pb-2">
+    //         Your Print Projects
+    //       </h2>
+
+    //       {cart.length === 0 ? (
+    //         <div className="bg-white p-10 text-center rounded-xl border border-gray-200">
+    //           <ShoppingCart size={48} className="mx-auto text-gray-300 mb-4" />
+    //           <p className="text-gray-500 text-lg">
+    //             Your project list is empty.
+    //           </p>
+    //         </div>
+    //       ) : (
+    //         cart.map((item) => (
+    //           <div
+    //             key={item.cartItemId}
+    //             className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex gap-6 relative"
+    //           >
+    //             {/* Image Thumbnail */}
+    //             <div className="w-28 h-28 bg-gray-50 rounded-lg border border-gray-200 flex items-center justify-center overflow-hidden flex-shrink-0">
+    //               {item.userPreview ? (
+    //                 <img
+    //                   src={item.userPreview}
+    //                   alt="User Art"
+    //                   className="w-full h-full object-cover"
+    //                 />
+    //               ) : (
+    //                 <div className="text-center text-gray-400">
+    //                   <ImageIcon
+    //                     size={24}
+    //                     className="mx-auto mb-1 opacity-50"
+    //                   />
+    //                   <span className="text-[10px] uppercase font-bold tracking-wider">
+    //                     No File
+    //                   </span>
+    //                 </div>
+    //               )}
+    //             </div>
+
+    //             <div className="flex-1">
+    //               <div className="flex justify-between items-start">
+    //                 <h4 className="font-bold text-lg text-slate-900 pr-8">
+    //                   {item.name}
+    //                 </h4>
+    //                 <p className="font-bold text-lg text-slate-900">
+    //                   ${(item.price * item.qty).toFixed(2)}
+    //                 </p>
+    //               </div>
+
+    //               <div className="text-sm text-gray-500 mb-2 space-y-1 mt-1">
+    //                 <p>
+    //                   <span className="font-medium text-slate-700">Size:</span>{" "}
+    //                   {item.size}
+    //                 </p>
+    //                 <p>
+    //                   <span className="font-medium text-slate-700">
+    //                     Material:
+    //                   </span>{" "}
+    //                   {item.material}
+    //                 </p>
+    //                 <p>
+    //                   <span className="font-medium text-slate-700">Qty:</span>{" "}
+    //                   {item.qty} (@ ${item.price.toFixed(2)}/ea)
+    //                 </p>
+    //               </div>
+
+    //               {item.customerNotes && (
+    //                 <div className="bg-orange-50 text-orange-800 text-xs p-2 rounded border border-orange-100 mb-2 inline-block">
+    //                   <span className="font-bold">Notes:</span>{" "}
+    //                   {item.customerNotes}
+    //                 </div>
+    //               )}
+
+    //               <button
+    //                 onClick={() => removeFromCart(item.cartItemId)}
+    //                 className="text-red-500 hover:text-red-700 text-sm font-medium flex items-center mt-2 absolute bottom-4 right-4"
+    //               >
+    //                 <Trash2 size={16} className="mr-1" /> Remove
+    //               </button>
+    //             </div>
+    //           </div>
+    //         ))
+    //       )}
+    //     </div>
+
+    //     {/* Right: The Customer Form & Quote Request */}
+    //     <div className="lg:col-span-5">
+    //       <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-xl sticky top-24">
+    //         <PaymentMethods />
+    //       </div>
+    //       <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-xl sticky top-24">
+    //         <div className="mb-6 border-b border-gray-100 pb-6">
+    //           <h3 className="text-xl font-bold text-slate-900 mb-2">
+    //             Order Summary
+    //           </h3>
+    //           <div className="flex justify-between items-center text-slate-600 mb-2">
+    //             <span>
+    //               Items ({cart.reduce((sum, item) => sum + item.qty, 0)}):
+    //             </span>
+    //             <span>${subtotal.toFixed(2)}</span>
+    //           </div>
+    //           <div className="flex justify-between items-center text-lg font-bold text-slate-900 mt-4">
+    //             <span>Estimated Total:</span>
+    //             <span>${subtotal.toFixed(2)}</span>
+    //           </div>
+    //           <p className="text-xs text-gray-400 mt-2">
+    //             * Final price may vary based on file adjustments and shipping.
+    //           </p>
+    //         </div>
+
+    //         <h3 className="text-lg font-bold text-slate-900 mb-2">
+    //           Contact Information
+    //         </h3>
+    //         <p className="text-slate-500 text-sm mb-6">
+    //           Where should we send your official quote and proofs?
+    //         </p>
+
+    //         <form onSubmit={handleQuoteSubmit} className="space-y-4">
+    //           <div>
+    //             <label className="block text-sm font-bold text-slate-700 mb-1">
+    //               Full Name *
+    //             </label>
+    //             <input
+    //               type="text"
+    //               name="name"
+    //               required
+    //               value={customerInfo.name}
+    //               onChange={handleCustomerInfoChange}
+    //               className="w-full bg-gray-50 border border-gray-300 rounded p-3 text-slate-900 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none"
+    //               placeholder="Jane Doe"
+    //             />
+    //           </div>
+
+    //           <div>
+    //             <label className="block text-sm font-bold text-slate-700 mb-1">
+    //               Email Address *
+    //             </label>
+    //             <input
+    //               type="email"
+    //               name="email"
+    //               required
+    //               value={customerInfo.email}
+    //               onChange={handleCustomerInfoChange}
+    //               className="w-full bg-gray-50 border border-gray-300 rounded p-3 text-slate-900 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none"
+    //               placeholder="jane@example.com"
+    //             />
+    //           </div>
+
+    //           <div>
+    //             <label className="block text-sm font-bold text-slate-700 mb-1">
+    //               Phone Number (Optional)
+    //             </label>
+    //             <input
+    //               type="tel"
+    //               name="phone"
+    //               value={customerInfo.phone}
+    //               onChange={handleCustomerInfoChange}
+    //               className="w-full bg-gray-50 border border-gray-300 rounded p-3 text-slate-900 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none"
+    //               placeholder="(555) 123-4567"
+    //             />
+    //           </div>
+
+    //           <button
+    //             type="submit"
+    //             disabled={isSubmitting || cart.length === 0}
+    //             className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 rounded-lg shadow-md transition-colors mt-4 disabled:bg-slate-400 flex justify-center items-center"
+    //           >
+    //             {isSubmitting ? (
+    //               <span className="flex items-center">
+    //                 <svg
+    //                   className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+    //                   xmlns="http://www.w3.org/2000/svg"
+    //                   fill="none"
+    //                   viewBox="0 0 24 24"
+    //                 >
+    //                   <circle
+    //                     className="opacity-25"
+    //                     cx="12"
+    //                     cy="12"
+    //                     r="10"
+    //                     stroke="currentColor"
+    //                     strokeWidth="4"
+    //                   ></circle>
+    //                   <path
+    //                     className="opacity-75"
+    //                     fill="currentColor"
+    //                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+    //                   ></path>
+    //                 </svg>
+    //                 Processing Request...
+    //               </span>
+    //             ) : (
+    //               "Request Official Quote"
+    //             )}
+    //           </button>
+    //         </form>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </div>
   );
 };
 
