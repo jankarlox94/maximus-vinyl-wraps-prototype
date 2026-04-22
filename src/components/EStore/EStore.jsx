@@ -282,7 +282,10 @@ const Navbar = ({ cartLength, setView }) => (
         Maximus<span className="text-orange-500">VINYL</span>
       </div>
       <div className="flex gap-6 items-center">
-        <div className="relative cursor-pointer hover:text-orange-500 transition-colors">
+        <div
+          className="relative cursor-pointer hover:text-orange-500 transition-colors"
+          onClick={() => setView("checkout")}
+        >
           <ShoppingCart size={20} />
           {cartLength > 0 && (
             <span className="absolute -top-2 -right-2 bg-orange-500 text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
@@ -912,7 +915,7 @@ const Checkout = ({
                     required
                     value={customerInfo.name}
                     onChange={handleCustomerInfoChange}
-                    className="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-base outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
+                    className="w-full bg-gray-50 border text-slate-900 border-gray-300 rounded-lg p-3 text-base outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
                     placeholder="Jane Doe"
                   />
                 </div>
@@ -927,8 +930,22 @@ const Checkout = ({
                     required
                     value={customerInfo.email}
                     onChange={handleCustomerInfoChange}
-                    className="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-base outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
+                    className="w-full bg-gray-50 border border-gray-300 text-slate-900 rounded-lg p-3 text-base outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
                     placeholder="jane@example.com"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-bold text-slate-700 mb-1">
+                    Phone Number
+                  </label>
+                  <input
+                    type="number"
+                    name="phone"
+                    value={customerInfo.phone}
+                    onChange={handleCustomerInfoChange}
+                    className="w-full  border border-gray-300 rounded p-3 text-slate-900 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none"
+                    placeholder="(555) 123-4567"
                   />
                 </div>
               </div>
@@ -1103,20 +1120,6 @@ const Checkout = ({
     //               onChange={handleCustomerInfoChange}
     //               className="w-full bg-gray-50 border border-gray-300 rounded p-3 text-slate-900 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none"
     //               placeholder="jane@example.com"
-    //             />
-    //           </div>
-
-    //           <div>
-    //             <label className="block text-sm font-bold text-slate-700 mb-1">
-    //               Phone Number (Optional)
-    //             </label>
-    //             <input
-    //               type="tel"
-    //               name="phone"
-    //               value={customerInfo.phone}
-    //               onChange={handleCustomerInfoChange}
-    //               className="w-full bg-gray-50 border border-gray-300 rounded p-3 text-slate-900 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none"
-    //               placeholder="(555) 123-4567"
     //             />
     //           </div>
 
