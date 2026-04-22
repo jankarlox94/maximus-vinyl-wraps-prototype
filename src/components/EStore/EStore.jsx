@@ -19,6 +19,10 @@ import TwentytwoBy28 from "../../assets/22_28_HOLDING_MOCKUP.jpg";
 import Twoby6feet from "../../assets/2by6banner.png";
 import Threeby6feet from "../../assets/3by6.png";
 import Fourby8feet from "../../assets/4by8.png";
+import sixteenbyfour from "../../assets/sixteenbyfour.png";
+import thirtybyfourft from "../../assets/thirtybyfourft.png";
+import twentybyfour from "../../assets/twentybyfour.png";
+import twentyfivebyfourft from "../../assets/twentyfivebyfourft.png";
 import PaymentMethods from "../PaymentMethods/PaymentMethods";
 
 // --- CONSTANTS ---
@@ -195,6 +199,74 @@ const PRODUCTS = [
     papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
     laminations: ["None"],
     image: Fourby8feet,
+  },
+  {
+    id: 11,
+    title: "Custom Canvas Print - Large Format",
+    size: "4' x 16'",
+    name: "Outdoor Giant",
+    ratio: "1:4",
+    price: 236.17,
+    tag: "Heavy Duty",
+    desc: "Large outdoor marketing and construction sites.",
+    comparison: "Full sheet of plywood / SUV side profile",
+    rating: 4.9,
+    reviews: 89,
+    sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
+    papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
+    laminations: ["None"],
+    image: sixteenbyfour,
+  },
+  {
+    id: 12,
+    title: "Custom Canvas Print - Large Format",
+    size: "4' x 20'",
+    name: "Outdoor Giant",
+    ratio: "1:4",
+    price: 281.37,
+    tag: "Heavy Duty",
+    desc: "Large outdoor marketing and construction sites.",
+    comparison: "Full sheet of plywood / SUV side profile",
+    rating: 4.9,
+    reviews: 89,
+    sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
+    papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
+    laminations: ["None"],
+    image: twentybyfour,
+  },
+  {
+    id: 13,
+    title: "Custom Canvas Print - Large Format",
+    size: "4' x 25'",
+    name: "Outdoor Giant",
+    ratio: "1:6",
+    price: 337.87,
+    tag: "Heavy Duty",
+    desc: "Large outdoor marketing and construction sites.",
+    comparison: "Full sheet of plywood / SUV side profile",
+    rating: 4.9,
+    reviews: 89,
+    sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
+    papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
+    laminations: ["None"],
+    image: twentyfivebyfourft,
+  },
+  {
+    id: 14,
+    title: "Custom Canvas Print - Large Format",
+    size: "4' x 30'",
+    name: "Outdoor Giant",
+    ratio: "1:7",
+    price: 394.37,
+    tag: "Heavy Duty",
+    desc: "Large outdoor marketing and construction sites.",
+    comparison: "Full sheet of plywood / SUV side profile",
+    rating: 4.9,
+    reviews: 89,
+    sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
+    papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
+    laminations: ["None"],
+    image: thirtybyfourft,
   },
 ];
 
