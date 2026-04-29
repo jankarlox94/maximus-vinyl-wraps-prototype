@@ -10,6 +10,7 @@ import {
   Minus,
   Plus,
   CheckCircle,
+  Paintbrush,
 } from "lucide-react";
 import OrderConfirmation from "../OrderConfirmation/OrderConfirmation";
 import ElevenBy14 from "../../assets/11x14.webp";
@@ -30,10 +31,10 @@ const PRODUCTS = [
   {
     id: 1,
     title: "Custom Canvas Print - Large Format",
-    size: '24" x 36"',
+    size: "2.5' x 4' ",
     name: "Large Statement Poster",
-    ratio: "2:3",
-    price: 45.99,
+    ratio: "1:2",
+    price: 45.19,
     tag: "Best Seller",
     desc: "Gold standard for living rooms and offices.",
     comparison: "Above a standard office desk",
@@ -47,10 +48,10 @@ const PRODUCTS = [
   {
     id: 2,
     title: "Custom Canvas Print - Large Format",
-    size: '18" x 24"',
+    size: "2.5' x 6'",
     name: "Medium-Large Print",
-    ratio: "3:4",
-    price: 32,
+    ratio: "1:3",
+    price: 62.14,
     tag: "Popular",
     desc: "Great for gallery walls or bedrooms.",
     comparison: "Scale of a standard carry-on suitcase",
@@ -255,6 +256,23 @@ const PRODUCTS = [
     id: 14,
     title: "Custom Canvas Print - Large Format",
     size: "4' x 30'",
+    name: "Outdoor Giant",
+    ratio: "1:7",
+    price: 394.37,
+    tag: "Heavy Duty",
+    desc: "Large outdoor marketing and construction sites.",
+    comparison: "Full sheet of plywood / SUV side profile",
+    rating: 4.9,
+    reviews: 89,
+    sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
+    papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
+    laminations: ["None"],
+    image: thirtybyfourft,
+  },
+  {
+    id: 14,
+    title: "Custom Canvas Print - Large Format",
+    size: "Custom Size",
     name: "Outdoor Giant",
     ratio: "1:7",
     price: 394.37,
@@ -503,7 +521,71 @@ const ProductDetails = ({
 
         <div className="space-y-5 sm:space-y-6">
           {/* File Upload - Mobile Optimized Area */}
-          <div>
+          <div className="space-y-4">
+            {/* Section 1: Upload */}
+            <div>
+              <label className="block text-xs sm:text-sm font-bold text-slate-300 mb-2 uppercase tracking-wide">
+                1. Upload Artwork (Optional)
+              </label>
+              <div className="border-2 border-dashed border-[#2e313c] rounded-xl p-4 sm:p-6 hover:bg-[#242731] transition text-center relative group">
+                <input
+                  type="file"
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  onChange={handleFileChange}
+                  accept="image/*"
+                />
+                <Upload
+                  size={28}
+                  className={`mx-auto mb-2 ${imageFile ? "text-cyan-400" : "text-gray-500"}`}
+                />
+                <p className="text-xs sm:text-sm font-medium text-slate-400">
+                  {imageFile ? "Tap to replace file" : "Browse Artwork File"}
+                </p>
+                {imageFile && (
+                  <p className="mt-2 text-[10px] text-cyan-400 font-bold truncate px-2">
+                    {imageFile.name}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            {/* Visual Divider */}
+            <div className="relative flex py-2 items-center">
+              <div className="flex-grow border-t border-[#2e313c]"></div>
+              <span className="flex-shrink mx-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                OR
+              </span>
+              <div className="flex-grow border-t border-[#2e313c]"></div>
+            </div>
+
+            {/* Section 2: Custom Design Upsell */}
+            <div className="bg-[#1a1d24] border border-[#2e313c] rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="flex items-start gap-3">
+                <div className="p-2 bg-cyan-500/10 rounded-lg">
+                  <Paintbrush size={20} className="text-cyan-400" />
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold text-slate-200">
+                    Need a custom design?
+                  </h4>
+                  <p className="text-xs text-slate-400 mt-0.5">
+                    Our pro designers can create a unique concept for you.
+                  </p>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => {
+                  /* handle custom design logic */
+                }}
+                className="w-full sm:w-auto px-4 py-2 bg-[#2e313c] hover:bg-cyan-600 text-slate-200 hover:text-white text-xs font-bold rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 whitespace-nowrap"
+              >
+                Add Custom Design (+$25)
+              </button>
+            </div>
+          </div>
+          {/* <div>
             <label className="block text-xs sm:text-sm font-bold text-slate-300 mb-2 uppercase tracking-wide">
               1. Upload Artwork (Optional)
             </label>
@@ -527,7 +609,7 @@ const ProductDetails = ({
                 </p>
               )}
             </div>
-          </div>
+          </div> */}
 
           {/* Material Dropdown - Native appearance for easier mobile selection */}
           <div>
