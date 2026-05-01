@@ -30,10 +30,14 @@ import PaymentMethods from "../PaymentMethods/PaymentMethods";
 import twopointfivebyfour from "../../assets/twopointfivebyfour.webp";
 import twofeetbysixfeet from "../../assets/twofeetbysixfeet.jpg";
 import wallDecalTenByTen from "../../assets/wall-decal-10-by-10.webp";
+import rzrlWrap from "../../assets/rzr-wrap.webp";
+import fourByTwenty from "../../assets/four-by-20.jpg";
+import fourpointfiveby30 from "../../assets/fourpointfiveby30.webp";
+import fullBody from "../../assets/full-body.webp";
 
 const PRODUCTS = [
   {
-    id: 5,
+    id: 1,
     title: "Custom Canvas Print - Large Format",
     size: '22" x 28"',
     name: "Retail Standard Sign",
@@ -50,7 +54,7 @@ const PRODUCTS = [
     image: TwentytwoBy28,
   },
   {
-    id: 6,
+    id: 2,
     title: "Custom Canvas Print - Large Format",
     size: "2.5' x 4'",
     name: "Large Statement Poster",
@@ -68,7 +72,7 @@ const PRODUCTS = [
     image: twopointfivebyfour,
   },
   {
-    id: 7,
+    id: 3,
     title: "Custom Canvas Print - Large Format",
     size: "2.5' x 6'",
     name: "Medium-Large Print",
@@ -86,7 +90,7 @@ const PRODUCTS = [
   },
 
   {
-    id: 9,
+    id: 4,
     title: "Heavy Duty Vinyl Banner",
     size: "3' x 6'",
     name: "Universal Vinyl Banner",
@@ -103,7 +107,7 @@ const PRODUCTS = [
     image: Threeby6feet,
   },
   {
-    id: 10,
+    id: 5,
     title: "Commercial Outdoor Banner",
     size: "4' x 8'",
     name: "Outdoor Giant",
@@ -120,7 +124,7 @@ const PRODUCTS = [
     image: Fourby8feet,
   },
   {
-    id: 11,
+    id: 6,
     title: "Commercial Outdoor Banner",
     size: "4' x 16'",
     name: "Extra-Wide Billboard",
@@ -136,26 +140,9 @@ const PRODUCTS = [
     laminations: ["None"],
     image: sixteenbyfour,
   },
+
   {
-    id: 18,
-    title: "Wall Decoration",
-    size: "10' x 10'",
-    name: "Large Wall Decoration",
-    ratio: "1:1",
-    price: 600,
-    tag: "Heavy Duty",
-    desc: "An expansive 16-foot horizontal canvas built to withstand the elements while providing dominant brand exposure.",
-    comparison: "Length of a mid-size sedan",
-    rating: 4.9,
-    reviews: 89,
-    isHighlighted: true,
-    sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
-    papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
-    laminations: ["None"],
-    image: wallDecalTenByTen,
-  },
-  {
-    id: 12,
+    id: 7,
     title: "Commercial Outdoor Banner",
     size: "4' x 20'",
     name: "Super-Wide Display",
@@ -169,10 +156,28 @@ const PRODUCTS = [
     sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
     papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
     laminations: ["None"],
-    image: twentybyfour,
+    image: fourByTwenty,
   },
   {
-    id: 13,
+    id: 8,
+    title: "Wall Decoration",
+    size: "10' x 10'",
+    name: "Large Wall Decoration",
+    ratio: "1:1",
+    price: 600,
+    tag: "Vinyl",
+    desc: ".",
+    comparison: "Length of a mid-size sedan",
+    rating: 4.9,
+    reviews: 89,
+    isHighlighted: true,
+    sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
+    papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
+    laminations: ["None"],
+    image: wallDecalTenByTen,
+  },
+  {
+    id: 9,
     title: "Commercial Outdoor Banner",
     size: "4' x 25'",
     name: "Event Megabanner",
@@ -189,7 +194,7 @@ const PRODUCTS = [
     image: twentyfivebyfourft,
   },
   {
-    id: 14,
+    id: 10,
     title: "Commercial Outdoor Banner",
     size: "4' x 30'",
     name: "Panoramic Titan",
@@ -203,10 +208,10 @@ const PRODUCTS = [
     sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
     papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
     laminations: ["None"],
-    image: thirtybyfourft,
+    image: fourpointfiveby30,
   },
   {
-    id: 15,
+    id: 11,
     title: "Commercial Outdoor Banner",
     size: "Custom Size",
     name: "Bespoke Large Format",
@@ -223,7 +228,7 @@ const PRODUCTS = [
     image: thirtybyfourft,
   },
   {
-    id: 16,
+    id: 12,
     title: "Rear Window Advertising - See-Through",
     size: "Custom Fit",
     name: "Microperforated Window Film",
@@ -241,7 +246,47 @@ const PRODUCTS = [
     image: microperforado,
   },
   {
-    id: 17,
+    id: 13,
+    title: "Commercial Outdoor Banner",
+    size: "Custom Size",
+    name: "Bespoke Large Format",
+    ratio: "Varies",
+    price: 394.37,
+    tag: "Heavy Duty",
+    desc: "Tailored to your specific structural needs, this custom option ensures a perfect fit for unique architectural spaces.",
+    comparison: "Fully customizable to your space",
+    rating: 4.9,
+    reviews: 89,
+    sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
+    papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
+    laminations: ["None"],
+    image: thirtybyfourft,
+  },
+  {
+    id: 14,
+    title: "Off-Road Vehicles - Professional Wrap",
+    size: "Full Coverage",
+    name: "Full Body Vinyl Wrap",
+    ratio: "N/A",
+    price: 2450.0,
+    tag: "Premium",
+    desc: "A complete aesthetic and functional transformation",
+    comparison: "Total vehicle transformation",
+    rating: 5.0,
+    reviews: 42,
+    sizes: ["Sedan/Coupe", "SUV/Truck", "Van/Fleet"],
+    papers: [
+      "Premium Cast Vinyl",
+      "Matte Finish",
+      "Gloss Finish",
+      "Satin Finish",
+    ],
+    isHighlighted: true,
+    laminations: ["UV Protection Gloss", "Matte Overlaminate"],
+    image: rzrlWrap,
+  },
+  {
+    id: 15,
     title: "Full Vehicle Branding - Professional Wrap",
     size: "Full Coverage",
     name: "Full Body Vinyl Wrap",
@@ -261,7 +306,7 @@ const PRODUCTS = [
     ],
     isHighlighted: true,
     laminations: ["UV Protection Gloss", "Matte Overlaminate"],
-    image: CommercialWrap,
+    image: fullBody,
   },
 ];
 
