@@ -572,7 +572,7 @@ const ProductDetails = ({
             </div>
 
             {/* Section 2: Custom Design Upsell */}
-            <div className="bg-[#1a1d24] border border-[#2e313c] rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="bg-[#1a1d24] border border-[#2e313c] rounded-xl p-4 flex-col sm:flex-row items-center justify-between gap-4">
               <div className="flex items-start gap-3">
                 <div className="p-2 bg-cyan-500/10 rounded-lg">
                   <Paintbrush size={20} className="text-cyan-400" />
@@ -586,16 +586,22 @@ const ProductDetails = ({
                   </p>
                 </div>
               </div>
-
-              <button
-                type="button"
-                onClick={() => {
-                  /* handle custom design logic */
-                }}
-                className="w-full sm:w-auto px-4 py-2 bg-[#2e313c] hover:bg-cyan-600 text-slate-200 hover:text-white text-xs font-bold rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 whitespace-nowrap"
-              >
-                Add Custom Design (starting +$25)
-              </button>
+              <div className="flex justify-center mt-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    /* handle custom design logic */
+                  }}
+                  className="w-full sm:w-auto px-4 py-2 bg-[#2e313c] hover:bg-cyan-600 text-slate-200 hover:text-white text-xs font-bold rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 whitespace-nowrap"
+                >
+                  Add Custom Design (starting +$25)
+                </button>
+              </div>
+              <div>
+                <h4 className="text-sm font-bold text-slate-200">
+                  Need a custom design?
+                </h4>
+              </div>
             </div>
           </div>
 
@@ -940,6 +946,7 @@ const EStore = () => {
   const [imageFile, setImageFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [quantity, setQuantity] = useState(1); // New quantity state
+  const [isCustomDesign, setIsCustomDesign] = useState(false); // this will set customDesign flag in each product.
 
   // Customer Contact State (For the quote)
   const [customerInfo, setCustomerInfo] = useState({
@@ -976,6 +983,7 @@ const EStore = () => {
           Date.now().toString() + Math.random().toString(36).substring(2, 9),
         qty: quantity,
         customerNotes: customerNote || "",
+        isCustomDesign: isCustomDesign,
         printingMaterial: selectedPrintingMaterial || selectedProduct.papers[0],
         file: imageFile,
         userPreview: previewUrl,
@@ -1013,6 +1021,7 @@ const EStore = () => {
     formData.append("customerName", customerInfo.name);
     formData.append("customerEmail", customerInfo.email);
     formData.append("customerPhone", customerInfo.phone);
+    // formData.append("")
 
     // 2. Append Cart Metadata (Everything EXCEPT the heavy file objects)
     const cartMetadata = cart.map((item) => ({
@@ -1024,6 +1033,7 @@ const EStore = () => {
       material: item.printingMaterial,
       notes: item.customerNotes,
       price: item.price,
+      isCustomDesign: item.isCustomDesign,
       hasFile: !!item.file,
     }));
     formData.append("cartData", JSON.stringify(cartMetadata));
