@@ -468,6 +468,7 @@ const Catalog = ({ setSelectedProduct, setView }) => (
 
 const ProductDetails = ({
   selectedProduct,
+  setSelectedProduct,
   previewUrl,
   imageFile,
   handleFileChange,
@@ -477,6 +478,8 @@ const ProductDetails = ({
   setCustomerNote,
   quantity,
   setQuantity,
+  isCustomDesign,
+  setIsCustomDesign,
   addToCart,
   setView,
 }) => (
@@ -586,12 +589,31 @@ const ProductDetails = ({
                   </p>
                 </div>
               </div>
-              <div className="flex justify-center mt-2">
+              <div className="flex items-center justify-between mt-4 p-3 bg-[#2e313c]/50 rounded-xl border border-slate-700">
+                <div className="flex flex-col">
+                  <span className="text-xs font-bold text-slate-200">
+                    Custom Design
+                  </span>
+                  <span className="text-[10px] text-cyan-400 font-medium">
+                    + starting at $25.00
+                  </span>
+                </div>
+
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    className="sr-only peer"
+                    checked={isCustomDesign}
+                    onChange={() => setIsCustomDesign(!isCustomDesign)}
+                  />
+                  {/* The Track */}
+                  <div className="w-11 h-6 bg-slate-600 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-cyan-500 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cyan-600"></div>
+                </label>
+              </div>
+              {/* <div className="flex justify-center mt-2">
                 <button
                   type="button"
-                  onClick={() => {
-                    /* handle custom design logic */
-                  }}
+                  onClick={() => setIsCustomDesign(!this.isCustomDesign)}
                   className="w-full sm:w-auto px-4 py-2 bg-[#2e313c] hover:bg-cyan-600 text-slate-200 hover:text-white text-xs font-bold rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 whitespace-nowrap"
                 >
                   Add Custom Design (starting +$25)
@@ -601,7 +623,7 @@ const ProductDetails = ({
                 <h4 className="text-sm font-bold text-slate-200">
                   Need a custom design?
                 </h4>
-              </div>
+              </div> */}
             </div>
           </div>
 
@@ -993,6 +1015,7 @@ const EStore = () => {
     // Reset configuration state for the next item
     setQuantity(1);
     setCustomerNote("");
+    setIsCustomDesign(false);
     setImageFile(null);
     setPreviewUrl(null);
     setSelectedPrintingMaterial("");
@@ -1021,8 +1044,12 @@ const EStore = () => {
     formData.append("customerName", customerInfo.name);
     formData.append("customerEmail", customerInfo.email);
     formData.append("customerPhone", customerInfo.phone);
-    // formData.append("")
+    // isCustomDesign
+    const anyCustomDesign = cart.some((item) => item.isCustomDesign === true);
+    formData.append("isCustomDesign", anyCustomDesign);
 
+    // formData.append("")
+    debugger;
     // 2. Append Cart Metadata (Everything EXCEPT the heavy file objects)
     const cartMetadata = cart.map((item) => ({
       cartItemId: item.cartItemId,
@@ -1100,6 +1127,7 @@ const EStore = () => {
         {view === "details" && (
           <ProductDetails
             selectedProduct={selectedProduct}
+            setSelectedProduct={setSelectedProduct}
             previewUrl={previewUrl}
             imageFile={imageFile}
             handleFileChange={handleFileChange}
@@ -1109,6 +1137,8 @@ const EStore = () => {
             setCustomerNote={setCustomerNote}
             quantity={quantity}
             setQuantity={setQuantity}
+            isCustomDesign={isCustomDesign}
+            setIsCustomDesign={setIsCustomDesign}
             addToCart={addToCart}
             setView={setView}
           />

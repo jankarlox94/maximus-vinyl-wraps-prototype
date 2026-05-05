@@ -6,6 +6,7 @@ import {
   FileText,
   AlertCircle,
 } from "lucide-react";
+import PaymentMethods from "../PaymentMethods/PaymentMethods";
 
 const OrderConfirmation = ({ orderData, onReset }) => {
   // Extracting data from the API response
@@ -65,6 +66,9 @@ const OrderConfirmation = ({ orderData, onReset }) => {
                   </p>
                 </div>
               </div>
+            </div>
+            <div className="bg-white border border-gray-200 rounded-xl p-5 sm:p-6 shadow-md">
+              <PaymentMethods />
             </div>
 
             {/* Order Summary Table */}
