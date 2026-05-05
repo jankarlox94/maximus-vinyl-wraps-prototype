@@ -13,18 +13,13 @@ import {
   Paintbrush,
 } from "lucide-react";
 import OrderConfirmation from "../OrderConfirmation/OrderConfirmation";
-import ElevenBy14 from "../../assets/11x14.webp";
-import EighteenBy24 from "../../assets/18-by-24-medium-sized-poster.jpg";
-import TwentyfourBy36 from "../../assets/24by36.jpg";
+
 import TwentytwoBy28 from "../../assets/22_28_HOLDING_MOCKUP.jpg";
-import Twoby6feet from "../../assets/2by6banner.png";
 import Threeby6feet from "../../assets/3by6.png";
 import Fourby8feet from "../../assets/4by8.png";
 import sixteenbyfour from "../../assets/sixteenbyfour.png";
 import thirtybyfourft from "../../assets/thirtybyfourft.png";
-import twentybyfour from "../../assets/twentybyfour.png";
 import twentyfivebyfourft from "../../assets/twentyfivebyfourft.png";
-import CommercialWrap from "../../assets/body-wrap.jpg";
 import microperforado from "../../assets/microperforado.jpg";
 import PaymentMethods from "../PaymentMethods/PaymentMethods";
 import twopointfivebyfour from "../../assets/twopointfivebyfour.webp";
