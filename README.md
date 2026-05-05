@@ -1,8 +1,6 @@
-Your documentation for the **MaximusVINYL E-Store** is ready. This README covers the architectural flow, the internal state-driven routing, the API communication patterns, and the administrative structure.
+# Maximus VINYL WRAPS E-Store & Order's Admin Portal
 
-# MaximusVINYL E-Store & Admin Portal
-
-A high-performance React application for a custom vinyl printing business. This platform allows users to discover products, configure custom printing specifications (including artwork uploads and design services), and request official quotes.
+A high-performance React application for Maximus vinyl print. This platform allows users to discover products, configure custom printing specifications (including artwork uploads and design services), and request official quotes.
 
 ## 🚀 Features
 
