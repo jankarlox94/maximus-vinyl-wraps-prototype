@@ -1,5 +1,7 @@
 # Maximus VINYL WRAPS E-Store & Order's Admin Portal
 
+Prototype link: https://maximus-web-client.netlify.app/
+
 A high-performance React application for Maximus vinyl print. This platform allows users to discover products, configure custom printing specifications (including artwork uploads and design services), and request official quotes.
 
 ## 🚀 Features
