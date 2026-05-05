@@ -1,4 +1,4 @@
-# Maximus VINYL WRAPS E-Store & Order's Admin Portal
+# Maximus VINYL WRAPS Quote system & Admin Portal
 
 Prototype link: https://maximus-web-client.netlify.app/
 
