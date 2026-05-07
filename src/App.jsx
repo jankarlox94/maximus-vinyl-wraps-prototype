@@ -10,6 +10,7 @@ import ScrollToTop from "./components/ScrollToTop/ScrollToTop.jsx";
 import MasterDashboard from "./components/MasterDashboard/MasterDashboard.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import AdminLogin from "./components/AdminLogin/AdminLogin.jsx";
+import OrderLookup from "./components/OrderLookup/OrderLookup";
 
 function App() {
   const bgImagen = {
@@ -37,6 +38,7 @@ function App() {
               <Route path="/contact2" element={<PrintProjectView />} />
               <Route path="/contact" element={<EStore />} />
               <Route path="/admin-login" element={<AdminLogin />} />
+              <Route path="/track-order" element={<OrderLookup />} />
               <Route
                 path="/dashboard"
                 element={
