@@ -11,29 +11,61 @@ import {
   ExternalLink,
 } from "lucide-react";
 import OrderStatusBadge from "../OrderStatusBadge/OrderStatusBadge";
+import { useSearchParams } from "react-router-dom";
 
 export default function MasterDashboard() {
   const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const fetchData = async () => {
-    fetch(`${import.meta.env.VITE_API_URL}/print-jobs/admin/dashboard`)
-      .then((res) => res.json())
-      .then((data) => {
+  const fetchData = async (recordId = null) => {
+    setLoading(true); // Triggers the loading state while fetching
+    try {
+      // Construct the URL to use the new /dashboard sub-route
+      const url = recordId
+        ? `${import.meta.env.VITE_API_URL}/print-jobs/admin/dashboard?order_number=${recordId}`
+        : `${import.meta.env.VITE_API_URL}/print-jobs/admin/dashboard`;
+
+      const res = await fetch(url);
+      const data = await res.json();
+
+      if (recordId) {
+        // The backend returns an array; select the first (and only) item
+        setSelectedOrder(data[0]);
+        setSearchParams({ order_number: recordId });
+      } else {
+        // Update the main dashboard list
         setOrders(data);
-        setLoading(false);
-      });
+      }
+    } catch (error) {
+      console.error("Dashboard fetch error:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
+  useEffect(() => {
+    const orderIdFromUrl = searchParams.get("order_number");
+
+    if (orderIdFromUrl) {
+      // If there is an ID in the URL, fetch that specific order
+      fetchData(orderIdFromUrl);
+    } else {
+      // Otherwise, just load the full list
+      fetchData();
+    }
+  }, []); // Run once on mount
+
+  // Update useEffect to load the initial list
   useEffect(() => {
     fetchData();
   }, []);
 
   const refreshData = () => {
-    console.log("Data refresh triggered from child component.");
     setSelectedOrder(null);
-    fetchData(); // Simply re-run the existing fetch function
+    setSearchParams({}); // This clears ?order_number=... from the URL
+    fetchData(); // Reload the full list
   };
 
   if (loading)
@@ -121,7 +153,7 @@ export default function MasterDashboard() {
                   </div>
 
                   <button
-                    onClick={() => setSelectedOrder(order)}
+                    onClick={() => fetchData(order.id)}
                     className="bg-slate-900 text-white px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider hover:bg-cyan-500 hover:text-white transition-all shadow-sm"
                   >
                     Details
@@ -204,7 +236,7 @@ export default function MasterDashboard() {
                     </td>
                     <td className="p-5 text-right">
                       <button
-                        onClick={() => setSelectedOrder(order)}
+                        onClick={() => fetchData(order.id)} // Fetch fresh details by ID
                         className="bg-slate-900 text-white px-4 py-2 rounded-xl text-xs font-black uppercase tracking-tighter hover:bg-cyan-600 transition-all shadow-sm active:scale-95"
                       >
                         View Details
