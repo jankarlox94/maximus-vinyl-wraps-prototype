@@ -144,7 +144,7 @@ const HeroTop = () => {
         </div>
         {/* CTA Button */}
         <div className="flex flex-col sm:flex-row gap-2">
-          <Link to="/catalogs">
+          <Link to="/catalog">
             <button className="px-8 py-4 bg-cyan-500 text-black font-black uppercase italic tracking-wider hover:bg-cyan-400 transition-all shadow-[0_0_20px_rgba(34,211,238,0.4)]">
               Go to Catalog, for free quotes
             </button>
