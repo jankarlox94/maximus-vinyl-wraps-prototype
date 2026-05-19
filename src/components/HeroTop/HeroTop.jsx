@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import LandingImg from "../../assets/landing-img-definitive.png";
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
+import { FaWhatsapp } from "react-icons/fa6";
 
 const HeroTop = () => {
   const navbarRedes = [
@@ -126,7 +127,7 @@ const HeroTop = () => {
               </li>
               <li className="flex items-start">
                 <CheckCircleIcon className="h-5 w-5 text-green-500 mr-3 mt-1 flex-shrink-0" />
-                <span>Car Wrapping</span>
+                <span>Turn the car into a mobile billboard </span>
               </li>
               <li className="flex items-start">
                 <CheckCircleIcon className="h-5 w-5 text-green-500 mr-3 mt-1 flex-shrink-0" />
@@ -140,22 +141,22 @@ const HeroTop = () => {
               </li>
             </ul>
           </div>
-
-          {/* CTA Button */}
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Link to="/contact">
-              <button className="px-8 py-4 bg-cyan-500 text-black font-black uppercase italic tracking-wider hover:bg-cyan-400 transition-all shadow-[0_0_20px_rgba(34,211,238,0.4)]">
-                Start Your Project
-              </button>
-            </Link>
-
-            <button
-              disabled
-              className="px-8 py-4 border border-gray-700 bg-gray-800/50 text-white font-black uppercase italic tracking-wider hover:border-cyan-500 transition-all"
-            >
-              Or Text Us Today (405) 421 7326
+        </div>
+        {/* CTA Button */}
+        <div className="flex flex-col sm:flex-row gap-2">
+          <Link to="/catalogs">
+            <button className="px-8 py-4 bg-cyan-500 text-black font-black uppercase italic tracking-wider hover:bg-cyan-400 transition-all shadow-[0_0_20px_rgba(34,211,238,0.4)]">
+              Go to Catalog, for free quotes
             </button>
-          </div>
+          </Link>
+
+          <button
+            disabled
+            className="flex px-8 py-4 border border-gray-700 bg-gray-800/50 text-white font-black uppercase italic tracking-wider "
+          >
+            <FaWhatsapp size={24} color="#25D366" />
+            WHATSAPP OR TEXT (405) 421 7326
+          </button>
         </div>
       </div>
     </div>

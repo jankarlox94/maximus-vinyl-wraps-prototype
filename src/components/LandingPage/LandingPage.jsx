@@ -1,12 +1,6 @@
-import React, { useState } from "react";
 import Logo from "../../assets/maxi3d.png";
 import { Link } from "react-router-dom";
-import EighteenBy24 from "../../assets/18-by-24-medium-sized-poster.jpg";
-import TwentyfourBy36 from "../../assets/24by36.jpg";
-import TwentytwoBy28 from "../../assets/22_28_HOLDING_MOCKUP.jpg";
-import Twoby6feet from "../../assets/2by6banner.png";
-import Threeby6feet from "../../assets/3by6.png";
-import Fourby8feet from "../../assets/4by8.png";
+
 import Navbar from "../Navbar/Navbar";
 
 import Carousel1 from "../../assets/carousel-pics/carousel-1.webp";
@@ -34,7 +28,6 @@ import Carousel19 from "../../assets/carousel-pics/carousel-19.webp";
 import Carousel20 from "../../assets/carousel-pics/carousel-20.webp";
 import Carousel21 from "../../assets/carousel-pics/carousel-21.webp";
 import Carousel22 from "../../assets/carousel-pics/carousel-22.webp";
-// import Fourby8feet from "../../assets/4by8.png";
 
 import { MousePointer2, Truck, Clock, ShieldCheck } from "lucide-react";
 import HeroTop from "../HeroTop/HeroTop";
@@ -112,7 +105,7 @@ const LandingPage = () => {
                 </svg>
               }
               title="Custom Car Wraps "
-              desc="Beyond traditional printing, we specialize in high-end custom car wraps that transform vehicles with unique, 'impossible colors and finishes' "
+              desc="Beyond traditional printing, we specialize in high-end custom car wraps that transform vehicles into mobile billboards "
             />
           </div>
         </div>
@@ -155,7 +148,7 @@ const LandingPage = () => {
               ))}
             </ul>
             <div className="flex ">
-              <Link to="/contact">
+              <Link to="/catalog">
                 <button className=" mx-auto px-8 py-4 bg-cyan-500 text-black font-black uppercase italic tracking-wider hover:bg-cyan-400 transition-all shadow-[0_0_20px_rgba(34,211,238,0.4)]">
                   Start Your Project
                 </button>

@@ -36,7 +36,7 @@ function App() {
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/contact2" element={<PrintProjectView />} />
-              <Route path="/contact" element={<EStore />} />
+              <Route path="/catalog" element={<EStore />} />
               <Route path="/admin-login" element={<AdminLogin />} />
               <Route path="/track-order" element={<OrderLookup />} />
               <Route

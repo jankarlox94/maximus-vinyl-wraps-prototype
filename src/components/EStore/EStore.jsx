@@ -29,6 +29,8 @@ import rzrlWrap from "../../assets/rzr-wrap.webp";
 import fourByTwenty from "../../assets/four-by-20.jpg";
 import fourpointfiveby30 from "../../assets/fourpointfiveby30.webp";
 import fullBody from "../../assets/full-body.webp";
+import customTrailer from "../../assets/trailer-custom.png";
+import customSizeOption from "../../assets/custom-size-option.png";
 
 const PRODUCTS = [
   {
@@ -68,41 +70,7 @@ const PRODUCTS = [
   },
   {
     id: 3,
-    title: "Custom Canvas Print - Large Format",
-    size: "2.5' x 6'",
-    name: "Panoramic Gallery Print",
-    ratio: "1:3",
-    price: 62.14,
-    tag: "Popular",
-    desc: "An elongated panoramic format perfect for breathtaking landscape photography or striking vertical art installations.",
-    comparison: "Height of a standard refrigerator",
-    rating: 4.9,
-    reviews: 89,
-    sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
-    papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
-    laminations: ["None"],
-    image: twofeetbysixfeet,
-  },
-  {
-    id: 4,
-    title: "Heavy Duty Vinyl Banner",
-    size: "3' x 6'",
-    name: "Universal Business Banner",
-    ratio: "1:2",
-    price: 110.0,
-    tag: "Best Value",
-    desc: "The essential marketing tool for grand openings and sales, offering high visibility and durability for indoor or outdoor use.",
-    comparison: "Width of a double-door entrance",
-    rating: 4.9,
-    reviews: 89,
-    sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
-    papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
-    laminations: ["None"],
-    image: Threeby6feet,
-  },
-  {
-    id: 5,
-    title: "Commercial Outdoor Banner",
+    title: "Commercial Banner",
     size: "4' x 8'",
     name: "The Outdoor Giant",
     ratio: "1:2",
@@ -118,110 +86,7 @@ const PRODUCTS = [
     image: Fourby8feet,
   },
   {
-    id: 6,
-    title: "Commercial Outdoor Banner",
-    size: "4' x 16'",
-    name: "Extra-Wide Billboard",
-    ratio: "1:4",
-    price: 236.17,
-    tag: "Heavy Duty",
-    desc: "An expansive 16-foot horizontal display built to withstand the elements while providing dominant brand exposure along highways.",
-    comparison: "Length of a mid-size sedan",
-    rating: 4.9,
-    reviews: 89,
-    sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
-    papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
-    laminations: ["None"],
-    image: sixteenbyfour,
-  },
-  {
-    id: 7,
-    title: "Commercial Outdoor Banner",
-    size: "4' x 20'",
-    name: "Stadium-Tier Backdrop",
-    ratio: "1:5",
-    price: 281.37,
-    tag: "Heavy Duty",
-    desc: "A premier 20-foot banner offering elite visibility for massive event backdrops and long-range commercial advertising.",
-    comparison: "Length of a large shipping container",
-    rating: 4.9,
-    reviews: 89,
-    sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
-    papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
-    laminations: ["None"],
-    image: fourByTwenty,
-  },
-  {
-    id: 8,
-    title: "Wall Decoration",
-    size: "10' x 10'",
-    name: "Full-Wall Vinyl Mural",
-    ratio: "1:1",
-    price: 600,
-    tag: "Vinyl",
-    desc: "Transform entire rooms with a seamless square mural. High-grade vinyl ensures vibrant colors for office branding or home feature walls.",
-    comparison: "Covers a standard bedroom wall",
-    rating: 4.9,
-    reviews: 89,
-    isHighlighted: true,
-    sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
-    papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
-    laminations: ["None"],
-    image: wallDecalTenByTen,
-  },
-  {
-    id: 9,
-    title: "Commercial Outdoor Banner",
-    size: "4' x 25'",
-    name: "Elite Event Megabanner",
-    ratio: "1:6",
-    price: 337.87,
-    tag: "Heavy Duty",
-    desc: "Stretching 25 feet, this high-performance banner is engineered for large-scale industrial branding and elite sporting events.",
-    comparison: "Height of a 2-story building",
-    rating: 4.9,
-    reviews: 89,
-    sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
-    papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
-    laminations: ["None"],
-    image: twentyfivebyfourft,
-  },
-  {
-    id: 10,
-    title: "Commercial Outdoor Banner",
-    size: "4' x 30'",
-    name: "The Panoramic Titan",
-    ratio: "1:7",
-    price: 394.37,
-    tag: "Heavy Duty",
-    desc: "Our largest standard banner configuration, providing 120 square feet of high-durability advertising space for maximum visual dominance.",
-    comparison: "Length of a full-size school bus",
-    rating: 4.9,
-    reviews: 89,
-    sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
-    papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
-    laminations: ["None"],
-    image: fourpointfiveby30,
-  },
-  {
-    id: 11,
-    title: "Commercial Outdoor Banner",
-    size: "Custom Size",
-    name: "Bespoke Large Format",
-    ratio: "Varies",
-    price: 0, // Set to 0 or logic for quote
-    tag: "Custom",
-    desc: "Tailored specifically to your structural requirements, ensuring a precision fit for unique architectural spaces and custom rigs.",
-    comparison: "Fully customizable to your dimensions",
-    rating: 4.9,
-    reviews: 89,
-    sizes: ["Custom"],
-    papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
-    laminations: ["None"],
-    image: thirtybyfourft,
-  },
-  {
-    id: 12,
+    id: 4,
     title: "Rear Window Advertising - See-Through",
     size: "Custom Fit",
     name: "Pro-View Perforated Film",
@@ -238,8 +103,9 @@ const PRODUCTS = [
     laminations: ["Optically Clear Lam"],
     image: microperforado,
   },
+
   {
-    id: 14,
+    id: 5,
     title: "Off-Road Vehicles - Professional Wrap",
     size: "Full Coverage",
     name: "Rugged Terrain Vehicle Wrap",
@@ -262,7 +128,7 @@ const PRODUCTS = [
     image: rzrlWrap,
   },
   {
-    id: 15,
+    id: 6,
     title: "Full Vehicle Branding - Professional Wrap",
     size: "Full Coverage",
     name: "Commercial Fleet Wrap",
@@ -283,6 +149,90 @@ const PRODUCTS = [
     isHighlighted: true,
     laminations: ["UV Protection Gloss", "Matte Overlaminate"],
     image: fullBody,
+  },
+
+  {
+    id: 7,
+    title: "Wall Decoration",
+    size: "10' x 10'",
+    name: "Full-Wall Vinyl Mural",
+    ratio: "1:1",
+    price: 600,
+    tag: "Vinyl",
+    desc: "Transform entire rooms with a seamless square mural. High-grade vinyl ensures vibrant colors for office branding or home feature walls.",
+    comparison: "Covers a standard bedroom wall",
+    rating: 4.9,
+    reviews: 89,
+    isHighlighted: true,
+    sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
+    papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
+    laminations: ["None"],
+    image: wallDecalTenByTen,
+  },
+  {
+    id: 8,
+    title: "Commercial Banner",
+    size: "4' x 30'",
+    name: "The Panoramic Titan",
+    ratio: "1:7",
+    price: 394.37,
+    tag: "Heavy Duty",
+    desc: "Our largest standard banner configuration, providing 120 square feet of high-durability advertising space for maximum visual dominance.",
+    comparison: "Length of a full-size school bus",
+    rating: 4.9,
+    reviews: 89,
+    sizes: ['8" x 10"', '11" x 14"', '16" x 20"'],
+    papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
+    laminations: ["None"],
+    image: fourpointfiveby30,
+  },
+  {
+    id: 9,
+    title: "Custom Size",
+    size: "Fully Customizable",
+    name: "Bespoke Large Format",
+    ratio: "Dynamic",
+    price: "From $35.00", // Minimum starting base price
+    tag: "Custom Sized",
+    desc: "Tailored specifically to your dimensions. Price is calculated based on total square footage used from our standard material rolls.",
+    comparison: "Fully customizable width and height to your exact dimensions",
+    rating: 4.9,
+    reviews: 89,
+    sizes: ["User Input"],
+    papers: ["Vinyl", "Chrome", "Banner", "Window Perf"],
+    laminations: ["None", "Gloss", "Matte"],
+    image: customSizeOption,
+
+    // Pricing & Calculation Metadata for Frontend Logic
+    pricingModel: {
+      minPrice: 35.0, // Minimum order charge
+      pricePerSqFt: 6.5, // Rate per square foot
+      rollWidthFt: 5.0, // Material roll width constraint (5 feet)
+    },
+    isHighlighted: true,
+  },
+  {
+    id: 10,
+    title: "Custom Trailer Wrap & Graphics",
+    size: "Custom Fit",
+    name: "Full Wrap or Spot Graphics",
+    ratio: "Vehicle Specific",
+    price: 999, // Set to 0 for quote-based logic
+    tag: "Premium Service",
+    desc: "Turn your trailer into a mobile billboard. Includes bespoke graphic design tailored to your brand and precision professional installation for a flawless, durable finish.",
+    comparison: "Custom designed and professionally installed",
+    rating: 4.9,
+    reviews: 89,
+    sizes: ["Custom Specification"],
+    papers: [
+      "Cast Vinyl",
+      "Reflective Vinyl",
+      "Printed Wrap Film",
+      "Perforated Window Film",
+    ],
+    isHighlighted: true,
+    laminations: ["Gloss", "Matte", "Satin", "UV Protective"],
+    image: customTrailer,
   },
 ];
 
@@ -332,6 +282,13 @@ const Catalog = ({ setSelectedProduct, setView }) => (
       <p className="text-gray-400 max-w-xl mx-auto text-sm md:text-lg leading-relaxed px-2">
         High-grade materials. Precision tools. Your custom masterpiece, made
         easy. Select, upload, and we'll do the rest.
+      </p>
+      <h2 className="text-xl sm:text-2xl md:text-3xl font-black italic uppercase tracking-tighter leading-none">
+        CATALOG <span className="text-cyan-500">& FREE QUOTE SYSTEM</span>
+      </h2>
+      <p className="text-gray-400 max-w-xl mx-auto text-sm md:text-sm lg:text-md leading-relaxed px-2">
+        Find any option based on size that you like, or choose the custom size
+        option. We can provide you with an estimated price in real time.
       </p>
     </div>
 

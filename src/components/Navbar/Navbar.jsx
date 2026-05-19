@@ -26,18 +26,7 @@ const Navbar = () => {
     },
   ];
 
-  const navbarLinks = [
-    {
-      id: 1,
-      title: "About",
-      link: "/",
-    },
-    {
-      id: 2,
-      title: "Contact",
-      link: "/contact",
-    },
-  ];
+  const navbarLinks = [];
 
   return (
     <nav className="fixed top-0 left-0 w-full bg-gray-300 bg-opacity-30 backdrop-blur-md z-50 transition-all duration-300">
@@ -88,7 +77,7 @@ const Navbar = () => {
             ))}
             <button className="hidden md:block px-6 py-2 md:mr-[4rem] border border-cyan-500/50 hover:text-cyan-400 hover:bg-cyan-500/10 transition-all rounded-full text-xs font-bold tracking-[0.2em]">
               <Link
-                to="/contact"
+                to="/catalog"
                 className="hover:text-cyan-400 transition-colors"
               >
                 CATALOG

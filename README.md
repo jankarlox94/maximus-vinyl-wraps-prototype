@@ -1,108 +1,64 @@
-# Maximus VINYL WRAPS Quote system & Admin Portal
+---
 
-Prototype link: https://maximus-web-client.netlify.app/
+## 🏁 Getting Started
 
-A high-performance React application for Maximus vinyl print. This platform allows users to discover products, configure custom printing specifications (including artwork uploads and design services), and request official quotes.
+The journey begins at our [Main Landing Page](https://maximus-web-client.netlify.app/). This is your hub for all high-grade custom vinyl services.
 
-## 🚀 Features
+### For Customers: The "Print Game" Catalog
 
-- **State-Driven Multi-View Interface**: A seamless single-page experience navigating through Catalog, Product Details, Checkout, and Confirmation without full page reloads.
-- **Dynamic Product Configuration**: Real-time updates for printing materials, quantities, and custom design toggles.
-- **Live Artwork Preview**: Instant visual feedback for user-uploaded files using browser-level object URLs.
-- **Integrated Quote System**: Multi-part form data submission supporting complex JSON metadata and physical file buffers.
-- **Admin Dashboard**: A protected route for staff to manage incoming print jobs and review customer requests.
+To start an order, head to the **Catalog**. You’ll see a variety of products, each representing a pre-defined print size.
+
+- **Selecting a Product**: Browse through the options and click on the one that fits your needs.
+- **Customization**: Inside each product, you can choose your specific **Printing Material** and upload your artwork.
+- **Visual Cue**: When you click **"Add to Cart,"** look at the top right of your screen. The number on the **Cart Icon** will increase to confirm your item is ready for checkout.
 
 ---
 
-## 🛠 Technical Stack
+## 🎨 The Custom Design Service
 
-- **Frontend**: React (Functional Components, Hooks).
-- **Styling**: Tailwind CSS for a dark-themed, "industrial" aesthetic.
-- **Icons**: Lucide React.
-- **Routing**: React Router DOM (v6) with Lazy Loading and Suspense.
-- **State Management**: Local React state (`useState`) for cart and configuration persistence.
+Sometimes a project needs a professional touch. We offer an optional **Custom Design** service.
 
----
-
-## 🗺 Application Architecture
-
-### Frontend Routes (`App.jsx`)
-
-The application uses `BrowserRouter` for top-level navigation:
-
-| Path           | Component         | Description                                                    |
-| :------------- | :---------------- | :------------------------------------------------------------- |
-| `/`            | `LandingPage`     | Company overview and entry point.                              |
-| `/contact`     | `EStore`          | The main commercial engine and product catalog.                |
-| `/admin-login` | `AdminLogin`      | Authentication gateway for the dashboard.                      |
-| `/dashboard`   | `MasterDashboard` | **Protected Route**: Administrative view for order management. |
-
-### Internal Views (`EStore.jsx`)
-
-The E-Store component manages its own internal state to switch between sub-views:
-
-- **Catalog**: Displays the `PRODUCTS` array with interactive cards.
-- **Details**: Configuration view for a specific `selectedProduct`.
-- **Checkout**: Order summary, cart item removal, and contact information form.
-- **Confirmation**: Success state displaying the response from the backend.
+- **Professional Help**: By toggling this on, you are requesting help from our in-office designer to ensure your vision comes to life perfectly.
+- **Important Note**: If you upload an image that has the wrong dimensions for the size you picked, we may reach out to offer this service at an hourly rate to ensure the final print looks exactly as you intended.
 
 ---
 
-## 🔌 API & Endpoint Documentation
+## 📝 Requesting a Quote & Payment
 
-### Submit Print Job (Quote Request)
+Once your cart is ready, proceed to the checkout.
 
-The application communicates with the backend via the `handleQuoteSubmit` function.
-
-- **URL**: `${VITE_API_URL}/print-jobs`
-- **Method**: `POST`
-- **Content-Type**: `multipart/form-data`
-
-#### Request Body (FormData)
-
-| Key                 | Type        | Description                                                             |
-| :------------------ | :---------- | :---------------------------------------------------------------------- |
-| `customerName`      | String      | User's full name.                                                       |
-| `customerEmail`     | String      | Contact email.                                                          |
-| `customerPhone`     | String      | Contact phone number.                                                   |
-| `isCustomDesign`    | Boolean     | True if **any** item in the cart requires professional design services. |
-| `cartData`          | JSON String | Array of objects containing `qty`, `material`, `size`, and `notes`.     |
-| `file_[cartItemId]` | File        | Binary file object for each item that has an uploaded artwork.          |
+1.  **Mandatory Info**: You **must** provide a valid **Email Address**. This is our primary way of sending your confirmation and official quote.
+2.  **Upload Artwork**: In the checkout area, look for the **dashed box**. Click it to easily pick a picture or design file from your phone or computer.
+3.  **The Success Screen**: After you hit **"Request Official Quote,"** stay on the page. A confirmation screen will appear with vital instructions.
+4.  **Finalizing**: You must complete the payment and send us confirmation as instructed on that screen. **Production will not start until payment is verified**.
 
 ---
 
-## 🔐 Administrative Access
+## 📦 Tracking Your Project
 
-The Admin view is guarded by a `ProtectedRoute` component.
+You can check the status of your project at any time using our [Public Order Tracker](https://maximus-web-client.netlify.app/track-order).
 
-1.  **Login**: Access `/admin-login` to authenticate.
-2.  **Dashboard**: Once authenticated, the user is redirected to `/dashboard` where `MasterDashboard` renders the management interface.
-
----
-
-## 📦 Local Setup
-
-1.  **Environment Variables**:
-    Create a `.env` file in the root directory:
-
-    ```env
-    VITE_API_URL=https://your-api-endpoint.com
-    ```
-
-2.  **Install Dependencies**:
-
-    ```bash
-    npm install
-    ```
-
-3.  **Run Development Server**:
-    ```bash
-    npm run dev
-    ```
+- **Finding your ID**: Check your confirmation email. It contains a direct link that will automatically load your specific order details for you.
+- **Live Updates**: This page will show you if your order is "Pending Quote," "In Progress," or "Ready for Pickup".
 
 ---
 
-## 📝 Order Logic Implementation
+## 🛠 Manager’s Guide (Internal Only)
 
-- **Cart Item Uniqueness**: Every item added to the cart is assigned a unique `cartItemId` combining a timestamp and a random string. This allows users to add the same product multiple times with different artwork or instructions.
-- **Memory Management**: When an item is removed from the cart, the application automatically calls `URL.revokeObjectURL` to free up system memory used by artwork previews.
+Managers can access the internal system at the [Dashboard Link](https://maximus-web-client.netlify.app/dashboard). This is a protected route designed for business owners and managers.
+
+### The MasterDashboard
+
+Once logged in, you will immediately see the **MasterDashboard**, which displays a complete list of every order in the system.
+
+**Common Manager Tasks:**
+
+- **Update Payment Status**: Click **"View Details"** on any order to log internal payment notes and flip the "Paid" toggle once funds are verified.
+- **Update Order Status**: Use the **Status Badge** inside the order details to keep the customer informed. Changing this to "Ready for Pickup" or "Complete" will update the customer's tracking view in real-time.
+
+---
+
+## 💡 Quick Navigation Tips
+
+- **Action Buttons**: Look for **Cyan** buttons; these are your primary "Go" or "Action" buttons throughout the app.
+- **Navigation**: Click the **MaximusVINYL** logo at any time to return to the catalog and start a new project.
