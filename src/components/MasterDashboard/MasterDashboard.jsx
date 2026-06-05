@@ -90,7 +90,7 @@ export default function MasterDashboard() {
         {/* Metric Card */}
         <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
           <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider block">
-            Unique Site Sessions
+            Website visit count
           </span>
           <div className="mt-2 flex items-baseline gap-2">
             <span className="text-4xl font-bold text-slate-800">
