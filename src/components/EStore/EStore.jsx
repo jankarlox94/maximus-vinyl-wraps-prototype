@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 import {
   ShoppingCart,
   Upload,
@@ -194,6 +195,7 @@ const PRODUCTS = [
     ratio: "Dynamic",
     price: "From $35.00", // Minimum starting base price
     tag: "Custom Sized",
+    isTheCustomOption: true,
     desc: "Tailored specifically to your dimensions. Price is calculated based on total square footage used from our standard material rolls.",
     comparison: "Fully customizable width and height to your exact dimensions",
     rating: 4.9,
@@ -580,6 +582,28 @@ const ProductDetails = ({
           </div>
 
           {/* Material Dropdown - Native appearance for easier mobile selection */}
+          {selectedProduct.isTheCustomOption && (
+            <div>
+              <label className="block text-xs sm:text-sm font-bold text-slate-300 mb-2 uppercase tracking-wide">
+                2. Printing Material
+              </label>
+              <select
+                className="w-full text-slate-300 border border-[#2e313c] bg-[#1a1c22] p-4 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none appearance-none cursor-pointer"
+                value={selectedPrintingMaterial}
+                onChange={(e) => setSelectedPrintingMaterial(e.target.value)}
+              >
+                <option value="" disabled>
+                  Select a material...
+                </option>
+                {selectedProduct.papers.map((p) => (
+                  <option key={p} value={p}>
+                    {p}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+
           <div>
             <label className="block text-xs sm:text-sm font-bold text-slate-300 mb-2 uppercase tracking-wide">
               2. Printing Material
@@ -1068,6 +1092,32 @@ const EStore = () => {
       setIsSubmitting(false);
     }
   };
+
+  useEffect(() => {
+    const registerVisitor = async () => {
+      const alreadyTracked = sessionStorage.getItem("maximus_tracked");
+      debugger;
+      if (!alreadyTracked) {
+        debugger;
+        try {
+          await fetch(
+            `${import.meta.env.VITE_API_URL}/print-jobs/visitor-hit`,
+            {
+              method: "POST",
+              // Do NOT set headers; the browser will set multipart/form-data automatically
+            },
+          );
+
+          // Set flag so they aren't counted again during this browser tab session
+          sessionStorage.setItem("maximus_tracked", "true");
+        } catch (err) {
+          console.error("Analytics tracking failed silently:", err);
+        }
+      }
+    };
+
+    registerVisitor();
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#0f1115] text-white font-sans selection:bg-cyan-500/30">

@@ -29,14 +29,22 @@ export default function MasterDashboard() {
 
       const res = await fetch(url);
       const data = await res.json();
-
+      debugger;
       if (recordId) {
         // The backend returns an array; select the first (and only) item
         setSelectedOrder(data[0]);
         setSearchParams({ order_number: recordId });
+        debugger;
       } else {
         // Update the main dashboard list
-        setOrders(data);
+        if (data && data.orders && data.metrics) {
+          setOrders(data.orders);
+          debugger;
+          setVisitorCount(data.metrics.totalVisitors);
+        } else {
+          // Fallback array parsing handling
+          setOrders(Array.isArray(data) ? data : []);
+        }
       }
     } catch (error) {
       console.error("Dashboard fetch error:", error);
@@ -45,27 +53,24 @@ export default function MasterDashboard() {
     }
   };
 
+  const [visitorCount, setVisitorCount] = useState(null);
+  const [loadingVisitorCount, setLoadingVisitorCount] = useState(true);
+
+  // CLEANUP: Combined your duplicate useEffect blocks into a single initialization layer
   useEffect(() => {
     const orderIdFromUrl = searchParams.get("order_number");
 
     if (orderIdFromUrl) {
-      // If there is an ID in the URL, fetch that specific order
       fetchData(orderIdFromUrl);
     } else {
-      // Otherwise, just load the full list
       fetchData();
     }
-  }, []); // Run once on mount
-
-  // Update useEffect to load the initial list
-  useEffect(() => {
-    fetchData();
-  }, []);
+  }, [searchParams]); // Listens to URL query manipulation safely
 
   const refreshData = () => {
     setSelectedOrder(null);
-    setSearchParams({}); // This clears ?order_number=... from the URL
-    fetchData(); // Reload the full list
+    setSearchParams({});
+    fetchData();
   };
 
   if (loading)
@@ -77,6 +82,25 @@ export default function MasterDashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-8 font-sans">
+      <h2 className="text-3xl font-bold text-gray-800 tracking-tight">
+        Admin Operations
+      </h2>
+
+      <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Metric Card */}
+        <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+          <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider block">
+            Unique Site Sessions
+          </span>
+          <div className="mt-2 flex items-baseline gap-2">
+            <span className="text-4xl font-bold text-slate-800">
+              {visitorCount ?? 0}
+            </span>
+
+            <span className="text-sm font-medium text-emerald-600">Total</span>
+          </div>
+        </div>
+      </div>
       <div className="max-w-7xl mx-auto">
         <header className="mb-8 flex justify-between items-end">
           <div>

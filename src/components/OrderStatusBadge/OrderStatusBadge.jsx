@@ -51,7 +51,6 @@ const OrderStatusBadge = ({ orderId, initialStatus = "pending_quote" }) => {
     // Optimistically update the UI so it feels instantaneous to the user
     setCurrentStatus(newStatus);
     setIsUpdating(true);
-
     try {
       // NOTE: Replace the URL with your actual Render backend URL or environment variable
       const response = await fetch(
@@ -64,12 +63,11 @@ const OrderStatusBadge = ({ orderId, initialStatus = "pending_quote" }) => {
           body: JSON.stringify({ status: newStatus }),
         },
       );
-      debugger;
 
       if (!response.ok) {
+        debugger;
         throw new Error("Failed to update status on the server.");
       }
-      debugger;
 
       console.log(`Order ${orderId} successfully updated to ${newStatus}`);
     } catch (error) {
