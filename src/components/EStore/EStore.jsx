@@ -549,7 +549,7 @@ const ProductDetails = ({
                     Custom Design
                   </span>
                   <span className="text-[10px] text-cyan-400 font-medium">
-                    + starting at $25.00
+                    + starting at $100.00
                   </span>
                 </div>
 
@@ -564,20 +564,6 @@ const ProductDetails = ({
                   <div className="w-11 h-6 bg-slate-600 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-cyan-500 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cyan-600"></div>
                 </label>
               </div>
-              {/* <div className="flex justify-center mt-2">
-                <button
-                  type="button"
-                  onClick={() => setIsCustomDesign(!this.isCustomDesign)}
-                  className="w-full sm:w-auto px-4 py-2 bg-[#2e313c] hover:bg-cyan-600 text-slate-200 hover:text-white text-xs font-bold rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 whitespace-nowrap"
-                >
-                  Add Custom Design (starting +$25)
-                </button>
-              </div>
-              <div>
-                <h4 className="text-sm font-bold text-slate-200">
-                  Need a custom design?
-                </h4>
-              </div> */}
             </div>
           </div>
 
@@ -1051,7 +1037,6 @@ const EStore = () => {
 
     try {
       debugger;
-      //  const response = await fetch("http://[::1]:3000/api/print-jobs", {
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/print-jobs`,
         {
@@ -1064,7 +1049,6 @@ const EStore = () => {
         // 1. Save the API response (Expected format: { id, orderNumber, items, totalAmount, etc })
         formData;
         const rawData = await response.json();
-        debugger;
         ///
         if (Array.isArray(rawData) && rawData.length > 0) {
           setOrderResponse(rawData[0]); // Set just the first (only) object
@@ -1078,7 +1062,6 @@ const EStore = () => {
         setCustomerInfo({ name: "", email: "", phone: "" });
         setView("confirmation");
       } else {
-        debugger;
         const errorData = await response.json().catch(() => ({})); // try to parse error JSON
         console.error("API Error Response:", errorData);
         throw new Error(`Submit failed with status: ${httpResponse.status}`);
@@ -1096,7 +1079,6 @@ const EStore = () => {
   useEffect(() => {
     const registerVisitor = async () => {
       const alreadyTracked = sessionStorage.getItem("maximus_tracked");
-      debugger;
       if (!alreadyTracked) {
         debugger;
         try {

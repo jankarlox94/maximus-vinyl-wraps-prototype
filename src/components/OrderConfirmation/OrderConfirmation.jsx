@@ -81,44 +81,6 @@ const OrderConfirmation = ({ orderData, onReset }) => {
                   {new Date(createdAt).toLocaleDateString()}
                 </span>
               </div>
-              {/* <table className="w-full text-sm text-left">
-                <tbody className="divide-y divide-gray-100">
-                  {items.map((item, idx) => (
-                    <tr
-                      key={idx}
-                      className="hover:bg-gray-50/50 transition-colors"
-                    >
-                      <td className="px-6 py-4">
-                        <div className="font-bold text-slate-800">
-                          {item.productName}
-                        </div>
-                        <div className="text-xs text-gray-500">
-                          {item.size} • {item.material}
-                        </div>
-                        {item.hasFile && (
-                          <div className="mt-1 flex items-center text-[10px] font-bold text-blue-600 uppercase">
-                            <FileText size={10} className="mr-1" /> Artwork
-                            Uploaded
-                          </div>
-                        )}
-                      </td>
-                      <td className="px-6 py-4 text-right font-mono font-bold text-slate-700">
-                        ${Number(item.price).toFixed(2)}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-                <tfoot className="bg-slate-900 text-white">
-                  <tr>
-                    <td className="px-6 py-5 font-bold text-lg uppercase tracking-tight">
-                      Estimated Total
-                    </td>
-                    <td className="px-6 py-5 text-right font-black text-xl text-orange-400">
-                      ${Number(totalAmount).toFixed(2)}
-                    </td>
-                  </tr>
-                </tfoot>
-              </table> */}
             </div>
           </div>
 
