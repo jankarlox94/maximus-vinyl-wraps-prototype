@@ -125,66 +125,81 @@ export default function MasterDashboard() {
         <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
           {/* MOBILE VIEW: Stacked Cards */}
           <div className="md:hidden divide-y divide-slate-100">
-            {orders.map((order) => (
-              <div
-                key={order.id}
-                className="p-4 space-y-3 hover:bg-slate-50 transition-colors"
-              >
-                <div className="flex justify-between items-start">
-                  <div className="space-y-0.5">
-                    <p className="font-black text-slate-900 uppercase text-sm flex items-center gap-2">
-                      {order.customer_name}
-                      {order.is_custom_design && (
-                        <span
-                          className="bg-orange-500 w-2 h-2 rounded-full animate-pulse"
-                          title="Custom Design Required"
-                        />
+            {[...orders]
+              .sort(
+                (a, b) =>
+                  new Date(b.lastUpdatedDateTime || b.created_at) -
+                  new Date(a.lastUpdatedDateTime || a.created_at),
+              )
+              .map((order) => (
+                <div
+                  key={order.id}
+                  className="p-4 space-y-3 hover:bg-slate-50 transition-colors"
+                >
+                  <div className="flex justify-between items-start">
+                    <div className="space-y-0.5">
+                      <p className="font-black text-slate-900 uppercase text-sm flex items-center gap-2">
+                        {order.customer_name}
+                        {order.is_custom_design && (
+                          <span
+                            className="bg-orange-500 w-2 h-2 rounded-full animate-pulse"
+                            title="Custom Design Required"
+                          />
+                        )}
+                      </p>
+                      <p className="text-xs text-slate-500 font-medium">
+                        {order.customer_email}
+                      </p>
+                      <p className="text-[10px] text-slate-400 font-mono">
+                        {order.customer_phone}
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-[10px] font-bold text-slate-400 uppercase">
+                        Created:{" "}
+                        {new Date(order.created_at).toLocaleDateString()}
+                      </p>
+                      {order.lastUpdatedDateTime && (
+                        <p className="text-[10px] font-medium text-amber-600 uppercase">
+                          Updated:{" "}
+                          {new Date(
+                            order.lastUpdatedDateTime,
+                          ).toLocaleDateString()}
+                        </p>
                       )}
-                    </p>
-                    <p className="text-xs text-slate-500 font-medium">
-                      {order.customer_email}
-                    </p>
-                    <p className="text-[10px] text-slate-400 font-mono">
-                      {order.customer_phone}
-                    </p>
+                      <p className="text-[10px] font-black text-cyan-600 uppercase mt-1">
+                        {order.order_items?.length || 0} Items
+                      </p>
+                    </div>
                   </div>
-                  <div className="text-right">
-                    <p className="text-[10px] font-bold text-slate-400 uppercase">
-                      {new Date(order.created_at).toLocaleDateString()}
-                    </p>
-                    <p className="text-[10px] font-black text-cyan-600 uppercase">
-                      {order.order_items?.length || 0} Projects
-                    </p>
-                  </div>
-                </div>
 
-                <div className="flex justify-between items-center">
-                  <div className="flex gap-2">
-                    {/* Status Badge */}
-                    <span className="px-2 py-0.5 rounded-full text-[10px] font-black uppercase bg-yellow-100 text-yellow-700 border border-yellow-200">
-                      {order.status.replace("_", " ")}
-                    </span>
-                    {/* Paid Badge */}
-                    <span
-                      className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase border ${
-                        order.is_paid
-                          ? "bg-green-100 text-green-700 border-green-200"
-                          : "bg-red-100 text-red-700 border-red-200"
-                      }`}
+                  <div className="flex justify-between items-center">
+                    <div className="flex gap-2">
+                      {/* Status Badge */}
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-black uppercase bg-yellow-100 text-yellow-700 border border-yellow-200">
+                        {order.status.replace("_", " ")}
+                      </span>
+                      {/* Paid Badge */}
+                      <span
+                        className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase border ${
+                          order.is_paid
+                            ? "bg-green-100 text-green-700 border-green-200"
+                            : "bg-red-100 text-red-700 border-red-200"
+                        }`}
+                      >
+                        {order.is_paid ? "Paid" : "Unpaid"}
+                      </span>
+                    </div>
+
+                    <button
+                      onClick={() => fetchData(order.id)}
+                      className="bg-slate-900 text-white px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider hover:bg-cyan-500 hover:text-white transition-all shadow-sm"
                     >
-                      {order.is_paid ? "Paid" : "Unpaid"}
-                    </span>
+                      Details
+                    </button>
                   </div>
-
-                  <button
-                    onClick={() => fetchData(order.id)}
-                    className="bg-slate-900 text-white px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider hover:bg-cyan-500 hover:text-white transition-all shadow-sm"
-                  >
-                    Details
-                  </button>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
 
           {/* DESKTOP VIEW: Traditional Table */}
@@ -192,7 +207,8 @@ export default function MasterDashboard() {
             <table className="w-full text-left border-collapse">
               <thead className="bg-slate-900 text-white text-[10px] uppercase tracking-widest">
                 <tr>
-                  <th className="p-5 font-black">Date</th>
+                  <th className="p-5 font-black">Date Created</th>
+                  <th className="p-5 font-black">Last Updated</th>
                   <th className="p-5 font-black">Customer Information</th>
                   <th className="p-5 font-black text-center">Items</th>
                   <th className="p-5 font-black">Design Status</th>
@@ -201,73 +217,102 @@ export default function MasterDashboard() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
-                {orders.map((order) => (
-                  <tr
-                    key={order.id}
-                    className="hover:bg-slate-50 transition-colors group"
-                  >
-                    <td className="p-5">
-                      <p className="text-sm text-slate-600 font-bold">
-                        {new Date(order.created_at).toLocaleDateString()}
-                      </p>
-                      <p className="text-[10px] text-slate-400 font-mono">
-                        #{order.id.slice(0, 8)}
-                      </p>
-                    </td>
-                    <td className="p-5">
-                      <p className="font-black text-slate-900 uppercase text-sm">
-                        {order.customer_name}
-                      </p>
-                      <div className="flex flex-col text-xs text-slate-500">
-                        <span>{order.customer_email}</span>
-                        <span className="font-mono text-[10px]">
-                          {order.customer_phone}
+                {[...orders]
+                  .sort(
+                    (a, b) =>
+                      new Date(b.lastUpdatedDateTime || b.created_at) -
+                      new Date(a.lastUpdatedDateTime || a.created_at),
+                  )
+                  .map((order) => (
+                    <tr
+                      key={order.id}
+                      className="hover:bg-slate-50 transition-colors group"
+                    >
+                      <td className="p-5">
+                        <p className="text-sm text-slate-600 font-bold">
+                          {new Date(order.created_at).toLocaleDateString()}
+                        </p>
+                        <p className="text-[10px] text-slate-400 font-mono">
+                          #{order.id.slice(0, 8)}
+                        </p>
+                      </td>
+                      <td className="p-5">
+                        {order.lastUpdatedDateTime ? (
+                          <>
+                            <p className="text-sm text-amber-700 font-bold">
+                              {new Date(
+                                order.lastUpdatedDateTime,
+                              ).toLocaleDateString()}
+                            </p>
+                            <p className="text-[10px] text-slate-400 font-mono">
+                              {new Date(
+                                order.lastUpdatedDateTime,
+                              ).toLocaleTimeString([], {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                              })}
+                            </p>
+                          </>
+                        ) : (
+                          <p className="text-xs text-slate-400 italic">
+                            Never Updated
+                          </p>
+                        )}
+                      </td>
+                      <td className="p-5">
+                        <p className="font-black text-slate-900 uppercase text-sm">
+                          {order.customer_name}
+                        </p>
+                        <div className="flex flex-col text-xs text-slate-500">
+                          <span>{order.customer_email}</span>
+                          <span className="font-mono text-[10px]">
+                            {order.customer_phone}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="p-5 text-center">
+                        <span className="bg-slate-100 text-slate-900 px-2 py-1 rounded font-black text-xs">
+                          {order.order_items?.length || 0}
                         </span>
-                      </div>
-                    </td>
-                    <td className="p-5 text-center">
-                      <span className="bg-slate-100 text-slate-900 px-2 py-1 rounded font-black text-xs">
-                        {order.order_items?.length || 0}
-                      </span>
-                    </td>
-                    <td className="p-5">
-                      {order.is_custom_design ? (
-                        <span className="flex items-center gap-1.5 text-[10px] font-black text-orange-600 uppercase">
-                          <span className="w-2 h-2 bg-orange-500 rounded-full" />
-                          Custom Build
-                        </span>
-                      ) : (
-                        <span className="text-[10px] font-bold text-slate-400 uppercase">
-                          Standard
-                        </span>
-                      )}
-                    </td>
-                    <td className="p-5">
-                      <div className="flex flex-col gap-1">
-                        <span className="w-fit px-3 py-1 rounded-full text-[10px] font-black uppercase bg-yellow-100 text-yellow-700 border border-yellow-200">
-                          {order.status.replace("_", " ")}
-                        </span>
-                        <span
-                          className={`w-fit px-3 py-1 rounded-full text-[10px] font-black uppercase border ${
-                            order.is_paid
-                              ? "bg-green-100 text-green-700 border-green-200"
-                              : "bg-red-100 text-red-700 border-red-200"
-                          }`}
+                      </td>
+                      <td className="p-5">
+                        {order.is_custom_design ? (
+                          <span className="flex items-center gap-1.5 text-[10px] font-black text-orange-600 uppercase">
+                            <span className="w-2 h-2 bg-orange-500 rounded-full" />
+                            Custom Build
+                          </span>
+                        ) : (
+                          <span className="text-[10px] font-bold text-slate-400 uppercase">
+                            Standard
+                          </span>
+                        )}
+                      </td>
+                      <td className="p-5">
+                        <div className="flex flex-col gap-1">
+                          <span className="w-fit px-3 py-1 rounded-full text-[10px] font-black uppercase bg-yellow-100 text-yellow-700 border border-yellow-200">
+                            {order.status.replace("_", " ")}
+                          </span>
+                          <span
+                            className={`w-fit px-3 py-1 rounded-full text-[10px] font-black uppercase border ${
+                              order.is_paid
+                                ? "bg-green-100 text-green-700 border-green-200"
+                                : "bg-red-100 text-red-700 border-red-200"
+                            }`}
+                          >
+                            {order.is_paid ? "Paid" : "Unpaid"}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="p-5 text-right">
+                        <button
+                          onClick={() => fetchData(order.id)} // Fetch fresh details by ID
+                          className="bg-slate-900 text-white px-4 py-2 rounded-xl text-xs font-black uppercase tracking-tighter hover:bg-cyan-600 transition-all shadow-sm active:scale-95"
                         >
-                          {order.is_paid ? "Paid" : "Unpaid"}
-                        </span>
-                      </div>
-                    </td>
-                    <td className="p-5 text-right">
-                      <button
-                        onClick={() => fetchData(order.id)} // Fetch fresh details by ID
-                        className="bg-slate-900 text-white px-4 py-2 rounded-xl text-xs font-black uppercase tracking-tighter hover:bg-cyan-600 transition-all shadow-sm active:scale-95"
-                      >
-                        View Details
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+                          View Details
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
