@@ -22,7 +22,6 @@ import sixteenbyfour from "../../assets/sixteenbyfour.png";
 import thirtybyfourft from "../../assets/thirtybyfourft.png";
 import twentyfivebyfourft from "../../assets/twentyfivebyfourft.png";
 import microperforado from "../../assets/microperforado.jpg";
-import PaymentMethods from "../PaymentMethods/PaymentMethods";
 import twopointfivebyfour from "../../assets/twopointfivebyfour.webp";
 import twofeetbysixfeet from "../../assets/twofeetbysixfeet.jpg";
 import wallDecalTenByTen from "../../assets/wall-decal-10-by-10.webp";
@@ -790,10 +789,6 @@ const Checkout = ({
 
         {/* Right: The Customer Form & Quote Request */}
         <div className="lg:col-span-5 space-y-6">
-          <div className="bg-white border border-gray-200 rounded-xl p-5 sm:p-6 shadow-md">
-            <PaymentMethods />
-          </div>
-
           {/* Made this section sticky only on Desktop */}
           <div className="bg-white border border-gray-200 rounded-xl p-5 sm:p-6 shadow-xl lg:sticky lg:top-24">
             <div className="mb-6 border-b border-gray-100 pb-6">
@@ -893,18 +888,6 @@ const Checkout = ({
                     <line x1="12" y1="16" x2="12.01" y2="16" />
                   </svg>
                 </div>
-
-                <p className="text-xs sm:text-sm leading-relaxed text-red-900">
-                  <span className="font-black text-red-900 uppercase">
-                    Important:
-                  </span>{" "}
-                  Payment must be completed through our provided methods to
-                  finalize your request.
-                  <span className="font-bold text-black block mt-1">
-                    Printing production will not commence until payment is
-                    verified.
-                  </span>
-                </p>
               </div>
             </form>
           </div>
