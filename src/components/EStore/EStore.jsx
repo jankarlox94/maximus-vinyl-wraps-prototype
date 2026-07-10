@@ -668,10 +668,15 @@ const Checkout = ({
   setView,
 }) => {
   debugger;
-  const subtotal = cart.reduce(
-    (total, item) => total + item.price * item.qty,
-    0,
-  );
+  const subtotal = cart.reduce((total, item) => {
+    // Calculate the base cost for this item line item
+    const itemBaseCost = item.price * item.qty;
+
+    // If it's a custom design, add a flat $100 fee to this line item
+    const customDesignFee = item.isCustomDesign ? 100 : 0;
+
+    return total + itemBaseCost + customDesignFee;
+  }, 0);
 
   return (
     <div className="p-4 sm:p-6 py-8 sm:py-12 max-w-7xl mx-auto min-h-screen animate-in fade-in">
@@ -768,7 +773,7 @@ const Checkout = ({
                       <span className="font-medium text-slate-700">
                         Is Custom Design?:
                       </span>{" "}
-                      {item.isCustomDesign ? "YES" : "NO"}
+                      {item.isCustomDesign ? "YES (+$100)" : "NO"}
                     </p>
                   </div>
 
@@ -796,33 +801,89 @@ const Checkout = ({
 
         {/* Right: The Customer Form & Quote Request */}
         <div className="lg:col-span-5 space-y-6">
-          {/* Made this section sticky only on Desktop */}
+          {/* Sticky Container */}
           <div className="bg-white border border-gray-200 rounded-xl p-5 sm:p-6 shadow-xl lg:sticky lg:top-24">
+            {/* Order Summary */}
             <div className="mb-6 border-b border-gray-100 pb-6">
               <h3 className="text-xl font-bold text-slate-900 mb-2">
                 Order Summary
               </h3>
+
+              {/* Standard Base Price Breakdown */}
               <div className="flex justify-between items-center text-slate-600 mb-2 text-sm sm:text-base">
                 <span>
                   Items ({cart.reduce((sum, item) => sum + item.qty, 0)}):
                 </span>
-                <span>${subtotal.toFixed(2)}</span>
+                <span>
+                  $
+                  {cart
+                    .reduce((sum, item) => sum + item.price * item.qty, 0)
+                    .toFixed(2)}
+                </span>
               </div>
+
+              {/* Explicit Setup Fee Line Item (Only shows if a custom setup exists in cart) */}
+              {cart.some((item) => item.isCustomDesign) && (
+                <div className="flex justify-between items-center text-amber-600 mb-2 text-sm sm:text-base font-medium">
+                  <span>Design Setup Fee:</span>
+                  <span>
+                    +$
+                    {(
+                      cart.filter((item) => item.isCustomDesign).length * 100
+                    ).toFixed(2)}
+                  </span>
+                </div>
+              )}
+
+              {/* Final Integrated Total */}
               <div className="flex justify-between items-center text-lg font-bold text-slate-900 mt-4">
                 <span>Estimated Total:</span>
                 <span>${subtotal.toFixed(2)}</span>
               </div>
             </div>
 
-            <h3 className="text-lg font-bold text-slate-900 mb-2">
+            {/* Contact Information Header */}
+            <h3 className="text-lg font-bold text-slate-900 mb-1">
               Contact Information
             </h3>
-            <p className="text-slate-500 text-sm mb-6">
-              Where should we send your official quote and proofs?
+            <p className="text-slate-500 text-sm mb-4">
+              Where should we send your official quote and layout proofs?
             </p>
 
+            {/* Highlighted Multi-Channel Contact Warning */}
+            <div className="mb-6 bg-amber-50 border-l-4 border-amber-500 p-3 sm:p-4 rounded-r-lg">
+              <div className="flex gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"
+                  />
+                </svg>
+                <div>
+                  <h4 className="text-xs font-black text-amber-900 uppercase tracking-wide">
+                    Both Fields Required for Layout Proofs
+                  </h4>
+                  <p className="text-xs text-amber-700 mt-0.5 leading-relaxed">
+                    We need a valid **Email** to send your quote details and a
+                    **Phone Number** to instantly confirm details before
+                    production.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Form Entry */}
             <form onSubmit={handleQuoteSubmit} className="space-y-4">
               <div className="grid grid-cols-1 gap-4">
+                {/* Full Name */}
                 <div>
                   <label className="block text-sm font-bold text-slate-700 mb-1">
                     Full Name *
@@ -833,45 +894,59 @@ const Checkout = ({
                     required
                     value={customerInfo.name}
                     onChange={handleCustomerInfoChange}
-                    className="w-full bg-gray-50 border text-slate-900 border-gray-300 rounded-lg p-3 text-base outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
+                    className="w-full bg-gray-50 border text-slate-900 border-gray-300 rounded-lg p-3 text-base outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all"
                     placeholder="Jane Doe"
                   />
                 </div>
-                {/* ... Other inputs use same style: rounded-lg and text-base ... */}
+
+                {/* Email Address */}
                 <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-1">
-                    Email Address *
-                  </label>
+                  <div className="flex justify-between items-center mb-1">
+                    <label className="block text-sm font-bold text-slate-700">
+                      Email Address *
+                    </label>
+                    <span className="text-[10px] font-black uppercase text-amber-600 bg-amber-100 px-1.5 py-0.5 rounded tracking-wider">
+                      For Email Quote Confirmation
+                    </span>
+                  </div>
                   <input
                     type="email"
                     name="email"
                     required
                     value={customerInfo.email}
                     onChange={handleCustomerInfoChange}
-                    className="w-full bg-gray-50 border border-gray-300 text-slate-900 rounded-lg p-3 text-base outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
+                    className="w-full bg-gray-50 border border-gray-300 text-slate-900 rounded-lg p-3 text-base outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all"
                     placeholder="jane@example.com"
                   />
                 </div>
 
+                {/* Phone Number */}
                 <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-1">
-                    Phone Number
-                  </label>
+                  <div className="flex justify-between items-center mb-1">
+                    <label className="block text-sm font-bold text-slate-700">
+                      Phone Number *
+                    </label>
+                    <span className="text-[10px] font-black uppercase text-amber-600 bg-amber-100 px-1.5 py-0.5 rounded tracking-wider">
+                      For Quick Communication
+                    </span>
+                  </div>
                   <input
-                    type="number"
+                    type="tel"
                     name="phone"
+                    required
                     value={customerInfo.phone}
                     onChange={handleCustomerInfoChange}
-                    className="w-full  border border-gray-300 rounded p-3 text-slate-900 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none"
+                    className="w-full bg-gray-50 border border-gray-300 text-slate-900 rounded-lg p-3 text-base outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all"
                     placeholder="(555) 123-4567"
                   />
                 </div>
               </div>
 
+              {/* Submit Button */}
               <button
                 type="submit"
                 disabled={isSubmitting || cart.length === 0}
-                className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 rounded-xl shadow-lg active:scale-[0.98] transition-all mt-4 disabled:bg-slate-400 flex justify-center items-center h-14"
+                className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 rounded-xl shadow-lg active:scale-[0.98] transition-all mt-4 disabled:bg-slate-400 flex justify-center items-center h-14 uppercase text-xs tracking-wider"
               >
                 {isSubmitting ? "Processing..." : "Request Official Quote"}
               </button>

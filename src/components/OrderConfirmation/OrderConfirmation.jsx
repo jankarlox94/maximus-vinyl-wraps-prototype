@@ -6,11 +6,11 @@ import {
   FileText,
   AlertCircle,
 } from "lucide-react";
+import OrderLookup from "../OrderLookup/OrderLookup";
 
 const OrderConfirmation = ({ orderData, onReset }) => {
   // Extracting data from the API response
   const { message, data, items, totalAmount, createdAt } = orderData;
-  debugger;
 
   return (
     <div className="max-w-3xl mx-auto py-12 px-6 animate-in zoom-in-95 duration-500">
@@ -29,6 +29,11 @@ const OrderConfirmation = ({ orderData, onReset }) => {
               #{data["orderId"]}
             </span>
           </p>
+          <a
+            href={`https://maximusvinylwraps.com/track-order?ordernumber=${data["orderId"]}`}
+          >
+            Track Order #{data.orderId}
+          </a>
         </div>
 
         <div className="p-8 md:p-12">
@@ -54,28 +59,14 @@ const OrderConfirmation = ({ orderData, onReset }) => {
                     Important Adjustment Policy
                   </h4>
                   <p className="text-sm text-orange-800 mt-1 leading-relaxed">
-                    We will be reaching out to you shortly if we need to make
-                    any adjustments to your printing order (such as resolution
-                    fixes or bleed corrections). Please note that{" "}
+                    Please review your Email(even Junk folder) and text
+                    messages, We will be reaching out to you shortly.
                     <strong>
-                      technical adjustments or design corrections may incur
-                      extra costs
+                      In this step we will talk about the printing and payment
+                      details.
                     </strong>{" "}
-                    that will be added to your final official quote.
                   </p>
                 </div>
-              </div>
-            </div>
-
-            {/* Order Summary Table */}
-            <div className="border border-gray-200 rounded-xl overflow-hidden">
-              <div className="bg-gray-50 px-6 py-3 border-b border-gray-200 flex justify-between items-center">
-                <span className="text-xs font-black uppercase text-slate-500 tracking-widest">
-                  Project Details
-                </span>
-                <span className="text-xs text-slate-400">
-                  {new Date(createdAt).toLocaleDateString()}
-                </span>
               </div>
             </div>
           </div>
@@ -99,7 +90,7 @@ const OrderConfirmation = ({ orderData, onReset }) => {
       </div>
 
       <p className="text-center text-gray-400 text-xs mt-8">
-        Maximus Vinyl Print Service • Oklahoma City, OK
+        Maximus Vinyl Wraps • Oklahoma City, OK
       </p>
     </div>
   );
