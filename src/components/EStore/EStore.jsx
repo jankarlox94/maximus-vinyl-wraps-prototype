@@ -1060,6 +1060,9 @@ const EStore = () => {
       left: 0,
       behavior: "instant", // Use "instant" instead of "smooth" to prevent flicker layout shifts
     });
+  }, [view]);
+
+  useEffect(() => {
     const registerVisitor = async () => {
       const alreadyTracked = sessionStorage.getItem("maximus_tracked");
       if (!alreadyTracked) {
