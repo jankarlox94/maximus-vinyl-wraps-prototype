@@ -667,7 +667,6 @@ const Checkout = ({
   isSubmitting,
   setView,
 }) => {
-  debugger;
   const subtotal = cart.reduce((total, item) => {
     // Calculate the base cost for this item line item
     const itemBaseCost = item.price * item.qty;

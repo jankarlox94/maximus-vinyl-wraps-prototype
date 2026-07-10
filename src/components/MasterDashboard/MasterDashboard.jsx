@@ -423,10 +423,15 @@ function OrderModal({ order, setOrders, setSelectedOrder, onClose }) {
       </div>
     );
   // Calculate the total estimated price
-  const orderTotal = order.order_items.reduce(
-    (sum, item) => sum + Number(item.estimated_price) * item.quantity,
-    0,
-  );
+  const orderTotal = order.order_items.reduce((sum, item) => {
+    // Calculate the base cost for this order item line
+    const itemBaseCost = Number(item.estimated_price) * item.quantity;
+
+    // Add a flat $100 if the item requires a custom design layout
+    const customDesignFee = item.is_custom_design ? 100 : 0;
+
+    return sum + itemBaseCost + customDesignFee;
+  }, 0);
 
   // Format the date nicely
   const formattedDate = new Date(order.created_at).toLocaleDateString("en-US", {
@@ -437,6 +442,7 @@ function OrderModal({ order, setOrders, setSelectedOrder, onClose }) {
     hour: "2-digit",
     minute: "2-digit",
   });
+  debugger;
 
   // Helper function for status badge colors
   const getStatusBadge = (status) => {
