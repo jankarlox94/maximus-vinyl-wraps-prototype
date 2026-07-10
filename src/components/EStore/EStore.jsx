@@ -994,7 +994,6 @@ const EStore = () => {
     formData.append("isCustomDesign", anyCustomDesign);
 
     // formData.append("")
-    debugger;
     // 2. Append Cart Metadata (Everything EXCEPT the heavy file objects)
     const cartMetadata = cart.map((item) => ({
       cartItemId: item.cartItemId,
@@ -1019,7 +1018,6 @@ const EStore = () => {
     });
 
     try {
-      debugger;
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/print-jobs`,
         {
@@ -1027,7 +1025,6 @@ const EStore = () => {
           body: formData, // Do NOT set headers; the browser will set multipart/form-data automatically
         },
       );
-      debugger;
       if (response.ok) {
         // 1. Save the API response (Expected format: { id, orderNumber, items, totalAmount, etc })
         formData;
@@ -1041,7 +1038,6 @@ const EStore = () => {
 
         setCart([]);
         orderResponse;
-        debugger;
         setCustomerInfo({ name: "", email: "", phone: "" });
         setView("confirmation");
       } else {
@@ -1050,7 +1046,6 @@ const EStore = () => {
         throw new Error(`Submit failed with status: ${httpResponse.status}`);
       }
     } catch (error) {
-      debugger;
       console.error("Error:", error);
       setOrderResponse({ error: error.message });
       alert("There was an issue submitting your request. Please try again.");
@@ -1060,6 +1055,11 @@ const EStore = () => {
   };
 
   useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "instant", // Use "instant" instead of "smooth" to prevent flicker layout shifts
+    });
     const registerVisitor = async () => {
       const alreadyTracked = sessionStorage.getItem("maximus_tracked");
       if (!alreadyTracked) {
