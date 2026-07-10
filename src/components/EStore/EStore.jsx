@@ -667,6 +667,7 @@ const Checkout = ({
   isSubmitting,
   setView,
 }) => {
+  debugger;
   const subtotal = cart.reduce(
     (total, item) => total + item.price * item.qty,
     0,
@@ -761,7 +762,13 @@ const Checkout = ({
                       <span className="font-medium text-slate-700">
                         Material:
                       </span>{" "}
-                      {item.material}
+                      {item.printingMaterial}
+                    </p>
+                    <p className="col-span-2">
+                      <span className="font-medium text-slate-700">
+                        Is Custom Design?:
+                      </span>{" "}
+                      {item.isCustomDesign ? "YES" : "NO"}
                     </p>
                   </div>
 
@@ -868,27 +875,6 @@ const Checkout = ({
               >
                 {isSubmitting ? "Processing..." : "Request Official Quote"}
               </button>
-              <div className="mt-4 p-4 bg-red-500/10 border border-red-500/50 rounded-xl flex gap-3 items-start animate-pulse-subtle">
-                <div className="flex-shrink-0 mt-0.5">
-                  {/* Alert Circle Icon */}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="text-red-500"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <line x1="12" y1="8" x2="12" y2="12" />
-                    <line x1="12" y1="16" x2="12.01" y2="16" />
-                  </svg>
-                </div>
-              </div>
             </form>
           </div>
         </div>
