@@ -1126,13 +1126,15 @@ const EStore = () => {
     const registerVisitor = async () => {
       const alreadyTracked = sessionStorage.getItem("maximus_tracked");
       if (!alreadyTracked) {
-        debugger;
         try {
           await fetch(
             `${import.meta.env.VITE_API_URL}/print-jobs/visitor-hit`,
             {
               method: "POST",
-              // Do NOT set headers; the browser will set multipart/form-data automatically
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({}),
             },
           );
 
