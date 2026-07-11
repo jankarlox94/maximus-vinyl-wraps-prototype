@@ -1139,7 +1139,6 @@ const EStore = () => {
               body: JSON.stringify({}),
             },
           );
-
           // Set flag so they aren't counted again during this browser tab session
           sessionStorage.setItem("maximus_tracked", "true");
         } catch (err) {
@@ -1147,7 +1146,6 @@ const EStore = () => {
         }
       }
     };
-
     registerVisitor();
   }, []);
 
