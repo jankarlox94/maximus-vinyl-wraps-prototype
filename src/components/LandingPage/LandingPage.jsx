@@ -165,7 +165,7 @@ const LandingPage = () => {
             <img src={Logo} alt="Logo" className="w-[200px]" />
           </div>
           <p className="text-gray-500 text-xs tracking-[0.3em] uppercase mb-4">
-            &copy; 2026 Maximus Vinyl Wrap.
+            &copy; 2026 Maximus Vinyl Wraps.
           </p>
         </div>
       </footer>

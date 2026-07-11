@@ -1123,9 +1123,11 @@ const EStore = () => {
   }, [view]);
 
   useEffect(() => {
+    let isExecuting = false;
     const registerVisitor = async () => {
       const alreadyTracked = sessionStorage.getItem("maximus_tracked");
-      if (!alreadyTracked) {
+      if (!alreadyTracked && !isExecuting) {
+        isExecuting = true;
         try {
           await fetch(
             `${import.meta.env.VITE_API_URL}/print-jobs/visitor-hit`,
