@@ -38,27 +38,15 @@ const PrintProjectView = () => {
   // -- email handlers--
   const handleEmailFormChange = (e) => {
     const { name, value } = e.target;
-    // debugger;
     emailSetFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleEmailFormSubmit = async (e) => {
-    // debugger;
     e.preventDefault();
     setStatus("submitting");
     // This is the payload you would send to your email service
     console.log("Email Payload:", emailFormData);
     const formData = new FormData();
-    // formData.append("customerName", emailFormData.customerName);
-    // formData.append("email", emailFormData.email);
-    // formData.append("phone", emailFormData.phone);
-    // formData.append("serviceType", emailFormData.serviceType);
-    // formData.append("quantity", emailFormData.quantity);
-    // formData.append("paperStock", emailFormData.paperStock);
-    // formData.append("finish", emailFormData.finish);
-    // formData.append("notes", emailFormData.notes);
-    // formData.append("dimensions", "10'x10'");
-
     formData.append("customerEmail", emailFormData.email);
     formData.append("width", "24"); // sending as string is fine, backend converts
     formData.append("height", "36");
@@ -66,11 +54,6 @@ const PrintProjectView = () => {
     if (imageFile) {
       formData.append("image", imageFile);
     }
-    // debugger;
-    // Append all text fields
-    // Object.keys(formData).forEach((key) => {
-    //   data.append(key, formData[key]);
-    // });
     try {
       const response = await fetch("http://[::1]:3000/api/print-jobs", {
         method: "POST",
@@ -86,7 +69,6 @@ const PrintProjectView = () => {
         setStatus("error");
       }
     } catch (error) {
-      debugger;
       console.log("Error:", error);
       setStatus("error");
     }
@@ -159,17 +141,6 @@ const PrintProjectView = () => {
 
       // Simulate success
       setStep(4);
-
-      /* // Real implementation example:
-      const response = await fetch('/api/submit-print-inquiry', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) throw new Error('Failed to send data');
-      setStep(4);
-      */
     } catch (err) {
       setError("There was an issue sending your request. Please try again.");
     } finally {
@@ -558,70 +529,6 @@ const PrintProjectView = () => {
                 Submit Print Order
               </button>
             </form>
-
-            // <div className="space-y-6 fade-in">
-            //   <div className="bg-blue-50 p-6 rounded-xl text-center border border-blue-100">
-            //     <h3 className="text-gray-600 font-medium mb-2">
-            //       Quick Estimation
-            //     </h3>
-            //     <div className="text-4xl font-bold text-blue-800 mb-2">
-            //       ${estimatedCost}
-            //     </div>
-            //     <p className="text-sm text-gray-500">
-            //       *This is a preliminary estimate based on {formData.width}"x
-            //       {formData.height}"
-            //       {formData.hasImage
-            //         ? " (Print Only)"
-            //         : " (Includes Design Service)"}
-            //       . Final price may vary.
-            //     </p>
-            //   </div>
-
-            //   <p className="text-gray-700 text-center">
-            //     Do you wish to continue and send these details to our shop
-            //     manager?
-            //   </p>
-
-            //   <div className="flex flex-col space-y-3 pt-2">
-            //     <button
-            //       onClick={() => setStep(5)}
-            //       disabled={isSubmitting}
-            //       className="w-full p-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition shadow-md flex justify-center items-center disabled:bg-green-400"
-            //     >
-            //       {isSubmitting ? (
-            //         <svg
-            //           className="animate-spin h-5 w-5 text-white"
-            //           xmlns="http://www.w3.org/2000/svg"
-            //           fill="none"
-            //           viewBox="0 0 24 24"
-            //         >
-            //           <circle
-            //             className="opacity-25"
-            //             cx="12"
-            //             cy="12"
-            //             r="10"
-            //             stroke="currentColor"
-            //             strokeWidth="4"
-            //           ></circle>
-            //           <path
-            //             className="opacity-75"
-            //             fill="currentColor"
-            //             d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-            //           ></path>
-            //         </svg>
-            //       ) : (
-            //         "Yes, contact Manager via Email to continue the process"
-            //       )}
-            //     </button>
-            //     <button
-            //       onClick={() => setStep(2)}
-            //       disabled={isSubmitting}
-            //       className="w-full p-3 text-gray-600 border border-gray-300 hover:bg-gray-50 rounded-lg transition disabled:opacity-50"
-            //     >
-            //       No, Edit Dimensions
-            //     </button>
-            //   </div>
-            // </div>
           )}
           {/* STEP 5: Success State */}
           {step === 5 && (

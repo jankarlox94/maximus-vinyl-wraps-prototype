@@ -29,17 +29,14 @@ export default function MasterDashboard() {
 
       const res = await fetch(url);
       const data = await res.json();
-      debugger;
       if (recordId) {
         // The backend returns an array; select the first (and only) item
         setSelectedOrder(data[0]);
         setSearchParams({ order_number: recordId });
-        debugger;
       } else {
         // Update the main dashboard list
         if (data && data.orders && data.metrics) {
           setOrders(data.orders);
-          debugger;
           setVisitorCount(data.metrics.totalVisitors);
         } else {
           // Fallback array parsing handling
@@ -442,7 +439,6 @@ function OrderModal({ order, setOrders, setSelectedOrder, onClose }) {
     hour: "2-digit",
     minute: "2-digit",
   });
-  debugger;
 
   // Helper function for status badge colors
   const getStatusBadge = (status) => {

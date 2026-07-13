@@ -16,7 +16,6 @@ const STATUS_OPTIONS = [
 const OrderStatusBadge = ({ orderId, initialStatus = "pending_quote" }) => {
   const [currentStatus, setCurrentStatus] = useState(initialStatus);
   const [isUpdating, setIsUpdating] = useState(false);
-  debugger;
 
   // Dynamic color mapping based on the active status
   const getColorClasses = (status) => {
@@ -44,7 +43,6 @@ const OrderStatusBadge = ({ orderId, initialStatus = "pending_quote" }) => {
   };
 
   const handleStatusChange = async (e) => {
-    debugger;
     const newStatus = e.target.value;
     const previousStatus = currentStatus;
 
@@ -65,13 +63,11 @@ const OrderStatusBadge = ({ orderId, initialStatus = "pending_quote" }) => {
       );
 
       if (!response.ok) {
-        debugger;
         throw new Error("Failed to update status on the server.");
       }
 
       console.log(`Order ${orderId} successfully updated to ${newStatus}`);
     } catch (error) {
-      debugger;
       console.error(error);
       alert("Error saving status. Reverting change.");
       // Revert the UI back to the old status if the database update failed
